@@ -62,7 +62,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="header">
   <h1>📋 互联网合规法规导航</h1>
   <p>全量法规清单 · 持续更新</p>
-  <div class="badge">17 个合规领域 · 100+ 部法规 · 40+ 监管及标准网站</div>
+  <div class="badge">13 个合规领域 · 80+ 部法规 · 40+ 监管及标准网站</div>
 </div>
 <div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" oninput="doSearch()" placeholder="搜索法规名称..."></div>
 <div class="container" id="app">
@@ -78,506 +78,226 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 
 <script>
 var DOMAINS = [
-{
+  {
   id:"content",icon:"📢",color:"#c62828",
   name:"内容安全",
   laws:[
-{name:"网络信息内容生态治理规定",st:"e",release:"2020-03-01",effective:"2020-03-01",desc:"11类禁止信息、跟帖弹幕管理、评论区管理责任",},
-{name:"网络暴力信息治理规定",st:"e",release:"2024-06-14",effective:"2024-08-01",desc:"网络暴力信息预警、监测和处置机制",},
-{name:"移动互联网应用程序信息服务管理规定",st:"e",release:"2022-06-14",effective:"2022-08-01",desc:"APP信息内容管理、数据安全、未成年人保护",},
-{name:"互联网弹窗信息推送服务管理规定",st:"e",release:"2022-09-09",effective:"2022-09-30",desc:"弹窗广告标识、一键关闭、不得诱导点击",},
-{name:"互联网信息内容管理行政执法程序规定",st:"e",release:"2023-02-16",effective:"2023-03-01",desc:"网信部门行政执法程序、调查取证、听证",},
-{name:"互联网信息搜索服务管理规定",st:"e",release:"2016-08-01",effective:"2016-08-01",desc:"搜索服务审核义务、付费搜索标识、自然搜索结果保护",},
-{name:"规范互联网信息服务市场秩序若干规定",st:"e",release:"2012-03-15",effective:"2012-03-15",desc:"禁止恶意干扰、误导用户卸载、虚假宣传",},
-{name:"具有舆论属性或社会动员能力的互联网信息服务安全评估规定",st:"e",release:"2018-11-30",effective:"2018-11-30",desc:"新上线/重大功能变更须安全评估",},
-{name:"互联网用户公众账号信息服务管理规定",st:"e",release:"2021-02-22",effective:"2021-02-22",desc:"公众账号信息发布、内容审核、账号分类分级",},
-{name:"互联网用户账号信息管理规定",st:"e",release:"2022-06-27",effective:"2022-08-01",desc:"账号注册、使用、管理；防止假冒仿冒",},
-{name:"互联网用户账号名称管理规定",st:"e",release:"2015-03-01",effective:"2015-03-01",desc:"账号名称、头像、简介等注册信息合规要求",},
-{name:"互联网群组信息服务管理规定",st:"e",release:"2017-10-08",effective:"2017-10-08",desc:"微信群、QQ群群主/管理者主体责任",},
-{name:"互联网论坛社区服务管理规定",st:"e",release:"2017-10-01",effective:"2017-10-01",desc:"论坛版块管理、版主责任、用户实名",},
-{name:"微博客信息服务管理规定",st:"e",release:"2018-03-20",effective:"2018-03-20",desc:"微博客信息发布、审核、辟谣机制",},
-{name:"即时通信工具公众信息服务发展管理暂行规定",st:"e",release:"2014-08-07",effective:"2014-08-07",desc:"微信公众平台等公众信息服务发布审核",},
-{name:"互联网跟帖评论服务管理规定（2022修订）",st:"e",release:"2022-12-15",effective:"2022-12-15",desc:"跟帖评论审核、实名管理、主体责任",},
-{name:"互联网新闻信息服务管理规定",st:"e",release:"2017-05-02",effective:"2017-06-01",desc:"新闻信息采编发布、转载服务许可",},
-{name:"互联网新闻信息服务单位约谈工作规定",st:"e",release:"2015-06-01",effective:"2015-06-01",desc:"约谈程序和整改要求",},
-{name:"互联网新闻信息服务新技术新应用安全评估管理规定",st:"e",release:"2017-12-01",effective:"2017-12-01",desc:"新闻信息服务新技术安全评估",},
-{name:"互联网新闻信息服务许可管理实施细则",st:"e",release:"2017-05-22",effective:"2017-06-01",desc:"新闻信息服务许可条件和审批流程",},
-{name:"互联网新闻信息服务单位内容管理从业人员管理办法",st:"e",release:"2017-12-01",effective:"2017-12-01",desc:"从业人员资质、培训、考核",}
+  {name:"网络暴力信息治理规定",st:"e",release:"2024-06-14",effective:"2024-08-01",desc:"网络暴力信息预警、监测和处置机制",},
+  {name:"互联网信息内容管理行政执法程序规定",st:"e",release:"2023-02-16",effective:"2023-03-01",desc:"网信部门行政执法程序、调查取证、听证",},
+  {name:"互联网跟帖评论服务管理规定（2022修订）",st:"e",release:"2022-12-15",effective:"2022-12-15",desc:"跟帖评论审核、实名管理、主体责任",},
+  {name:"互联网弹窗信息推送服务管理规定",st:"e",release:"2022-09-09",effective:"2022-09-30",desc:"弹窗广告标识、一键关闭、不得诱导点击",},
+  {name:"移动互联网应用程序信息服务管理规定",st:"e",release:"2022-06-14",effective:"2022-08-01",desc:"APP信息内容管理、数据安全、未成年人保护",},
+  {name:"互联网用户账号信息管理规定",st:"e",release:"2022-06-27",effective:"2022-08-01",desc:"账号注册、使用、管理；防止假冒仿冒",},
+  {name:"关于规范网络直播打赏加强未成年人保护的意见",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏",},
+  {name:"网络直播营销管理办法（试行）",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核",},
+  {name:"互联网用户公众账号信息服务管理规定",st:"e",release:"2021-02-22",effective:"2021-02-22",desc:"公众账号信息发布、内容审核、账号分类分级",},
+  {name:"关于加强网络直播规范管理工作的指导意见",st:"e",release:"2021-02-09",effective:"2021-02-09",desc:"压实平台主体责任、主播分级分类、打赏限额",},
+  {name:"网络信息内容生态治理规定",st:"e",release:"2020-03-01",effective:"2020-03-01",desc:"11类禁止信息、跟帖弹幕管理、评论区管理责任",},
+  {name:"网络音视频信息服务管理规定",st:"e",release:"2020-01-01",effective:"2020-01-01",desc:"网络音视频内容管理、传播秩序",},
+  {name:"具有舆论属性或社会动员能力的互联网信息服务安全评估规定",st:"e",release:"2018-11-30",effective:"2018-11-30",desc:"新上线/重大功能变更须安全评估",},
+  {name:"关于加强网络直播服务管理工作的通知",st:"e",release:"2018-08-01",effective:"2018-08-01",desc:"直播平台资质核查、主播实名、内容存储30天",},
+  {name:"微博客信息服务管理规定",st:"e",release:"2018-03-20",effective:"2018-03-20",desc:"微博客信息发布、审核、辟谣机制",},
+  {name:"互联网新闻信息服务新技术新应用安全评估管理规定",st:"e",release:"2017-12-01",effective:"2017-12-01",desc:"新闻信息服务新技术安全评估",},
+  {name:"互联网新闻信息服务单位内容管理从业人员管理办法",st:"e",release:"2017-12-01",effective:"2017-12-01",desc:"从业人员资质、培训、考核",},
+  {name:"互联网群组信息服务管理规定",st:"e",release:"2017-10-08",effective:"2017-10-08",desc:"微信群、QQ群群主/管理者主体责任",},
+  {name:"互联网论坛社区服务管理规定",st:"e",release:"2017-10-01",effective:"2017-10-01",desc:"论坛版块管理、版主责任、用户实名",},
+  {name:"互联网新闻信息服务管理规定",st:"e",release:"2017-05-02",effective:"2017-06-01",desc:"新闻信息采编发布、转载服务许可",},
+  {name:"互联网新闻信息服务许可管理实施细则",st:"e",release:"2017-05-22",effective:"2017-06-01",desc:"新闻信息服务许可条件和审批流程",},
+  {name:"互联网视听节目服务业务分类目录（试行）通告",st:"e",release:"2017-04-01",effective:"2017-04-01",desc:"四类业务分类：点播、转播、集成、聚合",},
+  {name:"网络表演经营活动管理办法",st:"e",release:"2017-01-01",effective:"2017-01-01",desc:"网络表演许可、表演者实名、内容自审",},
+  {name:"互联网直播服务管理规定",st:"e",release:"2016-11-04",effective:"2016-12-01",desc:"直播服务审核责任、黑名单、内容审核",},
+  {name:"互联网信息搜索服务管理规定",st:"e",release:"2016-08-01",effective:"2016-08-01",desc:"搜索服务审核义务、付费搜索标识、自然搜索结果保护",},
+  {name:"互联网新闻信息服务单位约谈工作规定",st:"e",release:"2015-06-01",effective:"2015-06-01",desc:"约谈程序和整改要求",},
+  {name:"互联网视听节目服务管理规定",st:"e",release:"2015-04-01",effective:"2015-04-01",desc:"视听节目许可、内容审核、播前审查",},
+  {name:"互联网用户账号名称管理规定",st:"e",release:"2015-03-01",effective:"2015-03-01",desc:"账号名称、头像、简介等注册信息合规要求",},
+  {name:"即时通信工具公众信息服务发展管理暂行规定",st:"e",release:"2014-08-07",effective:"2014-08-07",desc:"微信公众平台等公众信息服务发布审核",},
+  {name:"规范互联网信息服务市场秩序若干规定",st:"e",release:"2012-03-15",effective:"2012-03-15",desc:"禁止恶意干扰、误导用户卸载、虚假宣传",}
   ]
 },
-{
+  {
   id:"privacy",icon:"🔒",color:"#1565c0",
   name:"隐私保护",
   laws:[
-{name:"个人信息保护法（PIPL）",st:"e",release:"2021-08-20",effective:"2021-11-01",penalty:"≤5000万元/营收5%",desc:"告知同意、自动化决策、跨境传输、大型平台义务",},
-{name:"数据安全法",st:"e",release:"2021-06-10",effective:"2021-09-01",penalty:"≤1000万元",desc:"数据分类分级、重要数据目录、安全审查",},
-{name:"网络数据安全管理条例",st:"e",release:"2024-09-30",effective:"2025-01-01",desc:"整合细化网络数据安全管理",},
-{name:"儿童个人信息网络保护规定",st:"e",release:"2019-08-23",effective:"2019-10-01",desc:"14岁以下儿童个人信息收集须监护人同意",},
-{name:"数据出境安全评估办法",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估",},
-{name:"促进和规范数据跨境流动规定",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单",},
-{name:"个人信息出境标准合同办法",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者个人信息出境合同路径",},
-{name:"个人信息安全规范（GB/T 35273-2020）",st:"e",desc:"个人信息收集、存储、使用、共享安全要求",},
-{name:"APP违法违规收集使用个人信息行为认定方法",st:"e",release:"2019-12-30",effective:"2019-12-30",desc:"9类31种违规行为的认定标准",},
-{name:"移动智能终端应用软件预置和分发管理暂行规定",st:"e",release:"2017-07-01",effective:"2017-07-01",desc:"预置APP可卸载、分发平台实名认证",},
-{name:"关于进一步规范移动智能终端应用软件预置行为的通告",st:"e",release:"2023-01-01",effective:"2023-01-01",desc:"不可卸载APP范围限定",},
-{name:"工信部关于进一步提升移动互联网应用服务能力的通知",st:"e",release:"2023-02-27",effective:"2023-02-27",desc:"APP安装卸载、服务体验、个人信息保护",},
-{name:"工信部关于开展信息通信服务感知提升行动的通知",st:"e",release:"2021-11-01",effective:"2021-11-01",desc:"双清单、隐私政策改进、服务感知提升",}
+  {name:"网络数据安全管理条例",st:"e",release:"2024-09-30",effective:"2025-01-01",desc:"整合细化网络数据安全管理",},
+  {name:"促进和规范数据跨境流动规定",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单",},
+  {name:"个人信息出境标准合同办法",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径",},
+  {name:"工信部关于进一步提升移动互联网应用服务能力的通知",st:"e",release:"2023-02-27",effective:"2023-02-27",desc:"APP安装卸载、服务体验、个人信息保护",},
+  {name:"关于进一步规范移动智能终端应用软件预置行为的通告",st:"e",release:"2023-01-01",effective:"2023-01-01",desc:"不可卸载APP范围限定",},
+  {name:"数据出境安全评估办法",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估",},
+  {name:"个人信息保护法（PIPL）",st:"e",release:"2021-08-20",effective:"2021-11-01",penalty:"≤5000万元/营收5%",desc:"告知同意、自动化决策、跨境传输、大型平台义务",},
+  {name:"工信部关于开展信息通信服务感知提升行动的通知",st:"e",release:"2021-11-01",effective:"2021-11-01",desc:"双清单、隐私政策改进、服务感知提升",},
+  {name:"数据安全法",st:"e",release:"2021-06-10",effective:"2021-09-01",penalty:"≤1000万元",desc:"数据分类分级、重要数据目录、安全审查",},
+  {name:"APP违法违规收集使用个人信息行为认定方法",st:"e",release:"2019-12-30",effective:"2019-12-30",desc:"9类31种违规行为的认定标准",},
+  {name:"儿童个人信息网络保护规定",st:"e",release:"2019-08-23",effective:"2019-10-01",desc:"14岁以下儿童个人信息监护人同意",},
+  {name:"移动智能终端应用软件预置和分发管理暂行规定",st:"e",release:"2017-07-01",effective:"2017-07-01",desc:"预置APP可卸载、分发平台实名认证",},
+  {name:"个人信息安全规范（GB/T 35273-2020）",st:"e",desc:"个人信息收集、存储、使用、共享安全要求",},
+  {name:"APP用户权益保护测评规范 超范围收集个人信息",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 超范围收集个人信息的检测标准",},
+  {name:"APP用户权益保护测评规范 定向推送",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 定向推送合规检测",},
+  {name:"APP用户权益保护测评规范 个人信息获取行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 个人信息获取行为检测",},
+  {name:"APP用户权益保护测评规范 权限索取行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 权限索取行为合规检测",},
+  {name:"APP用户权益保护测评规范 违规使用个人信息",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 违规使用个人信息检测",},
+  {name:"APP用户权益保护测评规范 违规收集个人信息",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 违规收集个人信息检测",},
+  {name:"APP用户权益保护测评规范 下载分发行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 下载分发行为合规检测",},
+  {name:"APP用户权益保护测评规范 移动应用分发平台管理",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 应用商店管理合规检测",},
+  {name:"APP用户权益保护测评规范 移动应用分发平台信息展示",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 商店信息展示合规检测",},
+  {name:"APP用户权益保护测评规范 自启动和关联启动行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 自启动和关联启动合规检测",}
   ]
 },
-{
-  id:"appstd",icon:"📱",color:"#0d47a1",
-  name:"APP用户权益保护(团体标准)",
-  laws:[
-{name:"APP用户权益保护测评规范 超范围收集个人信息",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 超范围收集个人信息的检测标准",},
-{name:"APP用户权益保护测评规范 定向推送",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 定向推送合规检测",},
-{name:"APP用户权益保护测评规范 个人信息获取行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 个人信息获取行为检测",},
-{name:"APP用户权益保护测评规范 权限索取行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 权限索取行为合规检测",},
-{name:"APP用户权益保护测评规范 违规使用个人信息",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 违规使用个人信息检测",},
-{name:"APP用户权益保护测评规范 违规收集个人信息",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 违规收集个人信息检测",},
-{name:"APP用户权益保护测评规范 下载分发行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 下载分发行为合规检测",},
-{name:"APP用户权益保护测评规范 移动应用分发平台管理",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 应用商店管理合规检测",},
-{name:"APP用户权益保护测评规范 移动应用分发平台信息展示",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 商店信息展示合规检测",},
-{name:"APP用户权益保护测评规范 自启动和关联启动行为",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 自启动和关联启动合规检测",}
-  ]
-},
-{
-  id:"live",icon:"🎥",color:"#ad1457",
-  name:"网络直播与视听",
-  laws:[
-{name:"网络音视频信息服务管理规定",st:"e",release:"2020-01-01",effective:"2020-01-01",desc:"网络音视频内容管理、传播秩序",},
-{name:"互联网视听节目服务管理规定",st:"e",release:"2015-04-01",effective:"2015-04-01",desc:"视听节目许可、内容审核、播前审查",},
-{name:"互联网视听节目服务业务分类目录（试行）通告",st:"e",release:"2017-04-01",effective:"2017-04-01",desc:"四类业务分类：点播、转播、集成、聚合",},
-{name:"互联网直播服务管理规定",st:"e",release:"2016-11-04",effective:"2016-12-01",desc:"直播服务审核责任、黑名单、内容审核",},
-{name:"关于加强网络直播服务管理工作的通知",st:"e",release:"2018-08-01",effective:"2018-08-01",desc:"直播平台资质核查、主播实名、内容存储30天",},
-{name:"关于加强网络直播规范管理工作的指导意见",st:"e",release:"2021-02-09",effective:"2021-02-09",desc:"压实平台主体责任、主播分级分类、打赏限额",},
-{name:"网络直播营销管理办法（试行）",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核",},
-{name:"网络表演经营活动管理办法",st:"e",release:"2017-01-01",effective:"2017-01-01",desc:"网络表演许可、表演者实名、内容自审",},
-{name:"关于规范网络直播打赏加强未成年人保护的意见",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏、高峰时段禁打赏",}
-  ]
-},
-{
+  {
   id:"fraud",icon:"📵",color:"#e65100",
   name:"电信反诈",
   laws:[
-{name:"反电信网络诈骗法",st:"e",release:"2022-09-02",effective:"2022-12-01",desc:"电信治理、金融治理、互联网治理、实名制",},
-{name:"反洗钱法",st:"e",release:"2007-01-01",effective:"2007-01-01",desc:"反洗钱义务、大额交易报告、客户身份识别",},
-{name:"金融机构反洗钱和反恐怖融资监督管理办法",st:"e",release:"2021-08-01",effective:"2021-08-01",desc:"反洗钱内控制度、风险评估",}
+  {name:"反电信网络诈骗法",st:"e",release:"2022-09-02",effective:"2022-12-01",desc:"电信治理、金融治理、互联网治理、实名制",},
+  {name:"金融机构反洗钱和反恐怖融资监督管理办法",st:"e",release:"2021-08-01",effective:"2021-08-01",desc:"反洗钱内控制度、风险评估",},
+  {name:"反洗钱法",st:"e",release:"2007-01-01",effective:"2007-01-01",desc:"反洗钱义务、大额交易报告、客户身份识别",}
   ]
 },
-{
-  id:"consumer",icon:"🛡️",color:"#f57c00",
-  name:"消费者权益保护",
+  {
+  id:"payment",icon:"💳",color:"#00838f",
+  name:"支付合规",
   laws:[
-{name:"消费者权益保护法",st:"e",release:"2013-10-25",effective:"2014-03-15",desc:"七天无理由退货、格式条款限制、三倍赔偿",},
-{name:"消费者权益保护法实施条例",st:"e",release:"2024-03-19",effective:"2024-07-01",desc:"直播带货平台先行赔付、自动续费提示",},
-{name:"电子商务法",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",},
-{name:"网络交易监督管理办法",st:"e",release:"2021-03-15",effective:"2021-05-01",desc:"信息公示、直播带货合规、自动续费规则",},
-{name:"电信用户申诉处理办法",st:"e",release:"2016-07-01",effective:"2016-07-01",desc:"电信用户申诉受理、处理流程",},
-{name:"明码标价和禁止价格欺诈规定",st:"e",release:"2022-07-01",effective:"2022-07-01",desc:"明码标价义务、虚假优惠、先涨后降等欺诈认定",},
-{name:"国务院办公厅关于加强金融消费者权益保护工作的指导意见",st:"e",release:"2015-11-13",effective:"2015-11-13",desc:"金融消费者八项权益",},
-{name:"中国人民银行金融消费者权益保护实施办法",st:"e",release:"2020-11-01",effective:"2020-11-01",desc:"金融消费者信息保护、投诉处理",}
+  {name:"明码标价和禁止价格欺诈规定",st:"e",release:"2022-07-01",effective:"2022-07-01",desc:"明码标价义务、虚假优惠、先涨后降等欺诈认定",},
+  {name:"电子商务法",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",},
+  {name:"电信用户申诉处理办法",st:"e",release:"2016-07-01",effective:"2016-07-01",desc:"电信用户申诉受理、处理流程",},
+  {name:"网络支付服务数据安全要求（GB/T 42015-2022）",st:"e",desc:"网络支付数据安全要求",},
+  {name:"非银行支付机构条例（征求意见稿）",st:"p",desc:"非银行支付机构设立、变更、终止监管",},
+  {name:"支付机构外汇业务管理办法",st:"e",desc:"跨境外汇支付备案、交易、数据报送",},
+  {name:"网上银行系统信息安全通用规范（JR/T 0068-2020）",st:"e",desc:"网上银行安全技术要求",}
   ]
 },
-{
-  id:"antitrust",icon:"⚖️",color:"#5d4037",
-  name:"互联网反不正当竞争",
-  laws:[
-{name:"反不正当竞争法",st:"e",release:"2019-04-23",effective:"2019-04-23",penalty:"罚款10万-500万元",desc:"混淆行为、虚假宣传、商业诋毁、网络领域不正当竞争",},
-{name:"网络反不正当竞争暂行规定",st:"e",release:"2024-05-11",effective:"2024-09-01",desc:"刷单炒信、流量劫持、恶意不兼容、数据爬取",},
-{name:"反垄断法（2022修订）",st:"e",release:"2022-06-24",effective:"2022-08-01",desc:"平台经济反垄断适用",},
-{name:"平台经济领域反垄断指南",st:"e",release:"2021-02-07",effective:"2021-02-07",desc:"二选一、大数据杀熟、扼杀式并购认定",},
-{name:"禁止垄断协议规定",st:"e",release:"2023-04-15",effective:"2023-04-15",desc:"横向/纵向垄断协议、轴辐协议、安全港规则",},
-{name:"禁止滥用知识产权排除、限制竞争行为规定",st:"e",release:"2023-08-01",effective:"2023-08-01",desc:"知识产权行使中垄断行为认定",},
-{name:"公平竞争审查条例",st:"e",release:"2024-06-06",effective:"2024-08-01",desc:"政策措施公平竞争审查",},
-{name:"关于经营者集中申报的指导意见",st:"e",release:"2018-09-29",effective:"2018-09-29",desc:"申报标准、营业额计算、申报程序",},
-{name:"广东省实施反不正当竞争法办法",st:"e",desc:"广东省反不正当竞争执法细则",},
-{name:"深圳经济特区实施反不正当竞争法规定",st:"e",desc:"深圳市反不正当竞争地方法规",},
-{name:"江苏省实施反不正当竞争法办法",st:"e",desc:"江苏省反不正当竞争执法细则",}
-  ]
-},
-{
-  id:"ad",icon:"📺",color:"#ad1457",
-  name:"互联网广告合规",
-  laws:[
-{name:"广告法",st:"e",release:"2021-04-29",effective:"2021-04-29",penalty:"罚款20万-200万元",desc:"广告内容准则、行为规范、特殊行业广告限制",},
-{name:"互联网广告管理办法",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任",},
-{name:"规范促销行为暂行规定",st:"e",release:"2020-12-01",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制",}
-  ]
-},
-{
+  {
   id:"bribery",icon:"🚫",color:"#3e2723",
   name:"反商业贿赂",
   laws:[
-{name:"反不正当竞争法（商业贿赂条款）",st:"e",penalty:"罚款10万-300万元",desc:"禁止贿赂交易相对方工作人员",},
-{name:"刑法·商业贿赂相关条款（第163/164/385-393条）",st:"e",desc:"非国家工作人员受贿罪、行贿罪",},
-{name:"关于禁止商业贿赂行为的暂行规定",st:"e",desc:"商业贿赂定义、表现形式及法律责任",}
+  {name:"反不正当竞争法（商业贿赂条款）",st:"e",penalty:"罚款10万-300万元",desc:"禁止贿赂交易相对方工作人员",},
+  {name:"刑法·商业贿赂相关条款（第163/164/385-393条）",st:"e",desc:"非国家工作人员受贿罪、行贿罪",},
+  {name:"关于禁止商业贿赂行为的暂行规定",st:"e",desc:"商业贿赂定义、表现形式及法律责任",}
   ]
 },
-{
+  {
+  id:"antitrust",icon:"⚖️",color:"#5d4037",
+  name:"互联网反不正当竞争",
+  laws:[
+  {name:"网络反不正当竞争暂行规定",st:"e",release:"2024-05-11",effective:"2024-09-01",desc:"刷单炒信、流量劫持、恶意不兼容、数据爬取",},
+  {name:"公平竞争审查条例",st:"e",release:"2024-06-06",effective:"2024-08-01",desc:"政策措施公平竞争审查",},
+  {name:"专利法实施细则（2023修订）",st:"e",release:"2023-12-21",effective:"2024-01-20",desc:"专利审查、专利权评价报告",},
+  {name:"禁止滥用知识产权排除、限制竞争行为规定",st:"e",release:"2023-08-01",effective:"2023-08-01",desc:"知识产权行使中垄断行为认定",},
+  {name:"禁止垄断协议规定",st:"e",release:"2023-04-15",effective:"2023-04-15",desc:"横向/纵向垄断协议、轴辐协议、安全港规则",},
+  {name:"反垄断法（2022修订）",st:"e",release:"2022-06-24",effective:"2022-08-01",desc:"平台经济反垄断适用",},
+  {name:"著作权法（2020修订）",st:"e",release:"2020-11-11",effective:"2021-06-01",desc:"侵权赔偿上限提高至500万、惩罚性赔偿",},
+  {name:"专利法（2020修订）",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"专利保护期、惩罚性赔偿、开放许可",},
+  {name:"平台经济领域反垄断指南",st:"e",release:"2021-02-07",effective:"2021-02-07",desc:"二选一、大数据杀熟、扼杀式并购认定",},
+  {name:"商标法（2019修订）",st:"e",release:"2019-04-23",effective:"2019-11-01",desc:"商标注册、使用、保护、恶意注册规制",},
+  {name:"反不正当竞争法",st:"e",release:"2019-04-23",effective:"2019-04-23",penalty:"罚款10万-500万元",desc:"混淆行为、虚假宣传、商业诋毁、网络领域不正当竞争",},
+  {name:"关于经营者集中申报的指导意见",st:"e",release:"2018-09-29",effective:"2018-09-29",desc:"申报标准、营业额计算、申报程序",},
+  {name:"关于规范网络转载版权秩序的通知",st:"e",release:"2015-04-22",effective:"2015-04-22",desc:"转载授权、署名要求",},
+  {name:"著作权法实施条例",st:"e",release:"2013-03-01",effective:"2013-03-01",desc:"著作权法具体实施规定",},
+  {name:"广东省实施反不正当竞争法办法",st:"e",desc:"广东省反不正当竞争执法细则",},
+  {name:"深圳经济特区实施反不正当竞争法规定",st:"e",desc:"深圳市反不正当竞争地方法规",},
+  {name:"江苏省实施反不正当竞争法办法",st:"e",desc:"江苏省反不正当竞争执法细则",},
+  {name:"信息网络传播权保护条例",st:"e",desc:"避风港原则、通知删除规则",},
+  {name:"计算机软件保护条例",st:"e",desc:"软件著作权登记和保护",}
+  ]
+},
+  {
+  id:"ad",icon:"📺",color:"#ad1457",
+  name:"互联网广告合规",
+  laws:[
+  {name:"互联网广告管理办法",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任",},
+  {name:"广告法",st:"e",release:"2021-04-29",effective:"2021-04-29",penalty:"罚款20万-200万元",desc:"广告内容准则、行为规范、特殊行业广告限制",},
+  {name:"规范促销行为暂行规定",st:"e",release:"2020-12-01",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制",}
+  ]
+},
+  {
   id:"secret",icon:"🤫",color:"#4e342e",
   name:"商业秘密保护",
   laws:[
-{name:"反不正当竞争法（商业秘密条款）",st:"e",desc:"禁止侵犯商业秘密、举证责任转移、惩罚性赔偿",},
-{name:"刑法·侵犯商业秘密罪（第219条）",st:"e",desc:"造成重大损失处三年以上十年以下有期徒刑",},
-{name:"最高人民法院关于审理侵犯商业秘密纠纷案件的规定",st:"e",desc:"商业秘密认定、举证规则等司法解释",},
-{name:"关于强化知识产权保护的意见",st:"e",desc:"知识产权（含商业秘密）严保护政策",}
+  {name:"反不正当竞争法（商业秘密条款）",st:"e",desc:"禁止侵犯商业秘密、举证责任转移、惩罚性赔偿",},
+  {name:"刑法·侵犯商业秘密罪（第219条）",st:"e",desc:"造成重大损失处三年以上十年以下有期徒刑",},
+  {name:"最高人民法院关于审理侵犯商业秘密纠纷案件的规定",st:"e",desc:"商业秘密认定、举证规则等司法解释",},
+  {name:"关于强化知识产权保护的意见",st:"e",desc:"知识产权（含商业秘密）严保护政策",}
   ]
 },
-{
+  {
+  id:"consumer",icon:"🛡️",color:"#f57c00",
+  name:"消费者权益保护",
+  laws:[
+  {name:"消费者权益保护法实施条例",st:"e",release:"2024-03-19",effective:"2024-07-01",desc:"直播带货平台先行赔付、自动续费提示",},
+  {name:"未成年人网络保护条例",st:"e",release:"2023-10-16",effective:"2024-01-01",desc:"未成年人模式、防沉迷、网络欺凌防治",},
+  {name:"关于防止未成年人沉迷网络游戏的通知",st:"e",release:"2023-01-01",effective:"2023-01-01",desc:"充值限额、宵禁、实名制",},
+  {name:"关于进一步严格管理切实防止未成年人沉迷网络游戏的通知",st:"e",release:"2021-08-30",effective:"2021-09-01",desc:"周五六日各1小时",},
+  {name:"移动互联网应用（APP）适老化通用设计规范",st:"e",release:"2021-07-01",effective:"2021-07-01",desc:"大字体、高对比度、简化操作",},
+  {name:"互联网网站适老化通用设计规范",st:"e",release:"2021-07-01",effective:"2021-07-01",desc:"辅助功能、无障碍浏览",},
+  {name:"未成年人保护法（网络保护专章）",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"防沉迷、个人信息保护、不良信息防治",},
+  {name:"网络交易监督管理办法",st:"e",release:"2021-03-15",effective:"2021-05-01",desc:"信息公示、直播带货合规、自动续费规则",},
+  {name:"中国人民银行金融消费者权益保护实施办法",st:"e",release:"2020-11-01",effective:"2020-11-01",desc:"金融消费者信息保护、投诉处理",},
+  {name:"儿童个人信息网络保护规定",st:"e",release:"2019-08-23",effective:"2019-10-01",desc:"14岁以下儿童个人信息监护人同意",},
+  {name:"电子商务法",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",},
+  {name:"国务院办公厅关于加强金融消费者权益保护工作的指导意见",st:"e",release:"2015-11-13",effective:"2015-11-13",desc:"金融消费者八项权益",},
+  {name:"关于进一步加强对网上未成年人犯罪和欺凌事件报道管理的通知",st:"e",release:"2015-01-01",effective:"2015-01-01",desc:"未成年人犯罪报道限制",},
+  {name:"消费者权益保护法",st:"e",release:"2013-10-25",effective:"2014-03-15",desc:"七天无理由退货、格式条款限制、三倍赔偿",},
+  {name:"关于启动网络游戏防沉迷实名验证工作的通知",st:"e",release:"2011-10-01",effective:"2011-10-01",desc:"防沉迷实名验证系统",},
+  {name:"文化部、商务部关于加强网络游戏虚拟货币管理工作的通知",st:"e",release:"2009-06-04",effective:"2009-06-04",desc:"虚拟货币发行、交易、退换",}
+  ]
+},
+  {
   id:"finance",icon:"🏦",color:"#558b2f",
   name:"金融合规",
   laws:[
-{name:"金融数据安全分级指南（JR/T 0197-2020）",st:"e",desc:"金融数据安全分级方法",},
-{name:"个人金融信息保护技术规范（JR/T 0171-2020）",st:"e",desc:"个人金融信息分类和安全要求",},
-{name:"金融科技发展规划（2022-2025年）",st:"e",desc:"金融科技发展方向和风险防控",},
-{name:"非银行支付机构条例（征求意见稿）",st:"p",desc:"非银行支付机构设立、变更、终止监管",},
-{name:"网络支付服务数据安全要求（GB/T 42015-2022）",st:"e",desc:"网络支付数据安全要求",},
-{name:"网上银行系统信息安全通用规范（JR/T 0068-2020）",st:"e",desc:"网上银行安全技术要求",},
-{name:"支付机构外汇业务管理办法",st:"e",desc:"跨境外汇支付备案、交易、数据报送",}
+  {name:"中国人民银行金融消费者权益保护实施办法",st:"e",release:"2020-11-01",effective:"2020-11-01",desc:"金融消费者信息保护、投诉处理",},
+  {name:"国务院办公厅关于加强金融消费者权益保护工作的指导意见",st:"e",release:"2015-11-13",effective:"2015-11-13",desc:"金融消费者八项权益",},
+  {name:"金融数据安全分级指南（JR/T 0197-2020）",st:"e",desc:"金融数据安全分级方法",},
+  {name:"个人金融信息保护技术规范（JR/T 0171-2020）",st:"e",desc:"个人金融信息分类和安全要求",},
+  {name:"金融科技发展规划（2022-2025年）",st:"e",desc:"金融科技发展方向和风险防控",}
   ]
 },
-{
+  {
   id:"license",icon:"📋",color:"#283593",
   name:"业务资质",
   laws:[
-{name:"互联网信息服务管理办法",st:"e",desc:"经营性ICP许可、非经营性ICP备案",},
-{name:"电信条例",st:"e",desc:"电信业务许可、资源管理、服务、安全",},
-{name:"电信业务分类目录",st:"e",desc:"增值电信业务（ICP/EDI/SP等）分类",},
-{name:"电信业务经营许可管理办法",st:"e",desc:"增值电信许可证申请条件",},
-{name:"互联网文化管理暂行规定",st:"e",desc:"网络音乐、演出等文化经营活动许可",},
-{name:"网络出版服务管理规定",st:"e",desc:"网络出版许可、内容审核",},
-{name:"非经营性互联网信息服务备案管理办法",st:"e",desc:"非经营性ICP备案流程",},
-{name:"互联网域名管理办法",st:"e",desc:"域名注册服务、实名认证",},
-{name:"关于移动游戏出版服务管理的通知",st:"e",desc:"移动游戏版号审批要求",},
-{name:"关于开展移动互联网应用程序备案工作的通知",st:"e",release:"2023-08-09",effective:"2023-08-09",desc:"APP主办者备案制度",}
+  {name:"关于开展移动互联网应用程序备案工作的通知",st:"e",release:"2023-08-09",effective:"2023-08-09",desc:"APP主办者备案制度",},
+  {name:"商用密码管理条例",st:"e",release:"2023-06-29",effective:"2023-07-01",desc:"商用密码科研、生产、销售管理",},
+  {name:"网络安全审查办法",st:"e",release:"2022-01-04",effective:"2022-02-15",desc:"CII采购审查、100万+PII上市审查",},
+  {name:"关键信息基础设施安全保护条例",st:"e",release:"2021-08-17",effective:"2021-09-01",desc:"CII认定与安全保护",},
+  {name:"密码法",st:"e",release:"2019-10-26",effective:"2020-01-01",desc:"商用密码分类管理",},
+  {name:"网络安全法",st:"e",release:"2016-11-07",effective:"2017-06-01",desc:"等级保护、CII义务、实名认证",},
+  {name:"互联网信息服务管理办法",st:"e",desc:"经营性ICP许可、非经营性ICP备案",},
+  {name:"电信条例",st:"e",desc:"电信业务许可、资源管理、服务、安全",},
+  {name:"电信业务分类目录",st:"e",desc:"增值电信业务（ICP/EDI/SP等）分类",},
+  {name:"电信业务经营许可管理办法",st:"e",desc:"增值电信许可证申请条件",},
+  {name:"互联网文化管理暂行规定",st:"e",desc:"网络音乐、演出等文化经营活动许可",},
+  {name:"网络出版服务管理规定",st:"e",desc:"网络出版许可、内容审核",},
+  {name:"非经营性互联网信息服务备案管理办法",st:"e",desc:"非经营性ICP备案流程",},
+  {name:"互联网域名管理办法",st:"e",desc:"域名注册服务、实名认证",},
+  {name:"关于移动游戏出版服务管理的通知",st:"e",desc:"移动游戏版号审批要求",},
+  {name:"电子签名法",st:"e",desc:"电子签名法律效力",},
+  {name:"等保2.0·基本要求（GB/T 22239-2019）",st:"e",desc:"等级保护基本要求",},
+  {name:"等保2.0·测评要求（GB/T 28448-2019）",st:"e",desc:"等级保护测评要求",}
   ]
 },
-{
-  id:"ipr",icon:"📝",color:"#4e342e",
-  name:"知识产权",
+  {
+  id:"marketing",icon:"📣",color:"#6a1b9a",
+  name:"营销合规",
   laws:[
-{name:"著作权法（2020修订）",st:"e",release:"2020-11-11",effective:"2021-06-01",desc:"侵权赔偿上限提高至500万、惩罚性赔偿",},
-{name:"著作权法实施条例",st:"e",release:"2013-03-01",effective:"2013-03-01",desc:"著作权法具体实施规定",},
-{name:"商标法（2019修订）",st:"e",release:"2019-04-23",effective:"2019-11-01",desc:"商标注册、使用、保护、恶意注册规制",},
-{name:"专利法（2020修订）",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"专利保护期、惩罚性赔偿、开放许可",},
-{name:"专利法实施细则（2023修订）",st:"e",release:"2023-12-21",effective:"2024-01-20",desc:"专利审查、专利权评价报告",},
-{name:"信息网络传播权保护条例",st:"e",desc:"避风港原则、通知删除规则",},
-{name:"计算机软件保护条例",st:"e",desc:"软件著作权登记和保护",},
-{name:"关于规范网络转载版权秩序的通知",st:"e",release:"2015-04-22",effective:"2015-04-22",desc:"转载授权、署名要求",}
+  {name:"互联网广告管理办法",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任",},
+  {name:"关于规范网络直播打赏加强未成年人保护的意见",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏",},
+  {name:"互联网信息服务算法推荐管理规定",st:"e",release:"2022-01-04",effective:"2022-03-01",desc:"算法备案、透明度、用户关闭权",},
+  {name:"网络直播营销管理办法（试行）",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核",},
+  {name:"广告法",st:"e",release:"2021-04-29",effective:"2021-04-29",penalty:"罚款20万-200万元",desc:"广告内容准则、行为规范、特殊行业广告限制",},
+  {name:"规范促销行为暂行规定",st:"e",release:"2020-12-01",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制",},
+  {name:"电子商务法",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",}
   ]
 },
-{
-  id:"minor",icon:"👶",color:"#6a1b9a",
-  name:"未成年人保护",
-  laws:[
-{name:"未成年人保护法（网络保护专章）",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"防沉迷、个人信息保护、不良信息防治",},
-{name:"未成年人网络保护条例",st:"e",release:"2023-10-16",effective:"2024-01-01",desc:"未成年人模式、防沉迷、网络欺凌防治",},
-{name:"儿童个人信息网络保护规定",st:"e",release:"2019-08-23",effective:"2019-10-01",desc:"14岁以下儿童个人信息监护人同意",},
-{name:"关于进一步严格管理切实防止未成年人沉迷网络游戏的通知",st:"e",release:"2021-08-30",effective:"2021-09-01",desc:"周五六日各1小时",},
-{name:"关于防止未成年人沉迷网络游戏的通知",st:"e",release:"2023-01-01",effective:"2023-01-01",desc:"充值限额、宵禁、实名制",},
-{name:"关于启动网络游戏防沉迷实名验证工作的通知",st:"e",release:"2011-10-01",effective:"2011-10-01",desc:"防沉迷实名验证系统",},
-{name:"关于规范网络直播打赏加强未成年人保护的意见",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏",},
-{name:"关于进一步加强对网上未成年人犯罪和欺凌事件报道管理的通知",st:"e",release:"2015-01-01",effective:"2015-01-01",desc:"未成年人犯罪报道限制",},
-{name:"移动互联网应用（APP）适老化通用设计规范",st:"e",release:"2021-07-01",effective:"2021-07-01",desc:"大字体、高对比度、简化操作",},
-{name:"互联网网站适老化通用设计规范",st:"e",release:"2021-07-01",effective:"2021-07-01",desc:"辅助功能、无障碍浏览",},
-{name:"文化部、商务部关于加强网络游戏虚拟货币管理工作的通知",st:"e",release:"2009-06-04",effective:"2009-06-04",desc:"虚拟货币发行、交易、退换",}
-  ]
-},
-{
-  id:"ai",icon:"🤖",color:"#7b1fa2",
-  name:"AI与算法治理",
-  laws:[
-{name:"生成式人工智能服务管理暂行办法",st:"e",release:"2023-07-13",effective:"2023-08-15",desc:"训练数据合法性、内容标识、防止偏见",},
-{name:"互联网信息服务算法推荐管理规定",st:"e",release:"2022-01-04",effective:"2022-03-01",desc:"算法备案、透明度、用户关闭权",},
-{name:"互联网信息服务深度合成管理规定",st:"e",release:"2022-12-11",effective:"2023-01-10",desc:"深度合成标识、备案、内容审核",},
-{name:"新一代人工智能伦理规范",st:"e",release:"2021-09-25",effective:"2021-09-25",desc:"AI伦理六原则",},
-{name:"生成式人工智能服务安全基本要求",st:"e",release:"2024-03-01",effective:"2024-03-01",desc:"生成式AI安全评估、训练数据安全",}
-  ]
-},
-{
-  id:"netsec",icon:"🛡️",color:"#2e7d32",
-  name:"网络安全与密码",
-  laws:[
-{name:"网络安全法",st:"e",release:"2016-11-07",effective:"2017-06-01",desc:"等级保护、CII义务、实名认证",},
-{name:"关键信息基础设施安全保护条例",st:"e",release:"2021-08-17",effective:"2021-09-01",desc:"CII认定与安全保护",},
-{name:"网络安全审查办法",st:"e",release:"2022-01-04",effective:"2022-02-15",desc:"CII采购审查、100万+PII上市审查",},
-{name:"密码法",st:"e",release:"2019-10-26",effective:"2020-01-01",desc:"商用密码分类管理",},
-{name:"商用密码管理条例",st:"e",release:"2023-06-29",effective:"2023-07-01",desc:"商用密码科研、生产、销售管理",},
-{name:"电子签名法",st:"e",desc:"电子签名法律效力",},
-{name:"等保2.0·基本要求（GB/T 22239-2019）",st:"e",desc:"等级保护基本要求",},
-{name:"等保2.0·测评要求（GB/T 28448-2019）",st:"e",desc:"等级保护测评要求",}
-  ]
-},
-{
+  {
   id:"trade",icon:"🌍",color:"#00695c",
   name:"贸易合规",
   laws:[
-{name:"数据出境安全评估办法",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估",},
-{name:"促进和规范数据跨境流动规定",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单",},
-{name:"出口管制法",st:"e",release:"2020-10-17",effective:"2020-12-01",desc:"两用物项出口管制",},
-{name:"个人信息出境标准合同办法",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径",},
-{name:"阻断外国法律与措施不当域外适用办法",st:"e",desc:"应对域外适用阻断机制",}
+  {name:"促进和规范数据跨境流动规定",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单",},
+  {name:"个人信息出境标准合同办法",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径",},
+  {name:"数据出境安全评估办法",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估",},
+  {name:"出口管制法",st:"e",release:"2020-10-17",effective:"2020-12-01",desc:"两用物项出口管制",},
+  {name:"阻断外国法律与措施不当域外适用办法",st:"e",desc:"应对域外适用阻断机制",}
   ]
 }
 ];
-
-function getSrc(s){
-  var m={};
-  m['网络信息内容生态治理规定']='http://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm';
-  m['网络暴力信息治理规定']='http://www.cac.gov.cn/2024-06/14/c_1718970011591839.htm';
-  m['移动互联网应用程序信息服务管理规定']='http://www.cac.gov.cn/2022-06/14/c_1655794082832836.htm';
-  m['互联网弹窗信息推送服务管理规定']='http://www.cac.gov.cn/2022-09/09/c_1664274622832836.htm';
-  m['互联网信息内容管理行政执法程序规定']='http://www.cac.gov.cn/2023-02/16/c_1676884832921043.htm';
-  m['互联网信息搜索服务管理规定']='http://www.cac.gov.cn/2016-06/25/c_1119110788.htm';
-  m['规范互联网信息服务市场秩序若干规定']='https://www.miit.gov.cn';
-  m['具有舆论属性或社会动员能力的互联网信息服务安全评估规定']='http://www.cac.gov.cn/2018-11/15/c_1123681110.htm';
-  m['互联网用户公众账号信息服务管理规定']='http://www.cac.gov.cn/2021-01/22/c_1612887820925382.htm';
-  m['互联网用户账号信息管理规定']='http://www.cac.gov.cn/2022-06/27/c_1656301392832836.htm';
-  m['互联网用户账号名称管理规定']='http://www.cac.gov.cn/2015-02/04/c_1114233879.htm';
-  m['互联网群组信息服务管理规定']='http://www.cac.gov.cn/2017-09/07/c_1121618964.htm';
-  m['互联网论坛社区服务管理规定']='http://www.cac.gov.cn/2017-08/25/c_1121533479.htm';
-  m['微博客信息服务管理规定']='http://www.cac.gov.cn/2018-02/02/c_1122355586.htm';
-  m['即时通信工具公众信息服务发展管理暂行规定']='http://www.cac.gov.cn/2014-08/07/c_1111983460.htm';
-  m['互联网跟帖评论服务管理规定（2022修订）']='http://www.cac.gov.cn/2022-11/16/c_1669880761643882.htm';
-  m['互联网新闻信息服务管理规定']='http://www.cac.gov.cn/2017-05/02/c_1120898435.htm';
-  m['互联网新闻信息服务单位约谈工作规定']='http://www.cac.gov.cn/2015-04/28/c_1115120581.htm';
-  m['互联网新闻信息服务新技术新应用安全评估管理规定']='http://www.cac.gov.cn/2017-10/30/c_1121767677.htm';
-  m['互联网新闻信息服务许可管理实施细则']='http://www.cac.gov.cn/2017-05/22/c_1121015035.htm';
-  m['互联网新闻信息服务单位内容管理从业人员管理办法']='http://www.cac.gov.cn/2017-10/30/c_1121767677.htm';
-  m['个人信息保护法（PIPL）']='https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzE0NzA5NTI%3D';
-  m['数据安全法']='https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzVlMDk2MTk%3D';
-  m['网络数据安全管理条例']='https://www.gov.cn/zhengce/content/202409/content_6975738.htm';
-  m['儿童个人信息网络保护规定']='http://www.cac.gov.cn/2019-08/23/c_1124913902.htm';
-  m['数据出境安全评估办法']='http://www.cac.gov.cn/2022-07/07/c_1658811536938689.htm';
-  m['促进和规范数据跨境流动规定']='http://www.cac.gov.cn/2024-03/22/c_1713430247361299.htm';
-  m['个人信息出境标准合同办法']='http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm';
-  m['个人信息安全规范（GB/T 35273-2020）']='https://www.tc260.org.cn';
-  m['APP违法违规收集使用个人信息行为认定方法']='http://www.cac.gov.cn/2019-12/27/c_1578986455686602.htm';
-  m['移动智能终端应用软件预置和分发管理暂行规定']='https://www.miit.gov.cn';
-  m['关于进一步规范移动智能终端应用软件预置行为的通告']='https://www.miit.gov.cn';
-  m['工信部关于进一步提升移动互联网应用服务能力的通知']='https://www.miit.gov.cn';
-  m['工信部关于开展信息通信服务感知提升行动的通知']='https://www.miit.gov.cn';
-  m['消费者权益保护法']='http://www.npc.gov.cn/npc/c30834/201403/5f9e6c8d2b3654e.shtml';
-  m['消费者权益保护法实施条例']='https://www.gov.cn/zhengce/content/202403/content_6939896.htm';
-  m['电子商务法']='http://www.npc.gov.cn/npc/xinwen/2018-08/31/content_2060785.htm';
-  m['网络交易监督管理办法']='https://www.samr.gov.cn';
-  m['电信用户申诉处理办法']='https://www.miit.gov.cn';
-  m['明码标价和禁止价格欺诈规定']='https://www.samr.gov.cn';
-  m['国务院办公厅关于加强金融消费者权益保护工作的指导意见']='https://www.gov.cn/zhengce/content/2015-11/13/content_5028896.htm';
-  m['中国人民银行金融消费者权益保护实施办法']='http://www.pbc.gov.cn';
-  m['反不正当竞争法']='http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml';
-  m['网络反不正当竞争暂行规定']='https://www.samr.gov.cn';
-  m['反垄断法（2022修订）']='http://www.npc.gov.cn/npc/c30834/202206/5f2c0b7b8e3f4f0a8b9c9b9f9e0d9c3e.shtml';
-  m['平台经济领域反垄断指南']='https://www.samr.gov.cn';
-  m['禁止垄断协议规定']='https://www.samr.gov.cn';
-  m['禁止滥用知识产权排除、限制竞争行为规定']='https://www.samr.gov.cn';
-  m['公平竞争审查条例']='https://www.gov.cn/zhengce/content/202406/content_6958770.htm';
-  m['关于经营者集中申报的指导意见']='https://www.samr.gov.cn';
-  m['广东省实施反不正当竞争法办法']='http://www.gd.gov.cn';
-  m['深圳经济特区实施反不正当竞争法规定']='http://www.sz.gov.cn';
-  m['江苏省实施反不正当竞争法办法']='http://www.jiangsu.gov.cn';
-  m['广告法']='http://www.npc.gov.cn/npc/c30834/201811/5f9e6c8d2b3654e.shtml';
-  m['互联网广告管理办法']='https://www.samr.gov.cn';
-  m['规范促销行为暂行规定']='https://www.samr.gov.cn';
-  m['反不正当竞争法（商业贿赂条款）']='http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml';
-  m['刑法·商业贿赂相关条款（第163/164/385-393条）']='https://flk.npc.gov.cn';
-  m['关于禁止商业贿赂行为的暂行规定']='https://www.samr.gov.cn';
-  m['反不正当竞争法（商业秘密条款）']='http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml';
-  m['刑法·侵犯商业秘密罪（第219条）']='https://flk.npc.gov.cn';
-  m['最高人民法院关于审理侵犯商业秘密纠纷案件的规定']='https://www.court.gov.cn';
-  m['关于强化知识产权保护的意见']='https://www.gov.cn/zhengce/2019-11/24/content_5455196.htm';
-  m['金融数据安全分级指南（JR/T 0197-2020）']='https://www.cfstc.org';
-  m['个人金融信息保护技术规范（JR/T 0171-2020）']='https://www.cfstc.org';
-  m['金融科技发展规划（2022-2025年）']='http://www.pbc.gov.cn';
-  m['非银行支付机构条例（征求意见稿）']='http://www.pbc.gov.cn';
-  m['网络支付服务数据安全要求（GB/T 42015-2022）']='https://openstd.samr.gov.cn';
-  m['网上银行系统信息安全通用规范（JR/T 0068-2020）']='https://www.cfstc.org';
-  m['支付机构外汇业务管理办法']='https://www.safe.gov.cn';
-  m['互联网信息服务管理办法']='https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm';
-  m['电信条例']='https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm';
-  m['电信业务分类目录']='https://www.miit.gov.cn';
-  m['电信业务经营许可管理办法']='https://www.miit.gov.cn';
-  m['互联网文化管理暂行规定']='https://www.mct.gov.cn';
-  m['网络出版服务管理规定']='https://www.nppa.gov.cn/nppa/channels/286.shtml';
-  m['非经营性互联网信息服务备案管理办法']='https://www.miit.gov.cn';
-  m['互联网域名管理办法']='https://www.miit.gov.cn';
-  m['关于移动游戏出版服务管理的通知']='https://www.nppa.gov.cn';
-  m['关于开展移动互联网应用程序备案工作的通知']='https://www.miit.gov.cn';
-  m['著作权法（2020修订）']='http://www.npc.gov.cn/npc/c30834/202011/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml';
-  m['著作权法实施条例']='https://www.gov.cn';
-  m['商标法（2019修订）']='http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml';
-  m['专利法（2020修订）']='http://www.npc.gov.cn/npc/c30834/202010/5f9e6c8d2b3654e.shtml';
-  m['专利法实施细则（2023修订）']='https://www.gov.cn/zhengce/content/202312/content_6920486.htm';
-  m['信息网络传播权保护条例']='https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm';
-  m['计算机软件保护条例']='https://www.gov.cn';
-  m['关于规范网络转载版权秩序的通知']='https://www.ncac.gov.cn';
-  m['未成年人保护法（网络保护专章）']='http://www.npc.gov.cn/npc/c30834/202010/82a8f1b84350432cac03b1e382ee1744.shtml';
-  m['未成年人网络保护条例']='https://www.gov.cn/zhengce/content/202310/content_6909985.htm';
-  m['关于进一步严格管理切实防止未成年人沉迷网络游戏的通知']='https://www.nppa.gov.cn/nppa/channels/286.shtml';
-  m['关于防止未成年人沉迷网络游戏的通知']='https://www.nppa.gov.cn';
-  m['关于启动网络游戏防沉迷实名验证工作的通知']='https://www.nppa.gov.cn';
-  m['关于规范网络直播打赏加强未成年人保护的意见']='http://www.cac.gov.cn/2022-05/07/c_1653892832836.htm';
-  m['关于进一步加强对网上未成年人犯罪和欺凌事件报道管理的通知']='http://www.cac.gov.cn';
-  m['移动互联网应用（APP）适老化通用设计规范']='https://www.miit.gov.cn';
-  m['互联网网站适老化通用设计规范']='https://www.miit.gov.cn';
-  m['文化部、商务部关于加强网络游戏虚拟货币管理工作的通知']='https://www.mct.gov.cn';
-  m['生成式人工智能服务管理暂行办法']='http://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm';
-  m['互联网信息服务算法推荐管理规定']='http://www.cac.gov.cn/2022-01/04/c_1642894606364259.htm';
-  m['互联网信息服务深度合成管理规定']='http://www.cac.gov.cn/2022-12/11/c_1672229339312990.htm';
-  m['新一代人工智能伦理规范']='https://www.most.gov.cn';
-  m['生成式人工智能服务安全基本要求']='https://www.tc260.org.cn';
-  m['网络安全法']='http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm';
-  m['关键信息基础设施安全保护条例']='https://www.gov.cn/zhengce/content/2021-08/17/content_5631684.htm';
-  m['网络安全审查办法']='http://www.cac.gov.cn/2022-01/04/c_1642894602182845.htm';
-  m['密码法']='http://www.npc.gov.cn/npc/c30834/201910/5f9e6c8d2b3654e.shtml';
-  m['商用密码管理条例']='https://www.gov.cn/zhengce/content/202306/content_6890105.htm';
-  m['电子签名法']='http://www.npc.gov.cn/npc/c30834/201904/5f9e6c8d2b3654e.shtml';
-  m['等保2.0·基本要求（GB/T 22239-2019）']='https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4147';
-  m['等保2.0·测评要求（GB/T 28448-2019）']='https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4145';
-  m['出口管制法']='http://www.npc.gov.cn/npc/c30834/202010/5f9e6c8d2b3654e.shtml';
-  m['阻断外国法律与措施不当域外适用办法']='http://www.mofcom.gov.cn';
-  m['反电信网络诈骗法']='https://flk.npc.gov.cn';
-  m['反洗钱法']='https://flk.npc.gov.cn';
-  m['金融机构反洗钱和反恐怖融资监督管理办法']='http://www.pbc.gov.cn';
-  return m[s]||'https://www.gov.cn';
-}
-var SOURCES_GOV = [
-  {n:"国家互联网信息办公室（网信办）",u:"http://www.cac.gov.cn"},
-  {n:"网信办·政策法规专题页",u:"https://www.cac.gov.cn/wxzw/zcfg/A093703index_1.htm"},
-  {n:"工业和信息化部",u:"https://www.miit.gov.cn"},
-  {n:"工信部·政策文件检索",u:"https://www.miit.gov.cn/search/zcwjk.html?websiteid=110000000000000&pg=&p=&tpl=14&category=183&q="},
-  {n:"工信部·网络安全管理局文件",u:"https://www.miit.gov.cn/jgsj/waj/wjfb/art/2022/art_6f196f73ba9047a3aac7e039bf4ae260.html"},
-  {n:"公安部网络安全保卫局",u:"https://www.mps.gov.cn/n2255079/index.html"},
-  {n:"国家市场监督管理总局",u:"https://www.samr.gov.cn"},
-  {n:"国家金融监督管理总局",u:"https://www.nfra.gov.cn"},
-  {n:"中国人民银行",u:"http://www.pbc.gov.cn"},
-  {n:"国家广播电视总局",u:"https://www.nrta.gov.cn"},
-  {n:"中国广播电视网络（CBN）",u:"http://www.cbn.cn/col/col270/index.html"},
-  {n:"国家新闻出版署（国家版权局）",u:"https://www.nppa.gov.cn"},
-  {n:"文化和旅游部",u:"https://www.mct.gov.cn"},
-  {n:"国家数据局",u:"https://www.nda.gov.cn"},
-  {n:"国家标准化管理委员会",u:"https://www.sac.gov.cn"},
-  {n:"国家密码管理局",u:"https://www.oscca.gov.cn"},
-  {n:"商务部",u:"http://www.mofcom.gov.cn"},
-  {n:"国家外汇管理局",u:"https://www.safe.gov.cn"},
-  {n:"中国政府网·最新政策",u:"https://www.gov.cn/zhengce/zuixin/"},
-  {n:"中国政府网·国务院公报",u:"https://www.gov.cn/gongbao/2024/issue_11646/"},
-  {n:"中国政府网·政策文件库",u:"https://www.gov.cn/zhengce/zhengcewenjianku/"},
-  {n:"中国人大网",u:"http://www.npc.gov.cn"},
-  {n:"国家法律法规数据库",u:"https://flk.npc.gov.cn"},
-  {n:"北大法宝",u:"https://www.pkulaw.com/"}
-];
-var SOURCES_STD = [
-  {n:"中国互联网协会",u:"https://www.isc.org.cn"},
-  {n:"中国互联网协会·政策法规",u:"https://www.isc.org.cn//category/7358.html"},
-  {n:"中国网络空间安全协会",u:"https://www.cinsa.org.cn"},
-  {n:"TC260（全国信息安全标准化技术委员会）",u:"https://www.tc260.org.cn"},
-  {n:"中国通信标准化协会（CCSA）",u:"https://www.ccsa.org.cn"},
-  {n:"电信终端产业协会（TAF）",u:"https://www.taf.org.cn/StdQuery.aspx?type=TAF"},
-  {n:"中国电子技术标准化研究院（CESI）",u:"https://www.cesi.cn"},
-  {n:"中国信息通信研究院（CAICT）",u:"https://www.caict.ac.cn"},
-  {n:"全国金融标准化技术委员会",u:"https://www.cfstc.org"},
-  {n:"国家标准全文公开系统",u:"https://openstd.samr.gov.cn"},
-  {n:"全国标准信息公共服务平台",u:"https://std.samr.gov.cn"},
-  {n:"CNVD（国家信息安全漏洞共享平台）",u:"https://www.cnvd.org.cn"},
-  {n:"CNCERT（国家互联网应急中心）",u:"https://www.cert.org.cn"},
-  {n:"中国网络安全产业联盟（CCIA）",u:"https://www.ccia.org.cn"},
-  {n:"中国保密协会",u:"https://www.zgbmxh.com"}
-];
-function render(){
-  var html='',d,l,i,j;
-  for(i=0;i<DOMAINS.length;i++){
-    d=DOMAINS[i];
-    html+='<div class="domain-card" onclick="showDetail('+"'"+d.id+"'"+')"><div class="color-bar" style="background:'+d.color+'"></div><div class="icon">'+d.icon+'</div><div class="name">'+d.name+'</div><div class="count">'+d.laws.length+' 部</div></div>';
-  }
-  document.getElementById("domainGrid").innerHTML=html;
-}
-function showDetail(id){
-  var d,i,j,l,html='';
-  for(i=0;i<DOMAINS.length;i++)if(DOMAINS[i].id==id){d=DOMAINS[i];break;}
-  if(!d)return;
-  document.getElementById("searchInput").value='';
-  document.getElementById("detailTitle").innerHTML=d.icon+' '+d.name+' <span class="tag-count">'+d.laws.length+' 部</span>';
-  // Sort laws by effective date (newest first)
-  var sorted = d.laws.slice().sort(function(a,b){
-    var da=a.effective||'0000-00-00',db=b.effective||'0000-00-00';
-    return db.localeCompare(da);
-  });
-  for(i=0;i<sorted.length;i++){
-    l=sorted[i];
-    html+='<div class="law-item" style="border-left-color:'+d.color+'">';
-    html+='<div class="top"><a class="name" href="'+getSrc(l.name)+'" target="_blank" rel="noopener">'+l.name+'</a>';
-    html+='<span class="st '+(l.st=='e'?'st-e':l.st=='p'?'st-p':'st-d')+'">'+(l.st=='e'?'已生效':l.st=='p'?'立法中':'草案')+'</span></div>';
-    if(l.desc)html+='<div class="desc">'+l.desc+'</div>';
-    html+='<div class="meta">';
-    if(l.release)html+='<span>📋 '+l.release+'</span>';
-    if(l.effective)html+='<span>✅ '+l.effective+'</span>';
-    if(l.penalty)html+='<span>⚡ '+l.penalty+'</span>';
-    html+='</div>';
-    html+='<div class="links"><a href="'+getSrc(l.name)+'" target="_blank" rel="noopener">🔗 查看原文</a></div></div>';
-  }
-  document.getElementById("detailList").innerHTML=html;
-  document.getElementById("homeView").style.display='none';
-  document.getElementById("detailView").style.display='block';
-  document.getElementById("sourcesView").style.display='none';
-  document.getElementById("noResult").style.display='none';
-  document.getElementById("navHome").classList.add('active');
-  document.getElementById("navSources").classList.remove('active');
-}
-function renderSources(){
-  var html='<div class="source-group"><h3>🏛️ 政府监管部门网站（'+SOURCES_GOV.length+' 个）</h3><div class="source-grid">';
-  for(var i=0;i<SOURCES_GOV.length;i++)html+='<div class="source-item"><span class="sn">'+SOURCES_GOV[i].n+'</span><a href="'+SOURCES_GOV[i].u+'" target="_blank" rel="noopener">访问 ↗</a></div>';
-  html+='</div></div>';
-  html+='<div class="source-group"><h3>📐 行业协会与标准组织（'+SOURCES_STD.length+' 个）</h3><div class="source-grid">';
-  for(i=0;i<SOURCES_STD.length;i++)html+='<div class="source-item"><span class="sn">'+SOURCES_STD[i].n+'</span><a href="'+SOURCES_STD[i].u+'" target="_blank" rel="noopener">访问 ↗</a></div>';
-  html+='</div></div>';
-  document.getElementById("sourcesContent").innerHTML=html;
-}
-function showHome(){
-  document.getElementById("homeView").style.display='block';
-  document.getElementById("detailView").style.display='none';
-  document.getElementById("sourcesView").style.display='none';
-  document.getElementById("noResult").style.display='none';
-  document.getElementById("navHome").classList.add('active');
-  document.getElementById("navSources").classList.remove('active');
-}
-function switchView(v){
-  document.getElementById("searchInput").value='';
-  document.getElementById("noResult").style.display='none';
-  document.getElementById("navHome").classList.remove('active');
-  document.getElementById("navSources").classList.remove('active');
-  if(v=='home'){
-    showHome();
-    document.getElementById("navHome").classList.add('active');
-  }else{
-    document.getElementById("homeView").style.display='none';
-    document.getElementById("detailView").style.display='none';
-    document.getElementById("sourcesView").style.display='block';
-    document.getElementById("navSources").classList.add('active');
-  }
-}
-function doSearch(){
-  var q=document.getElementById("searchInput").value.trim().toLowerCase();
-  var nr=document.getElementById("noResult");
-  if(!q){showHome();return;}
-  document.getElementById("homeView").style.display='block';
-  document.getElementById("detailView").style.display='none';
-  document.getElementById("sourcesView").style.display='none';
-  document.getElementById("navHome").classList.add('active');
-  document.getElementById("navSources").classList.remove('active');
-  var cards=document.querySelectorAll(".domain-card"),found=false;
-  for(var i=0;i<cards.length;i++){
-    var d=DOMAINS[i];if(!d)continue;
-    var match=d.name.toLowerCase().indexOf(q)!==-1;
-    if(!match)for(var j=0;j<d.laws.length;j++){if(d.laws[j].name.toLowerCase().indexOf(q)!==-1||(d.laws[j].desc&&d.laws[j].desc.toLowerCase().indexOf(q)!==-1)||(d.laws[j].release&&d.laws[j].release.indexOf(q)!==-1)||(d.laws[j].effective&&d.laws[j].effective.indexOf(q)!==-1)){match=true;break;}}
-    cards[i].style.display=match?'':'none';
-    if(match)found=true;
-  }
-  nr.style.display=found?'none':'block';
-}
-render();
-renderSources();
-</script>
-</body>
-</html>
 
