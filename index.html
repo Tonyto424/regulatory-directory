@@ -46,7 +46,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .law-item .links a{display:inline-flex;align-items:center;gap:2px;padding:3px 9px;border-radius:6px;font-size:12px;text-decoration:none;background:#e8f0fe;color:#1a73e8;transition:background .2s}
 .law-item .links a:hover{background:#d2e3fc}
 #sourcesView{display:none}
-#casesView{display:none}
 .source-group{margin-bottom:24px}.source-group h3{font-size:16px;font-weight:600;margin-bottom:12px;padding:0 4px}
 .source-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
 .source-item{background:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -59,8 +58,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .bottom-nav .btn .bi{font-size:18px;display:block;margin-bottom:2px}
 .bottom-nav .btn:hover{color:#1a73e8}
 #noResult{text-align:center;padding:60px 20px;color:#999;display:none}
-
-/* Cases view */
+#casesView{display:none}
 .case-item{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border-left:4px solid #1a73e8;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .case-item .case-title{font-size:15px;font-weight:600;margin-bottom:6px;color:#1a1a1a}
 .case-item .case-title a{color:#1a1a1a;text-decoration:none}
@@ -545,63 +543,53 @@ var SOURCES_STD = [
   {n:"中国网络安全产业联盟（CCIA）",u:"https://www.ccia.org.cn"},
   {n:"中国保密协会",u:"https://www.zgbmxh.com"}
 ];
-
 var CASES=[
-{title:"拼多多未按规定报送涉税信息被罚",domain:"finance",date:"2026-01-22",source:"国家税务总局",url:"https://www.chinatax.gov.cn/chinatax/n810219/n810780/c5247171/content.html",summary:"上海寻梦信息技术有限公司（拼多多平台运营主体）未按《互联网平台企业涉税信息报送规定》报送涉税信息，被税务机关责令限期改正后仍未完成，被处以10万元罚款。这是该规定实施以来首例对平台企业的行政处罚。"},
-{title:"抖音账号"东北雨姐"转世账号被关闭",domain:"content",date:"2025-12-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_33246847",summary:"劣迹网红"东北雨姐""猫一杯""秀才"等通过转世账号变相复出，网信办依据《互联网用户账号信息管理规定》对相关账号予以关闭处理，禁止劣迹主播以更换账号或平台形式复播。"},
-{title:"APP超范围收集个人信息被警告处罚",domain:"privacy",date:"2025-10-15",source:"江苏网信网",url:"https://ishare.ifeng.com/c/s/v0028RJ47TEEgtG31ZuNlC5VZZsYFpijLJRTbcbhN1TxL9o__",summary:"南京某科技公司运营的APP天气功能以"提供精准定位的天气服务"为由索要位置权限，并在后台静默期间继续调用用户位置信息，超范围收集个人信息，被属地网信办责令改正并警告。"},
-{title:"山东某公司数据泄露安全风险案",domain:"privacy",date:"2025-10-01",source:"凤凰网",url:"https://ishare.ifeng.com/c/s/v0028RJ47TEEgtG31ZuNlC5VZZsYFpijLJRTbcbhN1TxL9o__",summary:"无锡某科技公司涉敏个人信息字段未脱敏加密处理，且未依法留存网络日志，存在数据泄露安全风险，违反《网络安全法》《数据安全法》《个人信息保护法》被处罚。"},
-{title:"上海网信办发布2025年执法典型案例",domain:"privacy",date:"2025-12-01",source:"上海市锦天城律师事务所",url:"https://www.allbrightlaw.com/CN/10531/673f6c0e7e42dd0.aspx",summary:"上海市网信办发布的年度执法典型案例显示，数起数据泄露案均涉及企业未依法履行网络数据安全主体责任，未采取必要的技术措施保障数据安全，被依法查处。"},
-{title:"七大电商平台因幽灵外卖被罚35.97亿元",domain:"consumer",date:"2025-08-01",source:"搜狐网",url:"http://news.sohu.com/a/1015735314_121335229",summary:"拼多多、美团、京东、饿了么、抖音、淘宝、天猫7家头部电商平台因"幽灵外卖"、假证件审核不严等问题合计被罚35.97亿元，平台法定代表人和食品安全总监被额外罚款1968万余元。"},
-{title:"杭州互联网法院发布平台自治十大典型案例",domain:"antitrust",date:"2024-05-27",source:"21经济网",url:"https://www.21jingji.com/article/20240529/herald/f31d1deecbc70ac8d3d2315faba50dab.html",summary:"杭州互联网法院发布监督和支持平台自治十大典型案例，涉及算法推荐治理、平台侵权责任认定、直播平台主播行为规则责任认定等焦点问题。"},
-{title:"广东某公司网页篡改被处罚",domain:"license",date:"2025-09-15",source:"新华网",url:"https://www.news.cn/legal/20250916/3a58ec54891a4dd58feb8795a6103ecb/c.html",summary:"广东某公司办公协作平台登录页面被篡改为违法有害内容。因存在任意文件上传漏洞且未修复，遭勒索软件攻击。企业未依法履行网络安全保护义务，被责令改正、警告并罚款。"},
-{title:"新疆某公司8个网站被篡改为涉赌信息",domain:"license",date:"2025-09-15",source:"新华网",url:"https://www.news.cn/legal/20250916/3a58ec54891a4dd58feb8795a6103ecb/c.html",summary:"新疆某科技公司门户网站及8个网站子页面被篡改为涉赌信息，php文件被恶意篡改。网站管理员休假不在岗，网站长期无人管理。违反《网络安全法》相关规定被警告。"},
-{title:"微信公众号传播有害信息被处罚",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"微信因对用户发布的信息未尽审核管理义务，多个公众号传播历史虚无主义等有害信息，广东省网信办依法约谈微信负责人，责令整改并对微信予以罚款。"},
-{title:"百度贴吧出现违法信息被处罚",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"百度贴吧出现法律禁止发布或传输的信息，北京市网信办约谈百度负责人，责令限期整改，暂停贴吧新用户注册，并对百度予以罚款。"},
-{title:"社交媒体账号宣扬炫富拜金被处置",domain:"content",date:"2025-11-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32279128",summary:"微博账号"郭美May努力努力"、小红书账号"亿颜LuLu"等宣扬炫富拜金、炒作不良价值观，快手账号"夏老二"打造网吧自律人设诱导未成年人，根据《网络信息内容生态治理规定》被处置。"},
-{title:"豆瓣网跟评违法违规信息被约谈",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"豆瓣网及其平台账号屡次出现法律禁止发布或传输的信息，国家网信办约谈豆瓣主要负责人，责令整改并暂停跟评功能，北京市网信办依法予以罚款。"},
-{title:"知乎网跟评环节存在违法信息被处罚",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"知乎网跟评环节存在法律禁止发布或传输的信息，国家网信办指导北京市网信办约谈知乎负责人，责令整改，暂停跟评功能，并予以罚款。"},
-{title:"网络平台未审核用户内容导致违法信息传播",domain:"content",date:"2025-08-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32059176",summary:"青岛某网站平台未按《网络安全法》对用户发布信息进行审核，导致违法信息在互联网传播扩散，公安机关依法对该网站予以行政处罚。"},
-{title:"2024网络安全执法案例集发布",domain:"license",date:"2024-09-01",source:"奇安信",url:"https://www.qianxin.com/news/detail?news_id=12483",summary:"《安全内参》与奇安信联合发布《2024网络安全执法案例集》，收录31起典型执法案例，其中近九成与数据安全相关，涉及政府、能源、交通、医疗、教育等多个行业。"},
-{title:"某社交App过度索权被约谈",domain:"privacy",date:"2024-06-01",source:"原创力文档",url:"https://m.book118.com/html/2025/1204/6032035140012022.shtm",summary:"某用户量庞大的社交App隐私政策晦涩难懂，在未明确说明用途的情况下要求获取通讯录、地理位置、设备相册等权限。用户拒绝授权后变相限制功能使用，被监管部门介入调查。"}
+{title:"拼多多未按规定报送涉税信息被罚",domain:"finance",date:"2026-01-22",source:"国家税务总局",url:"https://www.chinatax.gov.cn/chinatax/n810219/n810780/c5247171/content.html",summary:"上海寻梦信息技术有限公司(拼多多平台运营主体)未按《互联网平台企业涉税信息报送规定》报送涉税信息,被税务机关责令限期改正后仍未完成,被处以10万元罚款。"},
+{title:"抖音账号[东北雨姐]转世账号被关闭",domain:"content",date:"2025-12-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_33246847",summary:"劣迹网红[东北雨姐][猫一杯][秀才]等通过转世账号变相复出,网信办依据《互联网用户账号信息管理规定》对相关账号予以关闭处理。"},
+{title:"APP超范围收集个人信息被警告处罚",domain:"privacy",date:"2025-10-15",source:"江苏网信网",url:"https://ishare.ifeng.com/c/s/v0028RJ47TEEgtG31ZuNlC5VZZsYFpijLJRTbcbhN1TxL9o__",summary:"南京某科技公司APP天气功能以提供精准定位为由索要位置权限,并在后台继续调用用户位置信息,被网信办责令改正并警告。"},
+{title:"山东某公司数据泄露安全风险案",domain:"privacy",date:"2025-10-01",source:"凤凰网",url:"https://ishare.ifeng.com/c/s/v0028RJ47TEEgtG31ZuNlC5VZZsYFpijLJRTbcbhN1TxL9o__",summary:"无锡某科技公司涉敏个人信息字段未脱敏加密,未依法留存网络日志,违反《网络安全法》《数据安全法》《个人信息保护法》被处罚。"},
+{title:"七大电商平台因幽灵外卖被罚35.97亿元",domain:"consumer",date:"2025-08-01",source:"搜狐网",url:"http://news.sohu.com/a/1015735314_121335229",summary:"拼多多/美团/京东/饿了么/抖音/淘宝/天猫7家头部电商平台因幽灵外卖/假证件审核不严等问题合计被罚35.97亿元。"},
+{title:"杭州互联网法院发布平台自治十大典型案例",domain:"antitrust",date:"2024-05-27",source:"21经济网",url:"https://www.21jingji.com/article/20240529/herald/f31d1deecbc70ac8d3d2315faba50dab.html",summary:"杭州互联网法院发布平台自治十大典型案例,涉及算法推荐治理/平台侵权责任认定/直播平台主播行为规则责任认定。"},
+{title:"广东某公司网页篡改被处罚",domain:"license",date:"2025-09-15",source:"新华网",url:"https://www.news.cn/legal/20250916/3a58ec54891a4dd58feb8795a6103ecb/c.html",summary:"广东某公司办公平台登录页面被篡改,因存在任意文件上传漏洞未修复,被网信办责令改正/警告并罚款。"},
+{title:"微信公众号传播有害信息被罚款",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"微信对用户发布信息未尽审核管理义务,多个公众号传播历史虚无主义等有害信息,广东网信办约谈微信负责人并予以罚款。"},
+{title:"百度贴吧违法信息被处罚",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"百度贴吧出现法律禁止发布的信息,北京网信办约谈百度负责人,暂停新用户注册并予以罚款。"},
+{title:"豆瓣网被约谈并罚款",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"豆瓣网屡次出现违法信息,国家网信办约谈豆瓣负责人,暂停跟评功能并予以罚款。"},
+{title:"知乎网跟评违法信息被处罚",domain:"content",date:"2022-01-27",source:"国家网信办",url:"https://www.cac.gov.cn/2022-01/27/c_1644887128880847.htm",summary:"知乎网跟评环节存在违法信息,国家网信办约谈知乎负责人并予以罚款。"},
+{title:"青岛网站未审核内容致违法信息传播",domain:"content",date:"2025-08-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32059176",summary:"青岛某网站未按《网络安全法》审核用户发布信息,导致违法信息传播,被警方行政处罚。"}
 ];
 var DOMAIN_IDS={content:"内容安全",privacy:"隐私保护",fraud:"电信反诈",payment:"支付合规",bribery:"反商业贿赂",antitrust:"互联网反不正当竞争",ad:"互联网广告合规",secret:"商业秘密保护",consumer:"消费者权益保护",finance:"金融合规",license:"业务资质",marketing:"营销合规",trade:"贸易合规"};
 var curCaseFilter="all";
 function renderCases(filter){
-  if(!filter)filter=curCaseFilter;
-  else curCaseFilter=filter;
-  var i,c,html="",clist=[],domainCounts={},total=CASES.length;
+  if(!filter){filter=curCaseFilter;}else{curCaseFilter=filter;}
+  var i,c,clist=[];
   for(i=0;i<CASES.length;i++){
     c=CASES[i];
-    if(filter!="all"&&c.domain!=filter)continue;
-    clist.push(c);
+    if(filter=="all"||c.domain==filter){clist.push(clist.length);}
   }
-  // Sort by date desc
-  clist.sort(function(a,b){return b.date.localeCompare(a.date);});
-  // Filter buttons
-  var fhtml='<button class="btn'+(filter=="all"?" active":"")+'" onclick="renderCases('all')">全部('+total+")</button>";
-  var domainIds=["content","privacy","fraud","payment","bribery","antitrust","ad","secret","consumer","finance","license","marketing","trade"];
-  for(i=0;i<domainIds.length;i++){
-    var d=domainIds[i],cnt=0;
-    for(var j=0;j<CASES.length;j++){if(CASES[j].domain==d)cnt++;}
-    if(cnt>0)fhtml+='<button class="btn'+(filter==d?" active":"")+'" onclick="renderCases(''+d+'')">'+DOMAIN_IDS[d]+"("+cnt+")</button>";
+  clist.sort(function(a,b){return CASES[b].date.localeCompare(CASES[a].date);});
+  var fhtml='<button class="btn'+(filter=="all"?" active":"")+'" onclick="renderCases(\'all\')">全部('+CASES.length+")</button>";
+  var domains=["content","privacy","fraud","payment","bribery","antitrust","ad","secret","consumer","finance","license","marketing","trade"];
+  for(i=0;i<domains.length;i++){
+    var d=domains[i],cnt=0;
+    for(var j=0;j<CASES.length;j++){if(CASES[j].domain==d){cnt++;}}
+    if(cnt>0){
+      fhtml+='<button class="btn'+(filter==d?" active":"")+'" onclick="renderCases(\''+d+'\')">'+DOMAIN_IDS[d]+"("+cnt+")</button>";
+    }
   }
   document.getElementById("caseFilter").innerHTML=fhtml;
   document.getElementById("caseCount").innerHTML="共 "+clist.length+" 个案例";
-  html="";
+  var html2="";
   for(i=0;i<clist.length;i++){
-    c=clist[i];
-    html+='<div class="case-item" style="border-left-color:'+getDomainColor(c.domain)+'">';
-    html+='<div class="case-title"><a href="'+c.url+'" target="_blank" rel="noopener">'+c.title+"</a></div>";
-    html+='<div class="case-meta"><span class="tag">'+DOMAIN_IDS[c.domain]+"</span> "+c.date+" · 来源:"+c.source+"</div>";
-    html+='<div class="case-summary">'+c.summary+"</div></div>";
+    c=CASES[clist[i]];
+    var dc="#1a73e8";
+    for(var jj=0;jj<DOMAINS.length;jj++){if(DOMAINS[jj].id==c.domain){dc=DOMAINS[jj].color;break;}}
+    html2+='<div class="case-item" style="border-left-color:'+dc+'">';
+    html2+='<div class="case-title"><a href="'+c.url+'" target="_blank" rel="noopener">'+c.title+"</a></div>";
+    html2+='<div class="case-meta"><span class="tag">'+DOMAIN_IDS[c.domain]+"</span> "+c.date+" · 来源:"+c.source+"</div>";
+    html2+='<div class="case-summary">'+c.summary+"</div></div>";
   }
-  if(!html)html='<div style="text-align:center;padding:60px 20px;color:#999">暂无案例</div>';
-  document.getElementById("casesContent").innerHTML=html;
-}
-function getDomainColor(id){
-  for(var i=0;i<DOMAINS.length;i++){if(DOMAINS[i].id==id)return DOMAINS[i].color;}
-  return "#1a73e8";
+  if(!html2){html2='<div style="text-align:center;padding:60px 20px;color:#999">暂无案例</div>';}
+  document.getElementById("casesContent").innerHTML=html2;
 }
 
 function render(){
@@ -661,7 +649,6 @@ function showDetail(id){
   document.getElementById("homeView").style.display="none";
   document.getElementById("detailView").style.display="block";
   document.getElementById("sourcesView").style.display="none";
-  document.getElementById("casesView").style.display="none";
   document.getElementById("noResult").style.display="none";
   document.getElementById("navHome").classList.add("active");
   document.getElementById("navSources").classList.remove("active");
@@ -680,7 +667,6 @@ function showHome(){
   document.getElementById("homeView").style.display="block";
   document.getElementById("detailView").style.display="none";
   document.getElementById("sourcesView").style.display="none";
-  document.getElementById("casesView").style.display="none";
   document.getElementById("noResult").style.display="none";
   document.getElementById("navHome").classList.add("active");
   document.getElementById("navSources").classList.remove("active");
@@ -689,24 +675,17 @@ function showHome(){
 function switchView(v){
   document.getElementById("searchInput").value="";
   document.getElementById("noResult").style.display="none";
+  document.getElementById("detailView").style.display="none";
   document.getElementById("navHome").classList.remove("active");
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
-  document.getElementById("homeView").style.display="none";
-  document.getElementById("detailView").style.display="none";
-  document.getElementById("sourcesView").style.display="none";
-  document.getElementById("casesView").style.display="none";
-  if(v=="home"){
-    showHome();
-    document.getElementById("navHome").classList.add("active");
-  }else if(v=="cases"){
-    document.getElementById("casesView").style.display="block";
-    document.getElementById("navCases").classList.add("active");
-    renderCases();
-  }else{
-    document.getElementById("sourcesView").style.display="block";
-    document.getElementById("navSources").classList.add("active");
-  }
+  document.getElementById("navCases").classList.remove("active");
+  document.getElementById("homeView").style.display=v=="home"?"block":"none";
+  document.getElementById("sourcesView").style.display=v=="sources"?"block":"none";
+  document.getElementById("casesView").style.display=v=="cases"?"block":"none";
+  if(v=="home"){document.getElementById("navHome").classList.add("active");}
+  else if(v=="cases"){document.getElementById("navCases").classList.add("active");renderCases();}
+  else if(v=="sources"){document.getElementById("navSources").classList.add("active");}
 }
 function doSearch(){
   var q=document.getElementById("searchInput").value.trim().toLowerCase();
@@ -718,6 +697,7 @@ function doSearch(){
   document.getElementById("casesView").style.display="none";
   document.getElementById("navHome").classList.add("active");
   document.getElementById("navSources").classList.remove("active");
+  document.getElementById("navCases").classList.remove("active");
   var cards=document.querySelectorAll(".domain-card"),found=false,i,j,d,match;
   for(i=0;i<cards.length;i++){
     d=DOMAINS[i];if(!d)continue;
