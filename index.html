@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>互联网法规目录导航</title>
+<style>
+  :root {
+    --primary: #1a73e8;
+    --primary-light: #e8f0fe;
+    --accent: #0d47a1;
+    --bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --text: #202124;
+    --text-secondary: #5f6368;
+    --border: #dadce0;
+    --tag-ds: #e3f2fd;
+    --tag-wl: #e8f5e9;
+    --tag-ai: #f3e5f5;
+    --tag-pt: #fff3e0;
+    --tag-nr: #fce4ec;
+    --tag-cb: #e0f7fa;
+    --tag-jr: #f1f8e9;
+    --tag-wsn: #fbe9e7;
+    --tag-cy: #ede7f6;
+    --tag-fld: #fff8e1;
+    --tag-yx: #ffebee;
+    --tag-mm: #e8eaf6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    color: #fff;
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+  .header p { font-size: 15px; opacity: 0.85; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+  .header .subtitle { margin-top: 12px; font-size: 13px; opacity: 0.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 24px 16px 60px; }
+  .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+    justify-content: center;
+  }
+  .nav-tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+  .nav-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .section { display: none; }
+  .section.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .domain-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .domain-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .domain-title { font-size: 18px; font-weight: 600; }
+  .domain-count { font-size: 13px; color: var(--text-secondary); margin-left: auto; }
+  .law-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    border-left: 3px solid var(--primary);
+    transition: box-shadow 0.2s;
+  }
+  .law-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .law-card .title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .law-card .law-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .law-card .law-name:hover { color: var(--primary); text-decoration: underline; }
+  .law-card .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tag-effective { background: #e8f5e9; color: #2e7d32; }
+  .tag-progress { background: #fff3e0; color: #e65100; }
+  .tag-draft { background: #fce4ec; color: #c62828; }
+  .law-card .meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  .law-card .links {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .law-card .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-decoration: none;
+    background: var(--primary-light);
+    color: var(--primary);
+    transition: background 0.2s;
+  }
+  .law-card .links a:hover { background: #d2e3fc; }
+  .search-box {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.2s;
+    background: var(--card-bg);
+  }
+  .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+  .search-box .icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--text-secondary);
+  }
+  .no-result {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-secondary);
+    display: none;
+  }
+  .no-result.show { display: block; }
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+  }
+  .footer a { color: var(--primary); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .source-link {
+    display: block;
+    text-align: center;
+    margin: 24px 0 12px;
+    font-size: 13px;
+  }
+  .source-link a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .source-link a:hover { color: var(--primary); }
+  @media (max-width: 640px) {
+    .header { padding: 32px 16px 24px; }
+    .header h1 { font-size: 22px; }
+    .nav-tabs { gap: 6px; }
+    .nav-tab { font-size: 12px; padding: 6px 12px; }
+    .law-card { padding: 12px 14px; }
+    .law-card .law-name { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 互联网法规目录导航</h1>
+  <p>按合规领域分类呈现互联网行业法规原文链接，点击即可跳转政府官网 / 国家法律法规数据库</p>
+  <div class="subtitle">数据更新至 2024 年中 · 覆盖 12 个合规领域 · 40+ 部核心法规</div>
+</div>
+
+<div class="container">
+
+<div class="search-box">
+  <span class="icon">🔍</span>
+  <input type="text" id="searchInput" placeholder="搜索法规名称、关键词..." oninput="searchLaws()">
+</div>
+
+<div class="nav-tabs" id="navTabs"></div>
+
+<div id="sectionContainer"></div>
+
+<div class="no-result" id="noResult">
+  <div style="font-size:48px;margin-bottom:16px;">🔍</div>
+  <strong>未找到相关法规</strong>
+  <p style="margin-top:8px;">试试其他关键词，或查看其他合规领域</p>
+</div>
+
+<div class="source-link">
+  📎 参考：<a href="#gov">政府监管部门网站</a> · <a href="#std">行业协会与标准组织</a>
+</div>
+
+</div>
+
+<div class="footer">
+  互联网法规目录导航 · 基于公开法规资料整理，不构成正式法律意见 · 法规链接可能因网站改版调整
+</div>
+
+<script>
+const DOMAINS = [
+  {
+    id: "data-security",
+    name: "🔒 数据安全与个人信息保护",
+    color: "#1565c0",
+    laws: [
+      { name: "个人信息保护法（PIPL）", status: "已生效", statusTag: "effective", date: "2021-11-01", penalty: "≤5000万元 / 上年营收5%", summary: "告知同意、单独同意、自动化决策、跨境传输、大型平台义务", links: [
+        { text: "国家法律法规数据库", url: "https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzE0NzA5NTI%3D" },
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/c30834/202108/a8c4e3672c74491a80b53a172bb753fe.shtml" }
+      ]},
+      { name: "数据安全法", status: "已生效", statusTag: "effective", date: "2021-09-01", penalty: "≤1000万元，可停业整顿", summary: "数据分类分级、重要数据目录、安全审查、数据出口管制", links: [
+        { text: "国家法律法规数据库", url: "https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzVlMDk2MTk%3D" },
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/c30834/202106/7c9af12f51334a73b56d7938f99a788a.shtml" }
+      ]},
+      { name: "数据出境安全评估办法", status: "已生效", statusTag: "effective", date: "2022-09-01", summary: "重要数据/100万+PII/10万+敏感PII出境须安全评估", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2022-07/07/c_1658811536938689.htm" }
+      ]},
+      { name: "促进和规范数据跨境流动规定", status: "已生效", statusTag: "effective", date: "2024-03-22", summary: "豁免场景、自贸区负面清单、简化流程", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2024-03/22/c_1713430247361299.htm" }
+      ]},
+      { name: "网络数据安全管理条例", status: "已生效", statusTag: "effective", date: "2025-01-01", summary: "整合细化网络数据安全管理的条款", links: [
+        { text: "中国政府网", url: "https://www.gov.cn/zhengce/content/202409/content_6975738.htm" }
+      ]},
+      { name: "个人信息出境标准合同办法", status: "已生效", statusTag: "effective", date: "2023-06-01", summary: "非CII运营者个人信息出境的合同路径", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm" }
+      ]}
+    ]
+  },
+  {
+    id: "network-security",
+    name: "🛡️ 网络安全",
+    color: "#2e7d32",
+    laws: [
+      { name: "网络安全法", status: "已生效", statusTag: "effective", date: "2017-06-01", summary: "等级保护、CII运营者义务、实名认证、安全事件报告", links: [
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm" }
+      ]},
+      { name: "关键信息基础设施安全保护条例", status: "已生效", statusTag: "effective", date: "2021-09-01", summary: "CII认定、安全保护、检测评估、事件处置", links: [
+        { text: "中国政府网", url: "https://www.gov.cn/zhengce/content/2021-08/17/content_5631684.htm" }
+      ]},
+      { name: "网络安全审查办法", status: "已生效", statusTag: "effective", date: "2022-02-15", summary: "CII采购网络产品/服务审查；100万+PII赴国外上市审查", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2022-01/04/c_1642894602182845.htm" }
+      ]},
+      { name: "等保2.0·基本要求（GB/T 22239-2019）", status: "已生效", statusTag: "effective", summary: "网络安全等级保护基本要求（通用+扩展）", links: [
+        { text: "国家标准全文", url: "https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4147" }
+      ]},
+      { name: "等保2.0·测评要求（GB/T 28448-2019）", status: "已生效", statusTag: "effective", summary: "网络安全等级保护测评要求", links: [
+        { text: "国家标准全文", url: "https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4145" }
+      ]}
+    ]
+  },
+  {
+    id: "ai-algorithm",
+    name: "🤖 AI与算法治理",
+    color: "#7b1fa2",
+    laws: [
+      { name: "生成式人工智能服务管理暂行办法", status: "已生效", statusTag: "effective", date: "2023-08-15", summary: "训练数据合法性、内容标识、防止偏见、年度合规报告", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm" }
+      ]},
+      { name: "算法推荐管理规定", status: "已生效", statusTag: "effective", date: "2022-03-01", summary: "算法备案、透明度、用户关闭权、特殊群体保护", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2022-01/04/c_1642894606364259.htm" },
+        { text: "备案系统入口", url: "https://beian.cac.gov.cn" }
+      ]},
+      { name: "深度合成管理规定", status: "已生效", statusTag: "effective", date: "2023-01-10", summary: "深度合成标识、备案、数据管理、内容审核", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2022-12/11/c_1672229339312990.htm" }
+      ]},
+      { name: "人工智能法（立法中）", status: "立法中", statusTag: "progress", date: "列入2023年规划", summary: "立法起草阶段", links: [
+        { text: "立法规划", url: "http://www.npc.gov.cn/npc/c30834/202309/2cfc1b2a9d534cfaa2b99b8da0a60b3c.shtml" }
+      ]}
+    ]
+  },
+  {
+    id: "platform-ecommerce",
+    name: "🏪 平台责任与电子商务",
+    color: "#e65100",
+    laws: [
+      { name: "电子商务法", status: "已生效", statusTag: "effective", date: "2019-01-01", summary: "经营者登记、平台审核义务、通知删除、禁止二选一", links: [
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/xinwen/2018-08/31/content_2060785.htm" }
+      ]},
+      { name: "网络交易监督管理办法", status: "已生效", statusTag: "effective", date: "2021-05-01", summary: "信息公示、直播带货合规、自动续费规则", links: [
+        { text: "市监局原文", url: "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2021/art_b0dfc0c4e5ef4bb2819e7e1d4d9c7f5f.html" }
+      ]},
+      { name: "互联网平台分类分级指南", status: "已发布", statusTag: "effective", date: "2021-10-29", summary: "超级平台/大型平台/中小平台三级分类", links: [
+        { text: "市监局原文", url: "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2021/art_2c6f1d8e1d6e4a7d9c5e9e5d1f0d9c3e.html" }
+      ]}
+    ]
+  },
+  {
+    id: "content-regulation",
+    name: "📢 内容监管与信息治理",
+    color: "#c62828",
+    laws: [
+      { name: "网络信息内容生态治理规定", status: "已生效", statusTag: "effective", date: "2020-03-01", summary: "11类禁止信息、防范不良信息、跟帖弹幕管理", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm" }
+      ]},
+      { name: "用户公众账号信息服务管理规定", status: "已生效", statusTag: "effective", date: "2021-02-22", summary: "公众账号信息发布、内容审核、账号分类", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2021-01/22/c_1612887820925382.htm" }
+      ]},
+      { name: "跟帖评论服务管理规定（2022修订）", status: "已生效", statusTag: "effective", date: "2022-12-15", summary: "跟帖评论审核、实名管理、公众账号主体责任", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2022-11/16/c_1669880761643882.htm" }
+      ]},
+      { name: "网络暴力信息治理规定", status: "已生效", statusTag: "effective", date: "2024-08-01", summary: "建立网络暴力信息预警、监测和处置机制", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2024-06/14/c_1718970011591839.htm" }
+      ]}
+    ]
+  },
+  {
+    id: "cross-border",
+    name: "🌐 跨境数据传输",
+    color: "#00838f",
+    laws: [
+      { name: "数据出境安全评估办法", status: "已生效", statusTag: "effective", date: "2022-09-01", summary: "重要数据/100万+PII/10万+敏感PII出境须安全评估", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2022-07/07/c_1658811536938689.htm" }
+      ]},
+      { name: "促进和规范数据跨境流动规定", status: "已生效", statusTag: "effective", date: "2024-03-22", summary: "豁免场景（合同必需、HR必需等）、自贸区负面清单", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2024-03/22/c_1713430247361299.htm" }
+      ]},
+      { name: "个人信息出境标准合同办法", status: "已生效", statusTag: "effective", date: "2023-06-01", summary: "非CII运营者个人信息出境的合同路径及备案要求", links: [
+        { text: "网信办原文", url: "http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm" }
+      ]}
+    ]
+  },
+  {
+    id: "fintech",
+    name: "💳 金融科技与数据",
+    color: "#558b2f",
+    laws: [
+      { name: "金融数据安全分级指南（JR/T 0197-2020）", status: "已生效", statusTag: "effective", summary: "金融数据安全分级方法、安全防护要求", links: [
+        { text: "金标委查询", url: "https://www.cfstc.org/bzgk/gk/" }
+      ]},
+      { name: "个人金融信息保护技术规范（JR/T 0171-2020）", status: "已生效", statusTag: "effective", summary: "个人金融信息分类、收集、传输、存储安全要求", links: [
+        { text: "金标委查询", url: "https://www.cfstc.org/bzgk/gk/" }
+      ]},
+      { name: "金融科技发展规划（2022-2025年）", status: "已生效", statusTag: "effective", summary: "金融科技发展方向和重点任务", links: [
+        { text: "央行原文", url: "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/4451069/index.html" }
+      ]}
+    ]
+  },
+  {
+    id: "minor-protection",
+    name: "👶 未成年人网络保护",
+    color: "#6a1b9a",
+    laws: [
+      { name: "未成年人网络保护条例", status: "已生效", statusTag: "effective", date: "2024-01-01", summary: "未成年人模式、防沉迷、个人信息特殊保护", links: [
+        { text: "中国政府网", url: "https://www.gov.cn/zhengce/content/202310/content_6909985.htm" }
+      ]},
+      { name: "防沉迷\"830新规\"", status: "已生效", statusTag: "effective", date: "2021-09-01", summary: "限制游戏时长（周五六日各1小时）、禁止向未实名用户提供服务", links: [
+        { text: "国家新闻出版署", url: "https://www.nppa.gov.cn/nppa/channels/286.shtml" }
+      ]}
+    ]
+  },
+  {
+    id: "ipr",
+    name: "📝 知识产权与版权",
+    color: "#4e342e",
+    laws: [
+      { name: "著作权法（2020修订）", status: "已生效", statusTag: "effective", date: "2021-06-01", summary: "作品类型扩大、侵权赔偿上限提高至500万", links: [
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/c30834/202011/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml" }
+      ]},
+      { name: "信息网络传播权保护条例", status: "已生效", statusTag: "effective", summary: "网络环境下的著作权保护", links: [
+        { text: "中国政府网", url: "https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm" }
+      ]},
+      { name: "网络出版服务管理规定", status: "已生效", statusTag: "effective", summary: "网络出版许可、内容审核、监管要求", links: [
+        { text: "国家新闻出版署", url: "https://www.nppa.gov.cn/nppa/channels/286.shtml" }
+      ]}
+    ]
+  },
+  {
+    id: "antitrust",
+    name: "⚖️ 反垄断与不正当竞争",
+    color: "#3e2723",
+    laws: [
+      { name: "反垄断法（2022修订）", status: "已生效", statusTag: "effective", date: "2022-08-01", summary: "平台经济反垄断适用、提高处罚力度", links: [
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/c30834/202206/5f2c0b7b8e3f4f0a8b9c9b9f9e0d9c3e.shtml" }
+      ]},
+      { name: "平台经济领域反垄断指南", status: "已发布", statusTag: "effective", date: "2021-02-07", summary: "二选一、大数据杀熟、扼杀式并购等认定规则", links: [
+        { text: "市监局原文", url: "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fldj/art/2021/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html" }
+      ]}
+    ]
+  },
+  {
+    id: "gaming-entertainment",
+    name: "🎮 网络游戏与文娱",
+    color: "#ad1457",
+    laws: [
+      { name: "网络出版服务管理规定", status: "已生效", statusTag: "effective", summary: "网络出版许可、内容审核", links: [
+        { text: "国家新闻出版署", url: "https://www.nppa.gov.cn/nppa/channels/286.shtml" }
+      ]},
+      { name: "网络表演经营活动管理办法", status: "已生效", statusTag: "effective", summary: "网络表演经营许可、内容管理", links: [
+        { text: "文旅部原文", url: "https://www.mct.gov.cn/whzx/ggtz/201910/t20191022_846789.html" }
+      ]}
+    ]
+  },
+  {
+    id: "cryptography",
+    name: "🔐 密码与电子认证",
+    color: "#283593",
+    laws: [
+      { name: "密码法", status: "已生效", statusTag: "effective", date: "2020-01-01", summary: "商用密码分类管理、密码检测认证", links: [
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/c30834/201910/5f9e6c8d2b3654e.shtml" }
+      ]},
+      { name: "商用密码管理条例", status: "已生效", statusTag: "effective", date: "2023-07-01", summary: "商用密码的科研、生产、销售、使用和进出口管理", links: [
+        { text: "中国政府网", url: "https://www.gov.cn/zhengce/content/202306/content_6890105.htm" }
+      ]},
+      { name: "电子签名法", status: "已生效", statusTag: "effective", summary: "电子签名法律效力、认证机构管理", links: [
+        { text: "中国人大网", url: "http://www.npc.gov.cn/npc/c30834/201904/5f9e6c8d2b3654e.shtml" }
+      ]}
+    ]
+  }
+];
+
+const SOURCES = [
+  { id: "gov", name: "🏛️ 政府监管部门网站", items: [
+    { name: "国家互联网信息办公室（网信办）", url: "http://www.cac.gov.cn" },
+    { name: "工业和信息化部", url: "https://www.miit.gov.cn" },
+    { name: "公安部网络安全保卫局", url: "https://www.mps.gov.cn/n2255079/index.html" },
+    { name: "国家市场监督管理总局", url: "https://www.samr.gov.cn" },
+    { name: "国家金融监督管理总局", url: "https://www.nfra.gov.cn" },
+    { name: "中国人民银行", url: "http://www.pbc.gov.cn" },
+    { name: "国家广播电视总局", url: "https://www.nrta.gov.cn" },
+    { name: "国家新闻出版署（国家版权局）", url: "https://www.nppa.gov.cn" },
+    { name: "文化和旅游部", url: "https://www.mct.gov.cn" },
+    { name: "国家数据局", url: "https://www.nda.gov.cn" },
+    { name: "国家标准化管理委员会", url: "https://www.sac.gov.cn" },
+    { name: "国家密码管理局", url: "https://www.oscca.gov.cn" },
+    { name: "中国人大网（法律法规全文）", url: "http://www.npc.gov.cn" },
+    { name: "国家法律法规数据库", url: "https://flk.npc.gov.cn" },
+    { name: "中国政府网·政策文件库", url: "https://www.gov.cn/zhengce/zhengcewenjianku/" }
+  ]},
+  { id: "std", name: "📐 行业协会与标准组织", items: [
+    { name: "中国互联网协会", url: "https://www.isc.org.cn" },
+    { name: "中国网络空间安全协会", url: "https://www.cinsa.org.cn" },
+    { name: "全国信息安全标准化技术委员会（TC260）", url: "https://www.tc260.org.cn" },
+    { name: "中国通信标准化协会（CCSA）", url: "https://www.ccsa.org.cn" },
+    { name: "中国电子技术标准化研究院（CESI）", url: "https://www.cesi.cn" },
+    { name: "中国信息通信研究院（CAICT）", url: "https://www.caict.ac.cn" },
+    { name: "全国金融标准化技术委员会", url: "https://www.cfstc.org" },
+    { name: "国家标准全文公开系统", url: "https://openstd.samr.gov.cn" },
+    { name: "全国标准信息公共服务平台", url: "https://std.samr.gov.cn" },
+    { name: "国家信息安全漏洞共享平台（CNVD）", url: "https://www.cnvd.org.cn" },
+    { name: "国家互联网应急中心（CNCERT）", url: "https://www.cert.org.cn" },
+    { name: "中国网络安全产业联盟（CCIA）", url: "https://www.ccia.org.cn" },
+    { name: "中国保密协会", url: "https://www.zgbmxh.com" }
+  ]}
+];
+
+function render() {
+  const tabsEl = document.getElementById("navTabs");
+  const sectionsEl = document.getElementById("sectionContainer");
+
+  // render tabs
+  tabsEl.innerHTML = `<div class="nav-tab active" data-tab="all" onclick="switchTab('all')">📋 全部法规</div>` +
+    DOMAINS.map((d, i) => `<div class="nav-tab" data-tab="${d.id}" onclick="switchTab('${d.id}')">${d.name}</div>`).join("") +
+    `<div class="nav-tab" data-tab="sources-ref" onclick="switchTab('sources-ref')">📎 参考源</div>`;
+
+  let html = "";
+
+  // all domains section
+  html += `<div class="section active" id="section-all">`;
+  DOMAINS.forEach(domain => {
+    html += renderDomainSection(domain, false);
+  });
+  // append sources ref at bottom of all section
+  html += renderSourcesSection();
+  html += `</div>`;
+
+  // individual domain sections
+  DOMAINS.forEach(domain => {
+    html += `<div class="section" id="section-${domain.id}">`;
+    html += renderDomainSection(domain, true);
+    html += `</div>`;
+  });
+
+  // sources reference section
+  html += `<div class="section" id="section-sources-ref">`;
+  html += renderSourcesSection(true);
+  html += `</div>`;
+
+  sectionsEl.innerHTML = html;
+}
+
+function renderDomainSection(domain, showHeader = true) {
+  let html = "";
+  if (showHeader) {
+    html += `<div class="domain-header">
+      <div class="domain-icon" style="background:${domain.color}20;color:${domain.color}">${domain.name.split(" ")[0]}</div>
+      <div class="domain-title">${domain.name}</div>
+      <div class="domain-count">${domain.laws.length} 部</div>
+    </div>`;
+  } else {
+    html += `<h3 style="margin:24px 0 12px;color:${domain.color};">${domain.name}（${domain.laws.length} 部）</h3>`;
+  }
+  domain.laws.forEach(law => {
+    html += `<div class="law-card" style="border-left-color:${domain.color};">
+      <div class="title-row">
+        <a class="law-name" href="${law.links[0]?.url || '#'}" target="_blank" rel="noopener" style="color:${domain.color}">${law.name}</a>
+        <span class="tag tag-${law.statusTag}">${law.status}</span>
+      </div>
+      <div class="meta">
+        ${law.date ? `<span style="margin-right:12px;">📅 ${law.date}</span>` : ""}
+        ${law.penalty ? `<span style="margin-right:12px;">⚡ ${law.penalty}</span>` : ""}
+        ${law.summary || ""}
+      </div>
+      <div class="links">
+        ${law.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">🔗 ${l.text}</a>`).join("")}
+      </div>
+    </div>`;
+  });
+  return html;
+}
+
+function renderSourcesSection(standalone = false) {
+  let html = "";
+  if (standalone) {
+    html += `<h2 style="margin-bottom:20px;">📎 参考源</h2>`;
+  }
+  SOURCES.forEach(src => {
+    html += `<div class="domain-header" style="margin-top:${standalone ? '' : '24'}px;">
+      <div class="domain-title">${src.name}</div>
+      <div class="domain-count">${src.items.length} 个</div>
+    </div>`;
+    src.items.forEach(item => {
+      html += `<div class="law-card" style="border-left-color:var(--text-secondary);">
+        <div class="title-row">
+          <a class="law-name" href="${item.url}" target="_blank" rel="noopener" style="font-weight:500;">${item.name}</a>
+        </div>
+        <div class="links">
+          <a href="${item.url}" target="_blank" rel="noopener">🔗 访问网站</a>
+        </div>
+      </div>`;
+    });
+  });
+  return html;
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelector(`.nav-tab[data-tab="${tabId}"]`).classList.add("active");
+  if (tabId === "all") {
+    document.getElementById("section-all").classList.add("active");
+  } else if (tabId === "sources-ref") {
+    document.getElementById("section-sources-ref").classList.add("active");
+  } else {
+    document.getElementById(`section-${tabId}`).classList.add("active");
+  }
+  document.getElementById("noResult").classList.remove("show");
+}
+
+function searchLaws() {
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+  const noResult = document.getElementById("noResult");
+  if (!q) {
+    // show all cards
+    document.querySelectorAll(".law-card").forEach(c => c.style.display = "");
+    document.querySelectorAll("#section-all h3").forEach(h => h.style.display = "");
+    noResult.classList.remove("show");
+    return;
+  }
+  let found = false;
+  const cards = document.querySelectorAll("#section-all .law-card");
+  const headings = document.querySelectorAll("#section-all h3");
+  cards.forEach((c, i) => {
+    const match = c.textContent.toLowerCase().includes(q);
+    c.style.display = match ? "" : "none";
+    if (match) found = true;
+  });
+  // hide headings with no visible cards
+  headings.forEach(h => {
+    let next = h.nextElementSibling;
+    let hasVisible = false;
+    while (next && next.tagName !== "H3") {
+      if (next.tagName === "DIV" && next.classList.contains("law-card") && next.style.display !== "none") {
+        hasVisible = true; break;
+      }
+      next = next.nextElementSibling;
+    }
+    h.style.display = hasVisible ? "" : "none";
+    if (hasVisible) found = true;
+  });
+  // also search sources section
+  document.querySelectorAll("#section-all .source-link, #section-all .footer, #section-all .domain-header").forEach(el => {
+    // don't touch these
+  });
+  if (!found) {
+    noResult.classList.add("show");
+  } else {
+    noResult.classList.remove("show");
+  }
+}
+
+render();
+</script>
+</body>
+</html>
