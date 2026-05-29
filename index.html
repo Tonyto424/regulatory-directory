@@ -5,385 +5,298 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>互联网合规法规导航</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
-    background:#f0f2f5;color:#1a1a1a;line-height:1.6
-  }
-  .header{
-    background:linear-gradient(135deg,#0d47a1,#1a73e8);
-    color:#fff;padding:40px 24px 32px;text-align:center
-  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:#f0f2f5;color:#1a1a1a;line-height:1.6}
+  .header{background:linear-gradient(135deg,#0d47a1,#1a73e8);color:#fff;padding:40px 24px 32px;text-align:center}
   .header h1{font-size:26px;font-weight:700;margin-bottom:6px;letter-spacing:1px}
-  .header p{font-size:14px;opacity:.82;max-width:600px;margin:0 auto}
-  .header .badge{margin-top:10px;display:inline-flex;gap:8px;font-size:12px;opacity:.7}
-  .search-bar{
-    max-width:600px;margin:-20px auto 0;position:relative;z-index:2;padding:0 16px
-  }
-  .search-bar input{
-    width:100%;padding:14px 16px 14px 44px;border:none;border-radius:12px;
-    font-size:15px;outline:none;box-shadow:0 2px 12px rgba(0,0,0,.12);
-    background:#fff
-  }
+  .header p{font-size:14px;opacity:.82}.header .badge{margin-top:10px;font-size:12px;opacity:.7}
+  .search-bar{max-width:600px;margin:-20px auto 0;position:relative;z-index:2;padding:0 16px}
+  .search-bar input{width:100%;padding:14px 16px 14px 44px;border:none;border-radius:12px;font-size:15px;outline:none;box-shadow:0 2px 12px rgba(0,0,0,.12);background:#fff}
   .search-bar .icon{position:absolute;left:30px;top:50%;transform:translateY(-50%);font-size:18px;color:#999}
   .container{max-width:960px;margin:0 auto;padding:28px 16px 80px}
-
-  /* 首页卡片 */
-  #homeView .grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px
-  }
-  .domain-card{
-    background:#fff;border-radius:14px;padding:20px 14px;cursor:pointer;
-    box-shadow:0 1px 4px rgba(0,0,0,.06);transition:all .2s;
-    display:flex;flex-direction:column;align-items:center;text-align:center;
-    position:relative;overflow:hidden;border:1px solid transparent
-  }
-  .domain-card:hover{
-    box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)
-  }
-  .domain-card .icon{font-size:32px;margin-bottom:8px}
-  .domain-card .name{font-size:14px;font-weight:600;color:#1a1a1a}
-  .domain-card .count{font-size:11px;color:#888;margin-top:4px}
-  .domain-card .color-bar{
-    position:absolute;top:0;left:0;right:0;height:3px;
-    transition:height .2s
-  }
+  #homeView .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  .domain-card{background:#fff;border-radius:14px;padding:20px 14px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:all .2s;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden;border:1px solid transparent}
+  .domain-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)}
+  .domain-card .icon{font-size:32px;margin-bottom:8px}.domain-card .name{font-size:14px;font-weight:600;color:#1a1a1a}.domain-card .count{font-size:11px;color:#888;margin-top:4px}
+  .domain-card .color-bar{position:absolute;top:0;left:0;right:0;height:3px;transition:height .2s}
   .domain-card:hover .color-bar{height:4px}
-
-  /* 详情视图 */
   #detailView{display:none}
-  .detail-header{
-    display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap
-  }
-  .back-btn{
-    padding:8px 16px;border:none;border-radius:8px;background:#fff;cursor:pointer;
-    font-size:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);color:#555;
-    display:inline-flex;align-items:center;gap:4px;transition:all .2s
-  }
+  .detail-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .back-btn{padding:8px 16px;border:none;border-radius:8px;background:#fff;cursor:pointer;font-size:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);color:#555;display:inline-flex;align-items:center;gap:4px;transition:all .2s}
   .back-btn:hover{background:#f5f5f5;color:#1a73e8}
-  .detail-title{
-    font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px
-  }
-  .detail-title .tag-count{
-    font-size:13px;font-weight:400;color:#888;background:#f0f0f0;
-    padding:2px 10px;border-radius:10px
-  }
-  .law-item{
-    background:#fff;border-radius:12px;padding:16px 20px;margin-bottom:10px;
-    box-shadow:0 1px 3px rgba(0,0,0,.06);
-    border-left:4px solid var(--lc,#1a73e8);
-    transition:box-shadow .2s
-  }
+  .detail-title{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+  .detail-title .tag-count{font-size:13px;font-weight:400;color:#888;background:#f0f0f0;padding:2px 10px;border-radius:10px}
+  .law-item{background:#fff;border-radius:12px;padding:14px 18px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:4px solid var(--lc,#1a73e8);transition:box-shadow .2s}
   .law-item:hover{box-shadow:0 2px 10px rgba(0,0,0,.1)}
-  .law-item .top{
-    display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap
-  }
-  .law-item .name{font-size:15px;font-weight:600;color:#1a73e8;text-decoration:none}
+  .law-item .top{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+  .law-item .name{font-size:14px;font-weight:600;color:#1a73e8;text-decoration:none}
   .law-item .name:hover{text-decoration:underline}
-  .law-item .st{
-    display:inline-block;padding:2px 8px;border-radius:4px;
-    font-size:11px;font-weight:500;white-space:nowrap
-  }
-  .st-e{background:#e8f5e9;color:#2e7d32}
-  .st-p{background:#fff3e0;color:#e65100}
-  .st-d{background:#fce4ec;color:#c62828}
-  .law-item .desc{font-size:13px;color:#666;margin-top:6px}
-  .law-item .meta{
-    font-size:12px;color:#999;margin-top:4px;display:flex;flex-wrap:wrap;gap:8px
-  }
-  .law-item .links{
-    margin-top:8px;display:flex;flex-wrap:wrap;gap:6px
-  }
-  .law-item .links a{
-    display:inline-flex;align-items:center;gap:3px;
-    padding:4px 10px;border-radius:6px;font-size:12px;
-    text-decoration:none;background:#e8f0fe;color:#1a73e8;
-    transition:background .2s
-  }
+  .law-item .st{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap}
+  .st-e{background:#e8f5e9;color:#2e7d32}.st-p{background:#fff3e0;color:#e65100}.st-d{background:#fce4ec;color:#c62828}
+  .law-item .desc{font-size:12.5px;color:#666;margin-top:4px}
+  .law-item .meta{font-size:11.5px;color:#999;margin-top:3px;display:flex;flex-wrap:wrap;gap:6px}
+  .law-item .links{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
+  .law-item .links a{display:inline-flex;align-items:center;gap:2px;padding:3px 9px;border-radius:6px;font-size:12px;text-decoration:none;background:#e8f0fe;color:#1a73e8;transition:background .2s}
   .law-item .links a:hover{background:#d2e3fc}
-
-  /* 参考源视图 */
   #sourcesView{display:none}
-  .source-group{margin-bottom:24px}
-  .source-group h3{font-size:16px;font-weight:600;margin-bottom:12px;padding:0 4px}
-  .source-grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px
-  }
-  .source-item{
-    background:#fff;border-radius:10px;padding:12px 16px;
-    box-shadow:0 1px 3px rgba(0,0,0,.06);
-    display:flex;align-items:center;justify-content:space-between;gap:8px
-  }
-  .source-item .sn{font-size:13px;color:#333;flex:1}
-  .source-item a{
-    padding:4px 10px;border-radius:6px;font-size:12px;
-    text-decoration:none;background:#e8f0fe;color:#1a73e8;white-space:nowrap;
-    transition:background .2s
-  }
-  .source-item a:hover{background:#d2e3fc}
-
-  /* 底部导航 */
-  .bottom-nav{
-    position:fixed;bottom:0;left:0;right:0;
-    display:flex;background:#fff;border-top:1px solid #eee;
-    box-shadow:0 -2px 10px rgba(0,0,0,.06);z-index:100
-  }
-  .bottom-nav .btn{
-    flex:1;text-align:center;padding:10px 0;cursor:pointer;
-    font-size:13px;color:#888;transition:all .2s;border:none;background:transparent
-  }
-  .bottom-nav .btn.active{color:#1a73e8;font-weight:600}
-  .bottom-nav .btn .bi{font-size:18px;display:block;margin-bottom:2px}
-  .bottom-nav .btn:hover{color:#1a73e8}
+  .source-group{margin-bottom:24px}.source-group h3{font-size:16px;font-weight:600;margin-bottom:12px;padding:0 4px}
+  .source-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+  .source-item{background:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .source-item .sn{font-size:13px;color:#333;flex:1}.source-item a{padding:4px 10px;border-radius:6px;font-size:12px;text-decoration:none;background:#e8f0fe;color:#1a73e8;white-space:nowrap;transition:background .2s}.source-item a:hover{background:#d2e3fc}
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #eee;box-shadow:0 -2px 10px rgba(0,0,0,.06);z-index:100}
+  .bottom-nav .btn{flex:1;text-align:center;padding:10px 0;cursor:pointer;font-size:13px;color:#888;transition:all .2s;border:none;background:transparent}
+  .bottom-nav .btn.active{color:#1a73e8;font-weight:600}.bottom-nav .btn .bi{font-size:18px;display:block;margin-bottom:2px}.bottom-nav .btn:hover{color:#1a73e8}
   #noResult{text-align:center;padding:60px 20px;color:#999;display:none}
-
-  @media(max-width:640px){
-    .header{padding:32px 16px 24px}
-    .header h1{font-size:22px}
-    .container{padding:20px 12px 80px}
-    #homeView .grid{grid-template-columns:repeat(2,1fr);gap:10px}
-    .domain-card{padding:16px 10px}
-    .domain-card .icon{font-size:26px}
-    .source-grid{grid-template-columns:1fr}
-    .law-item{padding:12px 14px}
-  }
+  @media(max-width:640px){.header{padding:32px 16px 24px}.header h1{font-size:22px}.container{padding:20px 12px 80px}#homeView .grid{grid-template-columns:repeat(2,1fr);gap:10px}.domain-card{padding:16px 10px}.domain-card .icon{font-size:26px}.source-grid{grid-template-columns:1fr}.law-item{padding:12px 14px}}
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>📋 互联网合规法规导航</h1>
-  <p>按合规领域分类呈现法律法规原文链接，点击卡片进入法规清单</p>
-  <div class="badge">13 个合规领域 · 50+ 部核心法规 · 40+ 监管及标准网站</div>
+  <p>全量法规清单 · 持续更新</p>
+  <div class="badge">16 个合规领域 · 100+ 部核心法规 · 40+ 监管及标准网站</div>
 </div>
-
-<div class="search-bar">
-  <span class="icon">🔍</span>
-  <input type="text" id="searchInput" placeholder="搜索法规名称或关键词..." oninput="doSearch()">
-</div>
-
+<div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" placeholder="搜索法规名称..." oninput="doSearch()"></div>
 <div class="container" id="app">
-  <div id="homeView">
-    <div class="grid" id="domainGrid"></div>
-  </div>
-
-  <div id="detailView">
-    <div class="detail-header">
-      <button class="back-btn" onclick="showHome()">← 返回</button>
-      <span class="detail-title" id="detailTitle"></span>
-    </div>
-    <div id="detailList"></div>
-  </div>
-
-  <div id="sourcesView">
-    <h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2>
-    <div id="sourcesContent"></div>
-  </div>
-
+  <div id="homeView"><div class="grid" id="domainGrid"></div></div>
+  <div id="detailView"><div class="detail-header"><button class="back-btn" onclick="showHome()">← 返回</button><span class="detail-title" id="detailTitle"></span></div><div id="detailList"></div></div>
+  <div id="sourcesView"><h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2><div id="sourcesContent"></div></div>
   <div id="noResult">🔍 未找到相关法规</div>
 </div>
-
 <div class="bottom-nav">
-  <button class="btn active" id="navHome" onclick="switchView('home')">
-    <span class="bi">🏠</span>合规领域
-  </button>
-  <button class="btn" id="navSources" onclick="switchView('sources')">
-    <span class="bi">📎</span>参考源
-  </button>
+  <button class="btn active" id="navHome" onclick="switchView('home')"><span class="bi">🏠</span>合规领域</button>
+  <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
 </div>
 
 <script>
-// ==================== 合规领域数据（13个纬度） ====================
 const DOMAINS = [
-  {
-    id:"content-safe",icon:"📢",color:"#c62828",
-    name:"内容安全",
-    laws:[
-      {name:"网络信息内容生态治理规定",st:"effective",date:"2020-03-01",desc:"11类禁止信息、防范不良信息、跟帖弹幕、评论区管理责任",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm"}]},
-      {name:"网络暴力信息治理规定",st:"effective",date:"2024-08-01",desc:"建立网络暴力信息预警、监测和处置机制",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2024-06/14/c_1718970011591839.htm"}]},
-      {name:"互联网用户公众账号信息服务管理规定",st:"effective",date:"2021-02-22",desc:"公众账号信息发布、内容审核、账号分类分级管理",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2021-01/22/c_1612887820925382.htm"}]},
-      {name:"互联网跟帖评论服务管理规定（2022修订）",st:"effective",date:"2022-12-15",desc:"跟帖评论审核、实名管理、公众账号主体责任",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-11/16/c_1669880761643882.htm"}]},
-      {name:"网络音视频信息服务管理规定",st:"effective",date:"2020-01-01",desc:"网络音视频信息内容管理、传播秩序规范",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-11/29/c_1576561820967678.htm"}]}
-    ]
-  },
-  {
-    id:"privacy",icon:"🔒",color:"#1565c0",
-    name:"隐私保护",
-    laws:[
-      {name:"个人信息保护法（PIPL）",st:"effective",date:"2021-11-01",penalty:"≤5000万元 / 上年营收5%",desc:"告知同意、单独同意、自动化决策、跨境传输、大型平台义务",
-       links:[{t:"国家法律法规数据库",u:"https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzE0NzA5NTI%3D"},{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202108/a8c4e3672c74491a80b53a172bb753fe.shtml"}]},
-      {name:"数据安全法",st:"effective",date:"2021-09-01",penalty:"≤1000万元 / 可停业整顿",desc:"数据分类分级、重要数据目录、安全审查、数据出口管制",
-       links:[{t:"国家法律法规数据库",u:"https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzVlMDk2MTk%3D"},{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202106/7c9af12f51334a73b56d7938f99a788a.shtml"}]},
-      {name:"网络数据安全管理条例",st:"effective",date:"2025-01-01",desc:"整合细化网络数据安全管理条款，数据分类分级、安全评估",
-       links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202409/content_6975738.htm"}]},
-      {name:"个人信息安全规范（GB/T 35273-2020）",st:"effective",desc:"个人信息收集、存储、使用、共享、转让、公开披露安全要求",
-       links:[{t:"TC260查询",u:"https://www.tc260.org.cn"}]},
-      {name:"APP违法违规收集使用个人信息行为认定方法",st:"effective",date:"2019-12-30",desc:"9类31种违规收集使用个人信息的认定标准",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-12/27/c_1578986455686602.htm"}]},
-      {name:"个人信息出境标准合同办法",st:"effective",date:"2023-06-01",desc:"非CII运营者个人信息出境的合同路径及备案要求",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm"}]}
-    ]
-  },
-  {
-    id:"anti-fraud",icon:"📵",color:"#e65100",
-    name:"电信反诈",
-    laws:[
-      {name:"反电信网络诈骗法",st:"effective",date:"2022-12-01",desc:"电信治理、金融治理、互联网治理；实名制、异常交易监测、涉诈APP监测",
-       links:[{t:"国家法律法规数据库",u:"https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk5NjAxYzE1OTA3Mjk%3D"},{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202209/3f4b1a0b7e8f4f0a8b9c9b9f9e0d9c3e.shtml"}]},
-      {name:"电信和互联网行业数据安全标准体系建设指南",st:"effective",desc:"电信行业数据安全管理、反诈数据共享等标准框架",
-       links:[{t:"工信部网安局",u:"https://www.miit.gov.cn/jgsj/waj/wjfb/art/2022/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]},
-      {name:"关于依法严厉打击非法买卖银行卡和电话卡的通告",st:"effective",desc:"两卡治理、实名实人监管要求",
-       links:[{t:"中国政府网",u:"https://www.gov.cn/xinwen/2020-12/17/content_5570488.htm"}]}
-    ]
-  },
-  {
-    id:"payment",icon:"💳",color:"#00838f",
-    name:"支付合规",
-    laws:[
-      {name:"电子商务法（支付相关条款）",st:"effective",date:"2019-01-01",desc:"电子支付服务提供者的安全义务、错误处理、押金退还",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/xinwen/2018-08/31/content_2060785.htm"}]},
-      {name:"非银行支付机构条例（征求意见稿）",st:"progress",desc:"非银行支付机构的设立、变更、终止及监督管理",
-       links:[{t:"央行原文",u:"http://www.pbc.gov.cn/tiaofasi/144941/144979/3941920/index.html"}]},
-      {name:"网络支付服务数据安全要求（GB/T 42015-2022）",st:"effective",desc:"网络支付服务数据收集、存储、使用、共享安全要求",
-       links:[{t:"国家标准全文",u:"https://openstd.samr.gov.cn"}]},
-      {name:"支付机构外汇业务管理办法",st:"effective",desc:"支付机构跨境外汇支付业务的备案、交易、数据报送",
-       links:[{t:"外管局查询",u:"https://www.safe.gov.cn"}]}
-    ]
-  },
-  {
-    id:"anti-bribery",icon:"🚫",color:"#3e2723",
-    name:"反商业贿赂",
-    laws:[
-      {name:"反不正当竞争法（商业贿赂条款）",st:"effective",penalty:"罚款10万-300万元，没收违法所得",desc:"禁止采用财物手段贿赂交易相对方工作人员、受委托方",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
-      {name:"刑法·商业贿赂相关条款（第163/164/385-393条）",st:"effective",desc:"非国家工作人员受贿罪、行贿罪、单位行贿罪",
-       links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn"}]},
-      {name:"关于禁止商业贿赂行为的暂行规定",st:"effective",desc:"商业贿赂的定义、表现形式及法律责任",
-       links:[{t:"市监局查询",u:"https://www.samr.gov.cn"}]}
-    ]
-  },
-  {
-    id:"anti-unfair",icon:"⚖️",color:"#5d4037",
-    name:"互联网反不正当竞争",
-    laws:[
-      {name:"反不正当竞争法",st:"effective",penalty:"罚款10万-500万元",desc:"混淆行为、虚假宣传、商业诋毁、网络领域不正当竞争",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
-      {name:"网络反不正当竞争暂行规定",st:"effective",date:"2024-09-01",desc:"刷单炒信、流量劫持、恶意不兼容、数据爬取等网络竞争行为规制",
-       links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2024/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
-      {name:"反垄断法（2022修订）",st:"effective",date:"2022-08-01",desc:"平台经济反垄断适用，提高处罚力度",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202206/5f2c0b7b8e3f4f0a8b9c9b9f9e0d9c3e.shtml"}]},
-      {name:"平台经济领域反垄断指南",st:"effective",date:"2021-02-07",desc:"二选一、大数据杀熟、扼杀式并购、最惠国待遇条款认定",
-       links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fldj/art/2021/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]}
-    ]
-  },
-  {
-    id:"advertising",icon:"📺",color:"#ad1457",
-    name:"互联网广告合规",
-    laws:[
-      {name:"广告法",st:"effective",penalty:"罚款20万-200万元，可吊销营业执照",desc:"广告内容准则、行为规范、特殊行业广告限制、虚假广告责任",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201811/5f9e6c8d2b3654e.shtml"}]},
-      {name:"互联网广告管理办法",st:"effective",date:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任、算法推荐广告标注",
-       links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]}
-    ]
-  },
-  {
-    id:"trade-secret",icon:"🤫",color:"#4e342e",
-    name:"商业秘密保护",
-    laws:[
-      {name:"反不正当竞争法（商业秘密条款）",st:"effective",desc:"禁止侵犯商业秘密行为，举证责任转移",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
-      {name:"刑法·侵犯商业秘密罪（第219条）",st:"effective",desc:"造成重大损失的，处三年以上十年以下有期徒刑",
-       links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn"}]},
-      {name:"最高人民法院关于审理侵犯商业秘密纠纷案件适用法律若干问题的规定",st:"effective",desc:"商业秘密认定、保密措施合理性、举证规则等司法解释",
-       links:[{t:"最高人民法院",u:"https://www.court.gov.cn"}]},
-      {name:"关于强化知识产权保护的意见",st:"effective",desc:"知识产权（含商业秘密）严保护政策",
-       links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/2019-11/24/content_5455196.htm"}]}
-    ]
-  },
-  {
-    id:"consumer",icon:"🛡️",color:"#f57c00",
-    name:"消费者权益保护",
-    laws:[
-      {name:"消费者权益保护法",st:"effective",date:"2014-03-15",desc:"七天无理由退货、格式条款限制、欺诈三倍赔偿",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201403/5f9e6c8d2b3654e.shtml"}]},
-      {name:"网络交易监督管理办法",st:"effective",date:"2021-05-01",desc:"信息公示、直播带货合规、自动续费显著提示和取消途径",
-       links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2021/art_b0dfc0c4e5ef4bb2819e7e1d4d9c7f5f.html"}]},
-      {name:"电子商务法（消费者保护相关条款）",st:"effective",date:"2019-01-01",desc:"押金退还、商品质量保障、争议解决、信用评价真实",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/xinwen/2018-08/31/content_2060785.htm"}]}
-    ]
-  },
-  {
-    id:"finance",icon:"🏦",color:"#558b2f",
-    name:"金融合规",
-    laws:[
-      {name:"金融数据安全分级指南（JR/T 0197-2020）",st:"effective",desc:"金融数据安全分级方法、安全防护要求",
-       links:[{t:"金标委查询",u:"https://www.cfstc.org/bzgk/gk/"}]},
-      {name:"个人金融信息保护技术规范（JR/T 0171-2020）",st:"effective",desc:"个人金融信息分类、收集、传输、存储、展示安全要求",
-       links:[{t:"金标委查询",u:"https://www.cfstc.org/bzgk/gk/"}]},
-      {name:"金融科技发展规划（2022-2025年）",st:"effective",desc:"金融科技发展方向、数据治理、风险防控重点任务",
-       links:[{t:"央行原文",u:"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/4451069/index.html"}]},
-      {name:"网上银行系统信息安全通用规范（JR/T 0068-2020）",st:"effective",desc:"网上银行系统安全技术要求、安全管理要求",
-       links:[{t:"金标委查询",u:"https://www.cfstc.org/bzgk/gk/"}]},
-      {name:"金融消费者权益保护实施办法",st:"effective",desc:"金融消费者知情权、自主选择权、公平交易权保护",
-       links:[{t:"央行查询",u:"http://www.pbc.gov.cn"}]}
-    ]
-  },
-  {
-    id:"licensing",icon:"📋",color:"#283593",
-    name:"业务资质",
-    laws:[
-      {name:"互联网信息服务管理办法",st:"effective",desc:"经营性ICP许可、非经营性ICP备案及处罚",
-       links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm"}]},
-      {name:"电信业务经营许可管理办法",st:"effective",desc:"增值电信业务经营许可证（ICP/EDI/SP）申请与审批",
-       links:[{t:"工信部查询",u:"https://www.miit.gov.cn"}]},
-      {name:"网络文化经营许可证管理办法",st:"effective",desc:"网络音乐、演出、表演等文化经营活动许可",
-       links:[{t:"文旅部查询",u:"https://www.mct.gov.cn"}]},
-      {name:"广播电视节目制作经营许可证管理规定",st:"effective",desc:"广播电视节目制作经营许可条件及管理",
-       links:[{t:"广电总局查询",u:"https://www.nrta.gov.cn"}]},
-      {name:"信息网络传播视听节目许可证管理规定",st:"effective",desc:"互联网视听节目服务许可、分类管理",
-       links:[{t:"广电总局查询",u:"https://www.nrta.gov.cn"}]}
-    ]
-  },
-  {
-    id:"marketing",icon:"📣",color:"#6a1b9a",
-    name:"营销合规",
-    laws:[
-      {name:"广告法（营销相关条款）",st:"effective",desc:"虚假广告、绝对化用语、特殊行业广告限制、未成年人广告保护",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201811/5f9e6c8d2b3654e.shtml"}]},
-      {name:"互联网广告管理办法",st:"effective",date:"2023-05-01",desc:"广告标识、一键关闭、直播带货广告责任归属",
-       links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
-      {name:"电子商务法（营销相关条款）",st:"effective",desc:"刷单炒信禁止、虚假宣传禁止、搜索排名标注广告",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/xinwen/2018-08/31/content_2060785.htm"}]},
-      {name:"算法推荐管理规定（营销相关条款）",st:"effective",date:"2022-03-01",desc:"算法推荐营销透明度、用户关闭权、禁止价格歧视",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-01/04/c_1642894606364259.htm"}]},
-      {name:"关于进一步规范明星广告代言活动的指导意见",st:"effective",desc:"明星代言合规要求、金融产品代言限制",
-       links:[{t:"市监局查询",u:"https://www.samr.gov.cn"}]}
-    ]
-  },
-  {
-    id:"trade",icon:"🌍",color:"#00695c",
-    name:"贸易合规",
-    laws:[
-      {name:"数据出境安全评估办法",st:"effective",date:"2022-09-01",desc:"重要数据/100万+PII/10万+敏感PII出境须安全评估",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-07/07/c_1658811536938689.htm"}]},
-      {name:"促进和规范数据跨境流动规定",st:"effective",date:"2024-03-22",desc:"豁免场景、自贸区负面清单、简化申报流程",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2024-03/22/c_1713430247361299.htm"}]},
-      {name:"出口管制法",st:"effective",date:"2020-12-01",desc:"两用物项出口管制、管制清单、最终用户和最终用途管理",
-       links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202010/5f9e6c8d2b3654e.shtml"}]},
-      {name:"个人信息出境标准合同办法",st:"effective",date:"2023-06-01",desc:"非CII运营者个人信息出境的合同路径及备案",
-       links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm"}]},
-      {name:"阻断外国法律与措施不当域外适用办法",st:"effective",desc:"应对外国法律不当域外适用的阻断机制",
-       links:[{t:"商务部查询",u:"http://www.mofcom.gov.cn"}]}
-    ]
-  }
+{
+  id:"content",icon:"📢",color:"#c62828",name:"内容安全",
+  laws:[
+    {name:"网络信息内容生态治理规定",st:"effective",date:"2020-03-01",desc:"11类禁止信息、跟帖弹幕管理、评论区管理责任、防范不良信息",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm"}]},
+    {name:"网络暴力信息治理规定",st:"effective",date:"2024-08-01",desc:"建立网络暴力信息预警、监测、处置机制",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2024-06/14/c_1718970011591839.htm"}]},
+    {name:"移动互联网应用程序信息服务管理规定",st:"effective",date:"2022-08-01",desc:"APP信息内容管理、数据安全、未成年人保护、算法推荐规范",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-06/14/c_1655794082832836.htm"}]},
+    {name:"互联网弹窗信息推送服务管理规定",st:"effective",date:"2022-09-30",desc:"弹窗广告标识、一键关闭、不得以弹窗诱导点击、算法推荐透明",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-09/09/c_1664274622832836.htm"}]},
+    {name:"互联网信息内容管理行政执法程序规定",st:"effective",date:"2023-03-01",desc:"网信部门行政执法程序、调查取证、听证、执行",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2023-02/16/c_1676884832921043.htm"}]},
+    {name:"互联网信息搜索服务管理规定",st:"effective",date:"2016-08-01",desc:"搜索服务提供者审核义务、付费搜索标识、自然搜索结果保护",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2016-06/25/c_1119110788.htm"}]},
+    {name:"规范互联网信息服务市场秩序若干规定",st:"effective",date:"2012-03-15",desc:"禁止恶意干扰、误导用户卸载、虚假宣传等市场行为",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tx/art/2012/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]},
+    {name:"具有舆论属性或社会动员能力的互联网信息服务安全评估规定",st:"effective",date:"2018-11-30",desc:"新上线/重大功能变更前须进行安全评估，评估结果报网信部门和公安机关",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2018-11/15/c_1123681110.htm"}]},
+    {name:"互联网用户公众账号信息服务管理规定",st:"effective",date:"2021-02-22",desc:"公众账号信息发布、内容审核、账号分类分级管理",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2021-01/22/c_1612887820925382.htm"}]},
+    {name:"互联网用户账号信息管理规定",st:"effective",date:"2022-08-01",desc:"账号信息注册、使用、管理；防止假冒仿冒；账号核验",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-06/27/c_1656301392832836.htm"}]},
+    {name:"互联网用户账号名称管理规定",st:"effective",date:"2015-03-01",desc:"账号名称、头像、简介等注册信息的合规要求（后台实名、前台自愿）",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2015-02/04/c_1114233879.htm"}]},
+    {name:"互联网群组信息服务管理规定",st:"effective",date:"2017-10-08",desc:"微信群、QQ群等群组建立者/管理者主体责任、群组信息审核",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2017-09/07/c_1121618964.htm"}]},
+    {name:"互联网论坛社区服务管理规定",st:"effective",date:"2017-10-01",desc:"论坛社区版块管理、版主责任、用户实名认证",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2017-08/25/c_1121533479.htm"}]},
+    {name:"微博客信息服务管理规定",st:"effective",date:"2018-03-20",desc:"微博客信息发布、内容审核、辟谣机制、账号分类",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2018-02/02/c_1122355586.htm"}]},
+    {name:"即时通信工具公众信息服务发展管理暂行规定",st:"effective",date:"2014-08-07",desc:"即时通信工具公众信息服务发布、审核、备案要求（微信公众平台等）",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2014-08/07/c_1111983460.htm"}]},
+    {name:"互联网跟帖评论服务管理规定（2022修订）",st:"effective",date:"2022-12-15",desc:"跟帖评论审核、实名管理、公众账号主体责任",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-11/16/c_1669880761643882.htm"}]},
+    {name:"互联网新闻信息服务管理规定",st:"effective",date:"2017-06-01",desc:"互联网新闻信息采编发布、转载服务许可管理",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2017-05/02/c_1120898435.htm"}]},
+    {name:"互联网新闻信息服务单位约谈工作规定",st:"effective",date:"2015-06-01",desc:"网信办对违规新闻信息服务单位的约谈程序和整改要求",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2015-04/28/c_1115120581.htm"}]},
+    {name:"互联网新闻信息服务新技术新应用安全评估管理规定",st:"effective",date:"2017-12-01",desc:"新闻信息服务中新技术的安全评估要求",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2017-10/30/c_1121767677.htm"}]},
+    {name:"互联网新闻信息服务许可管理实施细则",st:"effective",date:"2017-06-01",desc:"新闻信息服务许可申请条件和审批流程",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2017-05/22/c_1121015035.htm"}]},
+    {name:"互联网新闻信息服务单位内容管理从业人员管理办法",st:"effective",date:"2017-12-01",desc:"新闻信息服务从业人员资质、培训、考核要求",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2017-10/30/c_1121767677.htm"}]}
+  ]
+},
+{
+  id:"privacy",icon:"🔒",color:"#1565c0",name:"隐私保护",
+  laws:[
+    {name:"个人信息保护法（PIPL）",st:"effective",date:"2021-11-01",penalty:"≤5000万元 / 上年营收5%",desc:"告知同意、单独同意、自动化决策、跨境传输、大型平台义务",links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzE0NzA5NTI%3D"},{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202108/a8c4e3672c74491a80b53a172bb753fe.shtml"}]},
+    {name:"数据安全法",st:"effective",date:"2021-09-01",penalty:"≤1000万元",desc:"数据分类分级、重要数据目录、安全审查、数据出口管制",links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk4NTk5YzVlMDk2MTk%3D"},{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202106/7c9af12f51334a73b56d7938f99a788a.shtml"}]},
+    {name:"网络数据安全管理条例",st:"effective",date:"2025-01-01",desc:"整合细化网络数据安全管理条款",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202409/content_6975738.htm"}]},
+    {name:"儿童个人信息网络保护规定",st:"effective",date:"2019-10-01",desc:"14岁以下儿童个人信息收集使用的监护人同意、安全评估、删除权",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-08/23/c_1124913902.htm"}]},
+    {name:"数据出境安全评估办法",st:"effective",date:"2022-09-01",desc:"重要数据/100万+PII/10万+敏感PII出境须安全评估",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-07/07/c_1658811536938689.htm"}]},
+    {name:"促进和规范数据跨境流动规定",st:"effective",date:"2024-03-22",desc:"豁免场景、自贸区负面清单",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2024-03/22/c_1713430247361299.htm"}]},
+    {name:"个人信息出境标准合同办法",st:"effective",date:"2023-06-01",desc:"非CII运营者个人信息出境的合同路径",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm"}]},
+    {name:"个人信息安全规范（GB/T 35273-2020）",st:"effective",desc:"个人信息收集、存储、使用、共享、转让、公开披露安全要求",links:[{t:"TC260查询",u:"https://www.tc260.org.cn"}]},
+    {name:"APP违法违规收集使用个人信息行为认定方法",st:"effective",date:"2019-12-30",desc:"9类31种违规收集使用个人信息的认定标准",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-12/27/c_1578986455686602.htm"}]},
+    {name:"移动智能终端应用软件预置和分发管理暂行规定",st:"effective",date:"2017-07-01",desc:"移动智能终端预置APP可卸载、分发平台实名认证、安全检测",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tx/art/2016/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]},
+    {name:"关于进一步规范移动智能终端应用软件预置行为的通告",st:"effective",date:"2023-01-01",desc:"不可卸载APP范围限定、预置APP备案",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/jgsj/waj/wjfb/art/2022/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]},
+    {name:"工信部关于进一步提升移动互联网应用服务能力的通知",st:"effective",date:"2023-02-27",desc:"APP安装卸载、服务体验、个人信息保护、响应用户诉求等要求",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tx/art/2023/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]},
+    {name:"工信部关于开展信息通信服务感知提升行动的通知",st:"effective",date:"2021-11-01",desc:"优化服务体验、个人信息保护双清单、隐私政策改进",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tx/art/2021/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]}
+  ]
+},
+{
+  id:"app-standards",icon:"📱",color:"#0d47a1",name:"APP用户权益保护(团体标准)",
+  laws:[
+    {name:"APP用户权益保护测评规范 超范围收集个人信息",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 超范围收集个人信息的检测评估标准",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 定向推送",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 定向推送和个性化推荐的合规检测",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 个人信息获取行为",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 个人信息获取行为的检测评估",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 权限索取行为",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 APP权限索取行为的合规检测",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 违规使用个人信息",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 违规使用个人信息检测标准",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 违规收集个人信息",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 违规收集个人信息检测标准",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 下载分发行为",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 应用下载和分发行为的合规检测",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 移动应用分发平台管理",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 移动应用商店管理合规检测",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 移动应用分发平台信息展示",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 应用商店信息展示合规检测",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]},
+    {name:"APP用户权益保护测评规范 自启动和关联启动行为",st:"effective",date:"2021-11-01",desc:"T/ISC-0011-2021 APP自启动和关联启动行为合规检测",links:[{t:"中国互联网协会",u:"https://www.isc.org.cn/category/7358.html"}]}
+  ]
+},
+{
+  id:"livestream",icon:"🎥",color:"#ad1457",name:"网络直播与视听",
+  laws:[
+    {name:"网络音视频信息服务管理规定",st:"effective",date:"2020-01-01",desc:"网络音视频信息内容管理、传播秩序规范",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-11/29/c_1576561820967678.htm"}]},
+    {name:"互联网视听节目服务管理规定",st:"effective",date:"2015-04-01",desc:"互联网视听节目许可、内容审核、播前审查",links:[{t:"广电总局原文",u:"https://www.nrta.gov.cn/art/2015/3/31/art_113_46558.html"}]},
+    {name:"互联网视听节目服务业务分类目录（试行）通告",st:"effective",date:"2017-04-01",desc:"视听节目四类业务分类（点播、转播、集成、聚合）",links:[{t:"广电总局原文",u:"https://www.nrta.gov.cn"}]},
+    {name:"互联网直播服务管理规定",st:"effective",date:"2016-12-01",desc:"直播服务提供者和发布者审核责任、黑名单、内容审核",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2016-11/04/c_1119846279.htm"}]},
+    {name:"关于加强网络直播服务管理工作的通知",st:"effective",date:"2018-08-01",desc:"直播平台资质核查、主播实名、直播内容存储30天",links:[{t:"网信办/广电总局",u:"http://www.cac.gov.cn"}]},
+    {name:"关于加强网络直播规范管理工作的指导意见",st:"effective",date:"2021-02-09",desc:"压实平台主体责任、主播分级分类、打赏限额",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2021-02/09/c_1614166412832836.htm"}]},
+    {name:"网络直播营销管理办法（试行）",st:"effective",date:"2021-05-25",desc:"直播间运营者和直播营销人员合规义务、商品审核",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2021-04/23/c_1618963122832836.htm"}]},
+    {name:"网络表演经营活动管理办法",st:"effective",date:"2017-01-01",desc:"网络表演许可、表演者实名、内容自审",links:[{t:"文旅部原文",u:"https://www.mct.gov.cn/whzx/ggtz/201910/t20191022_846789.html"}]},
+    {name:"关于规范网络直播打赏加强未成年人保护的意见",st:"effective",date:"2022-05-07",desc:"禁止未成年人打赏、高峰时段禁打赏、打赏限额",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-05/07/c_1653892832836.htm"}]}
+  ]
+},
+{
+  id:"anti-fraud",icon:"📵",color:"#e65100",name:"电信反诈",
+  laws:[
+    {name:"反电信网络诈骗法",st:"effective",date:"2022-12-01",desc:"电信治理、金融治理、互联网治理；实名制、异常交易监测、涉诈APP监测",links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn/detail2.html?ZmY4MDgxODE3OTZhNjM2YTAxNzk5NjAxYzE1OTA3Mjk%3D"}]},
+    {name:"反洗钱法",st:"effective",date:"2007-01-01",desc:"反洗钱义务、大额交易报告、可疑交易报告、客户身份识别",links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn"}]},
+    {name:"金融机构反洗钱和反恐怖融资监督管理办法",st:"effective",date:"2021-08-01",desc:"金融机构反洗钱内控制度、风险评估、客户尽职调查",links:[{t:"央行原文",u:"http://www.pbc.gov.cn/tiaofasi/144941/144979/4282188/index.html"}]}
+  ]
+},
+{
+  id:"consumer",icon:"🛡️",color:"#f57c00",name:"消费者权益保护",
+  laws:[
+    {name:"消费者权益保护法",st:"effective",date:"2014-03-15",desc:"七天无理由退货、格式条款限制、欺诈三倍赔偿",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201403/5f9e6c8d2b3654e.shtml"}]},
+    {name:"消费者权益保护法实施条例",st:"effective",date:"2024-07-01",desc:"细化经营者义务、直播带货平台先行赔付、自动续费显著提示",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202403/content_6939896.htm"}]},
+    {name:"电子商务法",st:"effective",date:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还、信用评价真实",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/xinwen/2018-08/31/content_2060785.htm"}]},
+    {name:"网络交易监督管理办法",st:"effective",date:"2021-05-01",desc:"信息公示、直播带货合规、自动续费显著提示和取消途径",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2021/art_b0dfc0c4e5ef4bb2819e7e1d4d9c7f5f.html"}]},
+    {name:"电信用户申诉处理办法",st:"effective",date:"2016-07-01",desc:"电信用户申诉受理、处理流程、争议调解",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tx/art/2016/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]},
+    {name:"明码标价和禁止价格欺诈规定",st:"effective",date:"2022-07-01",desc:"明码标价义务、价格欺诈行为认定（虚假优惠、先涨后降等）",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2022/art_b0dfc0c4e5ef4bb2819e7e1d4d9c7f5f.html"}]},
+    {name:"国务院办公厅关于加强金融消费者权益保护工作的指导意见",st:"effective",date:"2015-11-13",desc:"金融消费者知情权、自主选择权、公平交易权、信息安全权等八项权益",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/2015-11/13/content_5028896.htm"}]},
+    {name:"中国人民银行金融消费者权益保护实施办法",st:"effective",date:"2020-11-01",desc:"金融消费者信息保护、投诉处理、金融营销宣传规范",links:[{t:"央行原文",u:"http://www.pbc.gov.cn/tiaofasi/144941/144979/3941920/index.html"}]}
+  ]
+},
+{
+  id:"antitrust",icon:"⚖️",color:"#5d4037",name:"互联网反不正当竞争",
+  laws:[
+    {name:"反不正当竞争法",st:"effective",date:"2019-04-23",penalty:"罚款10万-500万元",desc:"混淆行为、虚假宣传、商业诋毁、网络领域不正当竞争",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
+    {name:"网络反不正当竞争暂行规定",st:"effective",date:"2024-09-01",desc:"刷单炒信、流量劫持、恶意不兼容、数据爬取等网络竞争行为",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2024/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
+    {name:"反垄断法（2022修订）",st:"effective",date:"2022-08-01",desc:"平台经济反垄断适用、提高处罚力度",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202206/5f2c0b7b8e3f4f0a8b9c9b9f9e0d9c3e.shtml"}]},
+    {name:"国务院反垄断委员会关于平台经济领域的反垄断指南",st:"effective",date:"2021-02-07",desc:"二选一、大数据杀熟、扼杀式并购、最惠国待遇条款认定",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fldj/art/2021/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
+    {name:"禁止垄断协议规定",st:"effective",date:"2023-04-15",desc:"横向/纵向垄断协议认定、轴辐协议、安全港规则",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fldj/art/2023/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
+    {name:"禁止滥用知识产权排除、限制竞争行为规定",st:"effective",date:"2023-08-01",desc:"知识产权行使中垄断行为的认定",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fldj/art/2023/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
+    {name:"公平竞争审查条例",st:"effective",date:"2024-08-01",desc:"政策措施公平竞争审查制度，防止排除限制竞争",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202406/content_6958770.htm"}]},
+    {name:"关于经营者集中申报的指导意见",st:"effective",date:"2018-09-29",desc:"经营者集中申报标准、营业额计算、申报程序",links:[{t:"市监局原文",u:"https://www.samr.gov.cn"}]},
+    {name:"广东省实施《中华人民共和国反不正当竞争法》办法",st:"effective",date:"2019-05-01",desc:"广东省反不正当竞争执法细则",links:[{t:"广东省人大",u:"http://www.gd.gov.cn"}]},
+    {name:"深圳经济特区实施《中华人民共和国反不正当竞争法》规定",st:"effective",date:"2020-01-01",desc:"深圳市反不正当竞争地方法规",links:[{t:"深圳市人大",u:"http://www.sz.gov.cn"}]},
+    {name:"江苏省实施《中华人民共和国反不正当竞争法》办法",st:"effective",date:"2017-07-01",desc:"江苏省反不正当竞争执法细则",links:[{t:"江苏省人大",u:"http://www.jiangsu.gov.cn"}]}
+  ]
+},
+{
+  id:"advertising",icon:"📺",color:"#ad1457",name:"互联网广告合规",
+  laws:[
+    {name:"广告法",st:"effective",date:"2021-04-29",penalty:"罚款20万-200万元，可吊销营业执照",desc:"广告内容准则、行为规范、特殊行业广告限制、虚假广告责任",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201811/5f9e6c8d2b3654e.shtml"}]},
+    {name:"互联网广告管理办法",st:"effective",date:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任、算法推荐广告标注",links:[{t:"市监局原文",u:"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_3d1f5e8a1d6e4a7d9c5e9e5d1f0d9c3e.html"}]},
+    {name:"规范促销行为暂行规定",st:"effective",date:"2020-12-01",desc:"有奖销售、价格促销、虚假促销的法律规制",links:[{t:"市监局原文",u:"https://www.samr.gov.cn"}]}
+  ]
+},
+{
+  id:"anti-bribery",icon:"🚫",color:"#3e2723",name:"反商业贿赂",
+  laws:[
+    {name:"反不正当竞争法（商业贿赂条款）",st:"effective",penalty:"罚款10万-300万元",desc:"禁止采用财物手段贿赂交易相对方工作人员、受委托方",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
+    {name:"刑法·商业贿赂相关条款（第163/164/385-393条）",st:"effective",desc:"非国家工作人员受贿罪、行贿罪、单位行贿罪量刑",links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn"}]},
+    {name:"关于禁止商业贿赂行为的暂行规定",st:"effective",desc:"商业贿赂定义、表现形式及法律责任",links:[{t:"市监局查询",u:"https://www.samr.gov.cn"}]}
+  ]
+},
+{
+  id:"trade-secret",icon:"🤫",color:"#4e342e",name:"商业秘密保护",
+  laws:[
+    {name:"反不正当竞争法（商业秘密条款）",st:"effective",desc:"禁止侵犯商业秘密行为、举证责任转移、惩罚性赔偿",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
+    {name:"刑法·侵犯商业秘密罪（第219条）",st:"effective",desc:"造成重大损失的处三年以上十年以下有期徒刑",links:[{t:"法律法规数据库",u:"https://flk.npc.gov.cn"}]},
+    {name:"最高人民法院关于审理侵犯商业秘密纠纷案件适用法律若干问题的规定",st:"effective",desc:"商业秘密认定、保密措施合理性、举证规则等司法解释",links:[{t:"最高人民法院",u:"https://www.court.gov.cn"}]},
+    {name:"关于强化知识产权保护的意见",st:"effective",desc:"知识产权（含商业秘密）严保护政策",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/2019-11/24/content_5455196.htm"}]}
+  ]
+},
+{
+  id:"finance",icon:"🏦",color:"#558b2f",name:"金融合规",
+  laws:[
+    {name:"金融数据安全分级指南（JR/T 0197-2020）",st:"effective",desc:"金融数据安全分级方法、安全防护要求",links:[{t:"金标委查询",u:"https://www.cfstc.org/bzgk/gk/"}]},
+    {name:"个人金融信息保护技术规范（JR/T 0171-2020）",st:"effective",desc:"个人金融信息分类、收集、传输、存储安全要求",links:[{t:"金标委查询",u:"https://www.cfstc.org/bzgk/gk/"}]},
+    {name:"金融科技发展规划（2022-2025年）",st:"effective",desc:"金融科技发展方向和风险防控重点任务",links:[{t:"央行原文",u:"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/4451069/index.html"}]},
+    {name:"非银行支付机构条例（征求意见稿）",st:"progress",desc:"非银行支付机构设立、变更、终止及监督管理",links:[{t:"央行原文",u:"http://www.pbc.gov.cn/tiaofasi/144941/144979/3941920/index.html"}]},
+    {name:"网络支付服务数据安全要求（GB/T 42015-2022）",st:"effective",desc:"网络支付服务数据安全要求",links:[{t:"国家标准全文",u:"https://openstd.samr.gov.cn"}]},
+    {name:"网上银行系统信息安全通用规范（JR/T 0068-2020）",st:"effective",desc:"网上银行系统安全技术要求",links:[{t:"金标委查询",u:"https://www.cfstc.org/bzgk/gk/"}]},
+    {name:"支付机构外汇业务管理办法",st:"effective",desc:"支付机构跨境外汇支付业务的备案、交易、数据报送",links:[{t:"外管局查询",u:"https://www.safe.gov.cn"}]}
+  ]
+},
+{
+  id:"licensing",icon:"📋",color:"#283593",name:"业务资质",
+  laws:[
+    {name:"互联网信息服务管理办法",st:"effective",desc:"经营性ICP许可、非经营性ICP备案、违规处罚",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm"}]},
+    {name:"电信条例",st:"effective",desc:"电信业务许可、电信资源管理、电信服务、电信安全",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm"}]},
+    {name:"电信业务分类目录",st:"effective",desc:"增值电信业务（ICP/EDI/SP/IDC等）的具体分类和定义",links:[{t:"工信部查询",u:"https://www.miit.gov.cn"}]},
+    {name:"电信业务经营许可管理办法",st:"effective",desc:"增值电信业务经营许可证申请条件、审批流程",links:[{t:"工信部查询",u:"https://www.miit.gov.cn"}]},
+    {name:"互联网文化管理暂行规定",st:"effective",desc:"网络音乐、网络演出、网络表演等文化经营活动许可",links:[{t:"文旅部查询",u:"https://www.mct.gov.cn"}]},
+    {name:"网络出版服务管理规定",st:"effective",desc:"网络出版许可、内容审核要求",links:[{t:"国家新闻出版署",u:"https://www.nppa.gov.cn/nppa/channels/286.shtml"}]},
+    {name:"非经营性互联网信息服务备案管理办法",st:"effective",desc:"非经营性ICP备案流程、备案信息变更、年度审核",links:[{t:"工信部查询",u:"https://www.miit.gov.cn"}]},
+    {name:"互联网域名管理办法",st:"effective",desc:"域名注册服务、解析服务管理、实名认证",links:[{t:"工信部查询",u:"https://www.miit.gov.cn"}]},
+    {name:"关于移动游戏出版服务管理的通知",st:"effective",desc:"移动游戏出版审批（版号）要求",links:[{t:"国家新闻出版署",u:"https://www.nppa.gov.cn"}]},
+    {name:"工业和信息化部关于开展移动互联网应用程序备案工作的通知",st:"effective",date:"2023-08-09",desc:"APP主办者备案制度（参照网站ICP备案）",links:[{t:"工信部原文",u:"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tx/art/2023/art_6f196f73ba9047a3aac7e039bf4ae260.html"}]}
+  ]
+},
+{
+  id:"ipr",icon:"📝",color:"#4e342e",name:"知识产权",
+  laws:[
+    {name:"著作权法（2020修订）",st:"effective",date:"2021-06-01",desc:"作品类型扩大、侵权赔偿上限提高至500万、惩罚性赔偿",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202011/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
+    {name:"著作权法实施条例",st:"effective",date:"2013-03-01",desc:"著作权法具体实施规定",links:[{t:"中国政府网",u:"https://www.gov.cn"}]},
+    {name:"商标法（2019修订）",st:"effective",date:"2019-11-01",desc:"商标注册、使用、保护；恶意注册规制",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/6b3a1fc7f2ae44d5b3f9f6c8d2b3654e.shtml"}]},
+    {name:"专利法（2020修订）",st:"effective",date:"2021-06-01",desc:"专利保护期、惩罚性赔偿、开放许可",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202010/5f9e6c8d2b3654e.shtml"}]},
+    {name:"专利法实施细则（2023修订）",st:"effective",date:"2024-01-20",desc:"专利审查、专利权评价报告、专利实施许可备案",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202312/content_6920486.htm"}]},
+    {name:"信息网络传播权保护条例",st:"effective",desc:"网络环境下的著作权保护、避风港原则、通知删除规则",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/2020-12/27/content_5574289.htm"}]},
+    {name:"计算机软件保护条例",st:"effective",desc:"计算机软件著作权登记和保护",links:[{t:"中国政府网",u:"https://www.gov.cn"}]},
+    {name:"关于规范网络转载版权秩序的通知",st:"effective",date:"2015-04-22",desc:"互联网转载中版权保护、转载授权、署名要求",links:[{t:"国家版权局",u:"https://www.ncac.gov.cn"}]}
+  ]
+},
+{
+  id:"minor",icon:"👶",color:"#6a1b9a",name:"未成年人保护",
+  laws:[
+    {name:"未成年人保护法（网络保护专章）",st:"effective",date:"2021-06-01",desc:"网络保护专章：防沉迷、个人信息保护、不良信息防治、举报机制",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202010/82a8f1b84350432cac03b1e382ee1744.shtml"}]},
+    {name:"未成年人网络保护条例",st:"effective",date:"2024-01-01",desc:"未成年人模式、防沉迷、个人信息特殊保护、网络欺凌防治",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202310/content_6909985.htm"}]},
+    {name:"儿童个人信息网络保护规定",st:"effective",date:"2019-10-01",desc:"14岁以下儿童个人信息收集使用须监护人同意、安全评估",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2019-08/23/c_1124913902.htm"}]},
+    {name:"关于进一步严格管理切实防止未成年人沉迷网络游戏的通知",st:"effective",date:"2021-09-01",desc:"限制游戏时长（周五六日各1小时）、禁止向未实名用户提供服务",links:[{t:"国家新闻出版署",u:"https://www.nppa.gov.cn/nppa/channels/286.shtml"}]},
+    {name:"国家新闻出版署关于防止未成年人沉迷网络游戏的通知",st:"effective",date:"2023-01-01",desc:"游戏充值限额、宵禁（晚10点-早8点禁玩）、实名制",links:[{t:"国家新闻出版署",u:"https://www.nppa.gov.cn"}]},
+    {name:"关于启动网络游戏防沉迷实名验证工作的通知",st:"effective",date:"2011-10-01",desc:"网络游戏防沉迷实名验证系统的实施要求",links:[{t:"国家新闻出版署",u:"https://www.nppa.gov.cn"}]},
+    {name:"关于规范网络直播打赏加强未成年人保护的意见",st:"effective",date:"2022-05-07",desc:"禁止未成年人打赏、高峰时段禁打赏、打赏限额提醒",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-05/07/c_1653892832836.htm"}]},
+    {name:"关于进一步加强对网上未成年人犯罪和欺凌事件报道管理的通知",st:"effective",date:"2015-01-01",desc:"未成年人犯罪报道限制、隐私保护、不渲染细节",links:[{t:"网信办原文",u:"http://www.cac.gov.cn"}]},
+    {name:"移动互联网应用（APP）适老化通用设计规范",st:"effective",date:"2021-07-01",desc:"APP适老化设计规范：大字体、高对比度、简化操作",links:[{t:"工信部原文",u:"https://www.miit.gov.cn"}]},
+    {name:"互联网APP适老化通用设计规范",st:"effective",date:"2021-07-01",desc:"网站适老化设计规范：辅助功能、无障碍浏览",links:[{t:"工信部原文",u:"https://www.miit.gov.cn"}]},
+    {name:"文化部、商务部关于加强网络游戏虚拟货币管理工作的通知",st:"effective",date:"2009-06-04",desc:"网络游戏虚拟货币发行、交易、退换管理",links:[{t:"文旅部原文",u:"https://www.mct.gov.cn"}]}
+  ]
+},
+{
+  id:"ai",icon:"🤖",color:"#7b1fa2",name:"AI与算法治理",
+  laws:[
+    {name:"生成式人工智能服务管理暂行办法",st:"effective",date:"2023-08-15",desc:"训练数据合法性、内容标识、防止偏见、年度合规报告",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm"}]},
+    {name:"互联网信息服务算法推荐管理规定",st:"effective",date:"2022-03-01",desc:"算法备案、透明度、用户关闭权、特殊群体保护",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-01/04/c_1642894606364259.htm"}
+{
+  id:"netsec",icon:"🛡️",color:"#2e7d32",name:"网络安全与密码",
+  laws:[
+    {name:"网络安全法",st:"effective",date:"2017-06-01",desc:"等级保护、CII运营者义务、实名认证、安全事件报告",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/xinwen/2016-11/07/content_2001605.htm"}]},
+    {name:"关键信息基础设施安全保护条例",st:"effective",date:"2021-09-01",desc:"CII认定、安全保护、检测评估、事件处置",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/2021-08/17/content_5631684.htm"}]},
+    {name:"网络安全审查办法",st:"effective",date:"2022-02-15",desc:"CII审查、100万+PII赴国外上市审查",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-01/04/c_1642894602182845.htm"}]},
+    {name:"密码法",st:"effective",date:"2020-01-01",desc:"商用密码分类管理、检测认证",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201910/5f9e6c8d2b3654e.shtml"}]},
+    {name:"商用密码管理条例",st:"effective",date:"2023-07-01",desc:"商用密码科研、生产、销售、使用、进出口管理",links:[{t:"中国政府网",u:"https://www.gov.cn/zhengce/content/202306/content_6890105.htm"}]},
+    {name:"电子签名法",st:"effective",desc:"电子签名法律效力、认证机构管理",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/201904/5f9e6c8d2b3654e.shtml"}]},
+    {name:"等保2.0·基本要求（GB/T 22239-2019）",st:"effective",desc:"网络安全等级保护基本要求",links:[{t:"国家标准全文",u:"https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4147"}]},
+    {name:"等保2.0·测评要求（GB/T 28448-2019）",st:"effective",desc:"网络安全等级保护测评要求",links:[{t:"国家标准全文",u:"https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4145"}]}
+  ]
+},
+,{t:"备案系统",u:"https://beian.cac.gov.cn"}]},
+    {name:"互联网信息服务深度合成管理规定",st:"effective",date:"2023-01-10",desc:"深度合成标识、备案、数据管理、内容审核",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-12/11/c_1672229339312990.htm"}]},
+    {name:"新一代人工智能伦理规范",st:"effective",date:"2021-09-25",desc:"人工智能伦理六原则：尊重隐私、公平公正、安全可控等",links:[{t:"科技部原文",u:"https://www.most.gov.cn"}]},
+    {name:"生成式人工智能服务安全基本要求",st:"effective",date:"2024-03-01",desc:"生成式AI服务安全评估要求、训练数据安全、内容安全",links:[{t:"TC260查询",u:"https://www.tc260.org.cn"}]}
+  ]
+},
+{
+  id:"trade",icon:"🌍",color:"#00695c",name:"贸易合规",
+  laws:[
+    {name:"数据出境安全评估办法",st:"effective",date:"2022-09-01",desc:"重要数据/100万+PII/10万+敏感PII出境须安全评估",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2022-07/07/c_1658811536938689.htm"}]},
+    {name:"促进和规范数据跨境流动规定",st:"effective",date:"2024-03-22",desc:"豁免场景、自贸区负面清单",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2024-03/22/c_1713430247361299.htm"}]},
+    {name:"出口管制法",st:"effective",date:"2020-12-01",desc:"两用物项出口管制、管制清单",links:[{t:"中国人大网",u:"http://www.npc.gov.cn/npc/c30834/202010/5f9e6c8d2b3654e.shtml"}]},
+    {name:"个人信息出境标准合同办法",st:"effective",date:"2023-06-01",desc:"非CII运营者个人信息出境合同路径及备案",links:[{t:"网信办原文",u:"http://www.cac.gov.cn/2023-02/24/c_1678884832921043.htm"}]},
+    {name:"阻断外国法律与措施不当域外适用办法",st:"effective",desc:"应对外国法律不当域外适用的阻断机制",links:[{t:"商务部查询",u:"http://www.mofcom.gov.cn"}]}
+  ]
+}
 ];
 
 const SOURCES_GOV = [
@@ -430,101 +343,39 @@ const SOURCES_STD = [
   {n:"中国保密协会",u:"https://www.zgbmxh.com"}
 ];
 
-// ==================== 渲染 ====================
-function renderHome() {
-  const grid = document.getElementById("domainGrid");
-  grid.innerHTML = DOMAINS.map(d =>
-    `<div class="domain-card" onclick="showDetail('${d.id}')">
-      <div class="color-bar" style="background:${d.color}"></div>
-      <div class="icon">${d.icon}</div>
-      <div class="name">${d.name}</div>
-      <div class="count">${d.laws.length} 部法规</div>
-    </div>`
-  ).join("");
+function renderHome(){
+  document.getElementById("domainGrid").innerHTML=DOMAINS.map(d=>`<div class="domain-card" onclick="showDetail('${d.id}')"><div class="color-bar" style="background:${d.color}"></div><div class="icon">${d.icon}</div><div class="name">${d.name}</div><div class="count">${d.laws.length} 部</div></div>`).join("");
 }
-
-function showDetail(domainId) {
-  const d = DOMAINS.find(x => x.id === domainId);
-  if (!d) return;
-  document.getElementById("searchInput").value = "";
-  document.getElementById("detailTitle").innerHTML =
-    `${d.icon} ${d.name} <span class="tag-count">${d.laws.length} 部</span>`;
-  const stMap = {effective:"st-e",progress:"st-p",draft:"st-d"};
-  const stLabel = {effective:"已生效",progress:"立法中",draft:"草案"};
-  document.getElementById("detailList").innerHTML = d.laws.map(l =>
-    `<div class="law-item" style="--lc:${d.color}">
-      <div class="top">
-        <a class="name" href="${l.links[0].u}" target="_blank" rel="noopener">${l.name}</a>
-        <span class="st ${stMap[l.st]||'st-e'}">${stLabel[l.st]||l.st}</span>
-      </div>
-      <div class="desc">${l.desc||''}</div>
-      <div class="meta">
-        ${l.date?`<span>📅 ${l.date}</span>`:''}${l.penalty?`<span>⚡ ${l.penalty}</span>`:''}
-      </div>
-      <div class="links">${l.links.map(lk=>`<a href="${lk.u}" target="_blank" rel="noopener">🔗 ${lk.t}</a>`).join('')}</div>
-    </div>`
-  ).join("");
-  document.getElementById("homeView").style.display="none";
-  document.getElementById("detailView").style.display="block";
-  document.getElementById("sourcesView").style.display="none";
-  document.getElementById("noResult").style.display="none";
-  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));
-  document.getElementById("navHome").classList.add("active");
-}
-
-function renderSources() {
-  document.getElementById("sourcesContent").innerHTML =
-    `<div class="source-group"><h3>🏛️ 政府监管部门网站（${SOURCES_GOV.length} 个）</h3>
-      <div class="source-grid">${SOURCES_GOV.map(s=>`<div class="source-item"><span class="sn">${s.n}</span><a href="${s.u}" target="_blank" rel="noopener">访问 ↗</a></div>`).join('')}</div></div>
-    <div class="source-group"><h3>📐 行业协会与标准组织（${SOURCES_STD.length} 个）</h3>
-      <div class="source-grid">${SOURCES_STD.map(s=>`<div class="source-item"><span class="sn">${s.n}</span><a href="${s.u}" target="_blank" rel="noopener">访问 ↗</a></div>`).join('')}</div></div>`;
-}
-
-function showHome() {
-  document.getElementById("homeView").style.display="block";
-  document.getElementById("detailView").style.display="none";
-  document.getElementById("sourcesView").style.display="none";
-  document.getElementById("noResult").style.display="none";
-  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));
-  document.getElementById("navHome").classList.add("active");
-}
-
-function switchView(v) {
+function showDetail(id){
+  const d=DOMAINS.find(x=>x.id===id);if(!d)return;
   document.getElementById("searchInput").value="";
-  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));
-  document.getElementById(`nav${v[0].toUpperCase()+v.slice(1)}`).classList.add("active");
-  document.getElementById("noResult").style.display="none";
-  if(v==="home"){showHome()}
-  else{
-    document.getElementById("homeView").style.display="none";
-    document.getElementById("detailView").style.display="none";
-    document.getElementById("sourcesView").style.display="block";
-  }
+  document.getElementById("detailTitle").innerHTML=`${d.icon} ${d.name} <span class="tag-count">${d.laws.length} 部</span>`;
+  const sm={effective:"st-e",progress:"st-p",draft:"st-d"},sl={effective:"已生效",progress:"立法中",draft:"草案"};
+  document.getElementById("detailList").innerHTML=d.laws.map(l=>`<div class="law-item" style="--lc:${d.color}"><div class="top"><a class="name" href="${l.links[0].u}" target="_blank" rel="noopener">${l.name}</a><span class="st ${sm[l.st]||'st-e'}">${sl[l.st]||l.st}</span></div>${l.desc?`<div class="desc">${l.desc}</div>`:''}<div class="meta">${l.date?`<span>📅 ${l.date}</span>`:''}${l.penalty?`<span>⚡ ${l.penalty}</span>`:''}</div><div class="links">${l.links.map(lk=>`<a href="${lk.u}" target="_blank" rel="noopener">🔗 ${lk.t}</a>`).join('')}</div></div>`).join("");
+  document.getElementById("homeView").style.display="none";document.getElementById("detailView").style.display="block";document.getElementById("sourcesView").style.display="none";document.getElementById("noResult").style.display="none";
+  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));document.getElementById("navHome").classList.add("active");
 }
-
-function doSearch() {
-  const q = document.getElementById("searchInput").value.trim().toLowerCase();
-  const noResult=document.getElementById("noResult");
+function renderSources(){
+  document.getElementById("sourcesContent").innerHTML=`<div class="source-group"><h3>🏛️ 政府监管部门网站（${SOURCES_GOV.length} 个）</h3><div class="source-grid">${SOURCES_GOV.map(s=>`<div class="source-item"><span class="sn">${s.n}</span><a href="${s.u}" target="_blank" rel="noopener">访问 ↗</a></div>`).join('')}</div></div><div class="source-group"><h3>📐 行业协会与标准组织（${SOURCES_STD.length} 个）</h3><div class="source-grid">${SOURCES_STD.map(s=>`<div class="source-item"><span class="sn">${s.n}</span><a href="${s.u}" target="_blank" rel="noopener">访问 ↗</a></div>`).join('')}</div></div>`;
+}
+function showHome(){
+  document.getElementById("homeView").style.display="block";document.getElementById("detailView").style.display="none";document.getElementById("sourcesView").style.display="none";document.getElementById("noResult").style.display="none";
+  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));document.getElementById("navHome").classList.add("active");
+}
+function switchView(v){
+  document.getElementById("searchInput").value="";document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));document.getElementById("nav"+v[0].toUpperCase()+v.slice(1)).classList.add("active");document.getElementById("noResult").style.display="none";
+  if(v==="home")showHome();else{document.getElementById("homeView").style.display="none";document.getElementById("detailView").style.display="none";document.getElementById("sourcesView").style.display="block";}
+}
+function doSearch(){
+  const q=document.getElementById("searchInput").value.trim().toLowerCase(),nr=document.getElementById("noResult");
   if(!q){showHome();return}
-  document.getElementById("homeView").style.display="block";
-  document.getElementById("detailView").style.display="none";
-  document.getElementById("sourcesView").style.display="none";
-  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));
-  document.getElementById("navHome").classList.add("active");
+  document.getElementById("homeView").style.display="block";document.getElementById("detailView").style.display="none";document.getElementById("sourcesView").style.display="none";
+  document.querySelectorAll(".bottom-nav .btn").forEach(b=>b.classList.remove("active"));document.getElementById("navHome").classList.add("active");
   let found=false;
-  const cards=document.querySelectorAll(".domain-card");
-  cards.forEach((c,i)=>{
-    const d=DOMAINS[i];if(!d)return;
-    const m=d.name.toLowerCase().includes(q)||d.laws.some(l=>l.name.toLowerCase().includes(q)||(l.desc||'').toLowerCase().includes(q));
-    c.style.display=m?"":"none";
-    if(m)found=true;
-  });
-  noResult.style.display=found?"none":"block";
+  document.querySelectorAll(".domain-card").forEach((c,i)=>{const d=DOMAINS[i];if(!d)return;const m=d.name.toLowerCase().includes(q)||d.laws.some(l=>l.name.toLowerCase().includes(q)||(l.desc||'').toLowerCase().includes(q));c.style.display=m?"":"none";if(m)found=true;});
+  nr.style.display=found?"none":"block";
 }
-
-// ==================== 初始化 ====================
-renderHome();
-renderSources();
+renderHome();renderSources();
 </script>
 </body>
 </html>
