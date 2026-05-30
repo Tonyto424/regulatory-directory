@@ -39,7 +39,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .law-item .name{font-size:14px;font-weight:600;color:#1a73e8;text-decoration:none}
 .law-item .name:hover{text-decoration:underline}
 .law-item .st{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap}
-.st-e{background:#e8f5e9;color:#2e7d32}.st-p{background:#fff3e0;color:#e65100}.st-d{background:#fce4ec;color:#c62828}
+.st-e{background:#e8f5e9;color:#2e7d32}.st-p{background:#fff3e0;color:#e65100}.st-d{background:#fce4ec;color:#c62828}.st-n{background:#fff3e0;color:#e65100}
 .law-item .desc{font-size:12.5px;color:#666;margin-top:4px}
 .law-item .meta{font-size:11.5px;color:#999;margin-top:3px;display:flex;flex-wrap:wrap;gap:6px}
 .law-item .links{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
@@ -146,6 +146,7 @@ var DOMAINS=[{
   {name:"人工智能拟人化互动服务管理暂行办法",cat:"rule",st:"e",release:"2026-04-10",effective:"2026-04-10",desc:"AI拟人化互动服务规范，防止误导和成瘾"},
   {name:"人工智能生成合成内容标识办法",cat:"rule",st:"e",release:"2025-03-14",effective:"2025-03-15",desc:"AI生成内容标识义务"},
   {name:"智能体规范应用与创新发展实施意见",cat:"rule",st:"e",release:"2026-05-08",effective:"2026-05-08",desc:"AI智能体规范应用与创新发展"},
+  {name:"互联网信息内容多渠道分发服务管理规定",cat:"rule",st:"n",release:"2026-05-29",effective:"2026-09-01",desc:"MCN机构须登记并取得许可，内容分发全链条管理，五部门联合发布"},
   {name:"互联网军事信息传播管理办法",cat:"rule",st:"e",release:"2025-02-08",effective:"2025-02-08",desc:"军事信息传播管理"},
   {name:"关于进一步加强网络侵权信息举报工作的指导意见",cat:"rule",st:"e",release:"2023-09-15",effective:"2023-09-15",desc:"网络侵权信息举报工作机制"},
   {name:"直播电商监督管理办法",cat:"rule",st:"e",release:"2026-01-07",effective:"2026-01-07",desc:"直播电商合规经营要求"},
@@ -469,6 +470,7 @@ function getSrc(s){
   m["电子商务法"]="https://flk.npc.gov.cn";
   m["电子签名法"]="https://flk.npc.gov.cn";
   m["直播电商监督管理办法"]="https://www.cac.gov.cn/2026-01/07/c_1769516655383334.htm";
+  m["互联网信息内容多渠道分发服务管理规定"]="https://www.cac.gov.cn/2026-05/29/c_1781795864412597.htm";
   m["禁止垄断协议规定"]="https://www.samr.gov.cn";
   m["禁止滥用知识产权排除、限制竞争行为规定"]="https://www.samr.gov.cn";
   m["移动互联网应用程序信息服务管理规定"]="https://www.cac.gov.cn/2022-06/14/c_1656821626455324.htm";
@@ -561,7 +563,7 @@ var CASES=[
 {title:"青岛网站未审核内容致违法信息传播",domain:"content",date:"2025-08-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32059176",summary:"青岛某网站未按《网络安全法》审核用户发布信息,导致违法信息传播,被警方行政处罚。"}
 ];
 
-var _newLaws=["最高人民法院"];  // populated by crawl script with ["Law Name 1","Law Name 2"]
+var _newLaws=["互联网信息内容多渠道分发服务管理规定"];  // populated by crawl script with ["Law Name 1","Law Name 2"]
 var _newCases=[];
 var DOMAIN_IDS={content:"内容安全",privacy:"隐私保护",fraud:"电信反诈",payment:"支付合规",bribery:"反商业贿赂",antitrust:"互联网反不正当竞争",ad:"互联网广告合规",secret:"商业秘密保护",consumer:"消费者权益保护",finance:"金融合规",license:"业务资质",marketing:"营销合规",trade:"贸易合规"};
 var curCaseFilter="all";
@@ -651,7 +653,7 @@ function showDetail(id){
       l=sortedLaws[i];
       catHtml+='<div class="law-item" style="border-left-color:'+d.color+'">';
       catHtml+='<div class="top"><a class="name" href="'+getSrc(l.name)+'" target="_blank" rel="noopener">'+l.name+"</a>";
-      catHtml+='<span class="st '+(l.st=="e"?"st-e":l.st=="p"?"st-p":"st-d")+'">'+(l.st=="e"?"已生效":l.st=="p"?"立法中":"草案")+"</span></div>";
+      catHtml+='<span class="st '+(l.st=="e"?"st-e":l.st=="p"?"st-p":l.st=="n"?"st-n":"st-d")+'">'+(l.st=="e"?"已生效":l.st=="p"?"立法中":l.st=="n"?"新发布":"草案")+"</span></div>";
       if(l.desc)catHtml+='<div class="desc">'+l.desc+"</div>";
       catHtml+='<div class="meta">';
       if(l.release)catHtml+="<span>📋 "+l.release+"</span>";
