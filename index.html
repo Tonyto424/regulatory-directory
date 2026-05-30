@@ -42,6 +42,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .st-e{background:#e8f5e9;color:#2e7d32}.st-p{background:#fff3e0;color:#e65100}.st-d{background:#fce4ec;color:#c62828}.st-n{background:#fff3e0;color:#e65100}
 .law-item .desc{font-size:12.5px;color:#666;margin-top:4px}
 .law-item .meta{font-size:11.5px;color:#999;margin-top:3px;display:flex;flex-wrap:wrap;gap:6px}
+.law-item .duty{margin-top:5px;padding:4px 10px;background:#fff8e1;border-radius:6px;font-size:12px;color:#e65100;border-left:3px solid #ffa000;line-height:1.5}
 .law-item .links{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
 .law-item .links a{display:inline-flex;align-items:center;gap:2px;padding:3px 9px;border-radius:6px;font-size:12px;text-decoration:none;background:#e8f0fe;color:#1a73e8;transition:background .2s}
 .law-item .links a:hover{background:#d2e3fc}
@@ -112,30 +113,30 @@ var DOMAINS=[{
   id:"content",icon:"📢",color:"#c62828",
   name:"内容安全",
   laws:[
-  {name:"网络暴力信息治理规定",cat:"rule",st:"e",release:"2024-06-14",effective:"2024-08-01",desc:"网络暴力信息预警、监测和处置机制"},
-  {name:"生成式人工智能服务管理暂行办法",cat:"rule",st:"e",release:"2023-07-13",effective:"2023-08-15",desc:"训练数据合法性、内容标识、防止偏见"},
+  {name:"网络暴力信息治理规定",cat:"rule",st:"e",release:"2024-06-14",effective:"2024-08-01",desc:"网络暴力信息预警、监测和处置机制",duty:"平台应建立网暴预警监测模型，提供一键防护、私信保护等用户保护功能"},
+  {name:"生成式人工智能服务管理暂行办法",cat:"rule",st:"e",release:"2023-07-13",effective:"2023-08-15",desc:"训练数据合法性、内容标识、防止偏见",duty:"平台应对训练数据合法性负责，对生成内容标识，履行算法备案义务"},
   {name:"网信部门行政执法程序规定",cat:"rule",st:"e",release:"2023-03-23",effective:"2023-03-23",desc:"网信部门行政执法程序、调查取证、听证"},
-  {name:"互联网信息服务深度合成管理规定",cat:"rule",st:"e",release:"2022-12-11",effective:"2023-01-10",desc:"深度合成标识、备案、内容审核"},
-  {name:"互联网跟帖评论服务管理规定",cat:"rule",st:"e",release:"2022-11-16",effective:"2022-11-16",desc:"跟帖评论审核、实名管理、主体责任"},
-  {name:"互联网弹窗信息推送服务管理规定",cat:"rule",st:"e",release:"2022-09-09",effective:"2022-09-30",desc:"弹窗广告标识、一键关闭、不得诱导点击"},
-  {name:"移动互联网应用程序信息服务管理规定",cat:"rule",st:"e",release:"2022-06-14",effective:"2022-08-01",desc:"APP信息内容管理、数据安全、未成年人保护"},
-  {name:"互联网用户账号信息管理规定",cat:"rule",st:"e",release:"2022-06-27",effective:"2022-08-01",desc:"账号注册、使用、管理；防止假冒仿冒"},
-  {name:"互联网用户公众账号信息服务管理规定",cat:"rule",st:"e",release:"2021-01-22",effective:"2021-01-22",desc:"公众账号信息发布、内容审核、账号分类分级"},
-  {name:"网络直播营销管理办法（试行）",cat:"rule",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核"},
-  {name:"关于加强网络直播规范管理工作的指导意见",cat:"rule",st:"e",release:"2021-02-09",effective:"2021-02-09",desc:"压实平台主体责任、主播分级分类、打赏限额"},
-  {name:"关于规范网络直播打赏加强未成年人保护的意见",cat:"rule",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏"},
-  {name:"网络信息内容生态治理规定",cat:"rule",st:"e",release:"2020-03-01",effective:"2020-03-01",desc:"11类禁止信息、跟帖弹幕管理、评论区管理责任"},
-  {name:"网络音视频信息服务管理规定",cat:"rule",st:"e",release:"2019-12-20",effective:"2020-01-01",desc:"网络音视频内容管理、传播秩序"},
-  {name:"具有舆论属性或社会动员能力的互联网信息服务安全评估规定",cat:"rule",st:"e",release:"2018-11-30",effective:"2018-11-30",desc:"新上线/重大功能变更须安全评估"},
+  {name:"互联网信息服务深度合成管理规定",cat:"rule",st:"e",release:"2022-12-11",effective:"2023-01-10",desc:"深度合成标识、备案、内容审核",duty:"平台应对深度合成内容显著标识，进行算法备案，告知用户标识义务"},
+  {name:"互联网跟帖评论服务管理规定",cat:"rule",st:"e",release:"2022-11-16",effective:"2022-11-16",desc:"跟帖评论审核、实名管理、主体责任",duty:"平台应建立先审后发机制，落实用户实名认证，建立黑名单制度"},
+  {name:"互联网弹窗信息推送服务管理规定",cat:"rule",st:"e",release:"2022-09-09",effective:"2022-09-30",desc:"弹窗广告标识、一键关闭、不得诱导点击",duty:"弹窗广告须显著标识并一键关闭，禁止诱导点击，弹窗内容须合规审核"},
+  {name:"移动互联网应用程序信息服务管理规定",cat:"rule",st:"e",release:"2022-06-14",effective:"2022-08-01",desc:"APP信息内容管理、数据安全、未成年人保护",duty:"APP须备案上架，落实信息内容安全管理主体责任，设置未成年人模式"},
+  {name:"互联网用户账号信息管理规定",cat:"rule",st:"e",release:"2022-06-27",effective:"2022-08-01",desc:"账号注册、使用、管理；防止假冒仿冒",duty:"平台应落实用户真实身份核验，打击假冒仿冒，展示企业认证信息"},
+  {name:"互联网用户公众账号信息服务管理规定",cat:"rule",st:"e",release:"2021-01-22",effective:"2021-01-22",desc:"公众账号信息发布、内容审核、账号分类分级",duty:"平台应对公众账号分类分级管理，核实账号主体信息，建立内容审核机制"},
+  {name:"网络直播营销管理办法（试行）",cat:"rule",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核",duty:"平台应核验直播间资质，建立商品审核机制，保存直播回放不少于60日"},
+  {name:"关于加强网络直播规范管理工作的指导意见",cat:"rule",st:"e",release:"2021-02-09",effective:"2021-02-09",desc:"压实平台主体责任、主播分级分类、打赏限额",duty:"平台应压实主体责任，主播分类分级，设置打赏限额和延时到账"},
+  {name:"关于规范网络直播打赏加强未成年人保护的意见",cat:"rule",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏",duty:"平台应禁止未成年人打赏，建立打赏冷静期，单次打赏设上限"},
+  {name:"网络信息内容生态治理规定",cat:"rule",st:"e",release:"2020-03-01",effective:"2020-03-01",desc:"11类禁止信息、跟帖弹幕管理、评论区管理责任",duty:"平台应建立内容审核机制，禁止传播11类违法信息，设置举报渠道"},
+  {name:"网络音视频信息服务管理规定",cat:"rule",st:"e",release:"2019-12-20",effective:"2020-01-01",desc:"网络音视频内容管理、传播秩序",duty:"平台应对音视频内容审核，落实实名制，及时处置违法内容"},
+  {name:"具有舆论属性或社会动员能力的互联网信息服务安全评估规定",cat:"rule",st:"e",release:"2018-11-30",effective:"2018-11-30",desc:"新上线/重大功能变更须安全评估",duty:"平台新上线或重大功能变更前须进行安全评估"},
   {name:"微博客信息服务管理规定",cat:"rule",st:"e",release:"2018-02-02",effective:"2018-02-02",desc:"微博客信息发布、审核、辟谣机制"},
   {name:"互联网新闻信息服务新技术新应用安全评估管理规定",cat:"rule",st:"e",release:"2017-10-30",effective:"2017-10-30",desc:"新闻信息服务新技术安全评估"},
   {name:"互联网新闻信息服务单位内容管理从业人员管理办法",cat:"rule",st:"e",release:"2017-10-30",effective:"2017-10-30",desc:"从业人员资质、培训、考核"},
   {name:"互联网群组信息服务管理规定",cat:"rule",st:"e",release:"2017-10-08",effective:"2017-10-08",desc:"微信群、QQ群群主/管理者主体责任"},
   {name:"互联网论坛社区服务管理规定",cat:"rule",st:"e",release:"2017-10-01",effective:"2017-10-01",desc:"论坛版块管理、版主责任、用户实名"},
-  {name:"互联网新闻信息服务管理规定",cat:"rule",st:"e",release:"2017-05-02",effective:"2017-06-01",desc:"新闻信息采编发布、转载服务许可"},
+  {name:"互联网新闻信息服务管理规定",cat:"rule",st:"e",release:"2017-05-02",effective:"2017-06-01",desc:"新闻信息采编发布、转载服务许可",duty:"平台提供新闻信息服务须取得许可，不得转载非规范来源新闻"},
   {name:"互联网新闻信息服务许可管理实施细则",cat:"rule",st:"e",release:"2017-05-22",effective:"2017-06-01",desc:"新闻信息服务许可条件和审批流程"},
-  {name:"互联网直播服务管理规定",cat:"rule",st:"e",release:"2016-11-04",effective:"2016-12-01",desc:"直播服务审核责任、黑名单、内容审核"},
-  {name:"互联网信息搜索服务管理规定",cat:"rule",st:"e",release:"2016-08-01",effective:"2016-08-01",desc:"搜索服务审核义务、付费搜索标识、自然搜索结果保护"},
+  {name:"互联网直播服务管理规定",cat:"rule",st:"e",release:"2016-11-04",effective:"2016-12-01",desc:"直播服务审核责任、黑名单、内容审核",duty:"平台应对直播内容实时巡查，建立主播黑名单，落实实名认证"},
+  {name:"互联网信息搜索服务管理规定",cat:"rule",st:"e",release:"2016-08-01",effective:"2016-08-01",desc:"搜索服务审核义务、付费搜索标识、自然搜索结果保护",duty:"付费搜索须显著标识，保护自然搜索结果不受干扰"},
   {name:"互联网新闻信息服务单位约谈工作规定",cat:"rule",st:"e",release:"2015-06-01",effective:"2015-06-01",desc:"约谈程序和整改要求"},
   {name:"互联网用户账号名称管理规定",cat:"rule",st:"e",release:"2015-03-01",effective:"2015-03-01",desc:"账号名称、头像、简介等注册信息合规要求"},
   {name:"即时通信工具公众信息服务发展管理暂行规定",cat:"rule",st:"e",release:"2014-08-07",effective:"2014-08-07",desc:"微信公众平台等公众信息服务发布审核"},
@@ -144,14 +145,14 @@ var DOMAINS=[{
   {name:"网络表演经营活动管理办法",cat:"rule",st:"",release:"2017-01-01",desc:"网络表演许可、表演者实名、内容自审"},
   {name:"互联网视听节目服务管理规定",cat:"rule",st:"",release:"2015-04-01",desc:"视听节目许可、内容审核、播前审查"},
   {name:"关于加强网络直播服务管理工作的通知",cat:"rule",st:"",release:"2018-08-01",desc:"直播平台资质核查、主播实名、内容存储30天"},
-  {name:"人工智能拟人化互动服务管理暂行办法",cat:"rule",st:"e",release:"2026-04-10",effective:"2026-04-10",desc:"AI拟人化互动服务规范，防止误导和成瘾"},
-  {name:"人工智能生成合成内容标识办法",cat:"rule",st:"e",release:"2025-03-14",effective:"2025-03-15",desc:"AI生成内容标识义务"},
-  {name:"智能体规范应用与创新发展实施意见",cat:"rule",st:"e",release:"2026-05-08",effective:"2026-05-08",desc:"AI智能体规范应用与创新发展"},
-  {name:"互联网信息内容多渠道分发服务管理规定",cat:"rule",st:"n",release:"2026-05-29",effective:"2026-09-01",desc:"MCN机构须登记并取得许可，内容分发全链条管理，五部门联合发布"},
-  {name:"互联网军事信息传播管理办法",cat:"rule",st:"e",release:"2025-02-08",effective:"2025-02-08",desc:"军事信息传播管理"},
-  {name:"关于进一步加强网络侵权信息举报工作的指导意见",cat:"rule",st:"e",release:"2023-09-15",effective:"2023-09-15",desc:"网络侵权信息举报工作机制"},
-  {name:"直播电商监督管理办法",cat:"rule",st:"e",release:"2026-01-07",effective:"2026-01-07",desc:"直播电商合规经营要求"},
-  {name:"网络交易平台规则监督管理办法",cat:"rule",st:"e",release:"2026-01-07",effective:"2026-01-07",desc:"网络交易平台规则管理"},
+  {name:"人工智能拟人化互动服务管理暂行办法",cat:"rule",st:"e",release:"2026-04-10",effective:"2026-04-10",desc:"AI拟人化互动服务规范，防止误导和成瘾",duty:"平台应对AI拟人化互动显著标识，建立防误导防成瘾机制"},
+  {name:"人工智能生成合成内容标识办法",cat:"rule",st:"e",release:"2025-03-14",effective:"2025-03-15",desc:"AI生成内容标识义务",duty:"平台应对AI生成内容添加不可篡改标识，向用户明示"},
+  {name:"智能体规范应用与创新发展实施意见",cat:"rule",st:"e",release:"2026-05-08",effective:"2026-05-08",desc:"AI智能体规范应用与创新发展",duty:"平台应对AI智能体备案登记，明确功能边界和披露义务"},
+  {name:"互联网信息内容多渠道分发服务管理规定",cat:"rule",st:"n",release:"2026-05-29",effective:"2026-09-01",desc:"MCN机构须登记并取得许可，内容分发全链条管理，五部门联合发布",duty:"平台应与MCN签订入驻协议并报省级网信部门备案，显著展示账号所属MCN名称"},
+  {name:"互联网军事信息传播管理办法",cat:"rule",st:"e",release:"2025-02-08",effective:"2025-02-08",desc:"军事信息传播管理",duty:"平台应审核军事信息传播，落实军事信息传播管理要求"},
+  {name:"关于进一步加强网络侵权信息举报工作的指导意见",cat:"rule",st:"e",release:"2023-09-15",effective:"2023-09-15",desc:"网络侵权信息举报工作机制",duty:"平台应畅通举报渠道，及时处置侵权信息，保护权利人"},
+  {name:"直播电商监督管理办法",cat:"rule",st:"e",release:"2026-01-07",effective:"2026-01-07",desc:"直播电商合规经营要求",duty:"平台应审核直播资质，建立商品质量管控和先行赔付机制"},
+  {name:"网络交易平台规则监督管理办法",cat:"rule",st:"e",release:"2026-01-07",effective:"2026-01-07",desc:"网络交易平台规则管理",duty:"平台规则制定变更须公开透明，保护商家合法权益"},
   {name:"生成式人工智能服务安全基本要求",cat:"standard",st:"e",release:"2024-03-01",desc:"生成式AI安全评估、训练数据安全"},
   {name:"新一代人工智能伦理规范",cat:"ethics",st:"e",release:"2021-09-25",desc:"AI伦理六原则"}
   ]
@@ -160,24 +161,24 @@ var DOMAINS=[{
   id:"privacy",icon:"🔒",color:"#1565c0",
   name:"隐私保护",
   laws:[
-  {name:"个人信息保护法（PIPL）",cat:"law",st:"e",release:"2021-08-20",effective:"2021-11-01",desc:"告知同意、自动化决策、跨境传输、大型平台义务",penalty:"≤5000万元/营收5%"},
-  {name:"数据安全法",cat:"law",st:"e",release:"2021-06-10",effective:"2021-09-01",desc:"数据分类分级、重要数据目录、安全审查",penalty:"≤1000万元"},
-  {name:"网络数据安全管理条例",cat:"regulation",st:"e",release:"2024-09-30",effective:"2025-01-01",desc:"整合细化网络数据安全管理"},
-  {name:"促进和规范数据跨境流动规定",cat:"rule",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单"},
-  {name:"个人信息出境标准合同办法",cat:"rule",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径"},
-  {name:"个人信息出境认证办法",cat:"rule",st:"e",release:"2025-10-17",effective:"2025-10-17",desc:"个人信息出境认证管理"},
-  {name:"个人信息保护合规审计管理办法",cat:"rule",st:"e",release:"2025-02-14",effective:"2025-02-14",desc:"个人信息保护合规审计要求"},
-  {name:"国家网络身份认证公共服务管理办法",cat:"rule",st:"e",release:"2025-05-23",effective:"2025-05-23",desc:"国家网络身份认证公共服务"},
-  {name:"数据出境安全评估办法",cat:"rule",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估"},
-  {name:"工信部关于进一步提升移动互联网应用服务能力的通知",cat:"rule",st:"e",release:"2023-02-27",effective:"2023-02-27",desc:"APP安装卸载、服务体验、个人信息保护"},
+  {name:"个人信息保护法（PIPL）",cat:"law",st:"e",release:"2021-08-20",effective:"2021-11-01",desc:"告知同意、自动化决策、跨境传输、大型平台义务",penalty:"≤5000万元/营收5%",duty:"平台应建立告知同意机制，最小必要收集信息，响应删除权/可携带权"},
+  {name:"数据安全法",cat:"law",st:"e",release:"2021-06-10",effective:"2021-09-01",desc:"数据分类分级、重要数据目录、安全审查",penalty:"≤1000万元",duty:"平台应建立数据分类分级制度，识别重要数据，定期安全评估"},
+  {name:"网络数据安全管理条例",cat:"regulation",st:"e",release:"2024-09-30",effective:"2025-01-01",desc:"整合细化网络数据安全管理",duty:"平台应细化网络数据安全管理制度，明确数据处理安全保护义务"},
+  {name:"促进和规范数据跨境流动规定",cat:"rule",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单",duty:"平台数据出境前应评估场景，签署标准合同或申报安全评估"},
+  {name:"个人信息出境标准合同办法",cat:"rule",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径",duty:"平台向境外提供个人信息须与接收方签署标准合同并备案"},
+  {name:"个人信息出境认证办法",cat:"rule",st:"e",release:"2025-10-17",effective:"2025-10-17",desc:"个人信息出境认证管理",duty:"平台数据出境可选择专业机构认证方式"},
+  {name:"个人信息保护合规审计管理办法",cat:"rule",st:"e",release:"2025-02-14",effective:"2025-02-14",desc:"个人信息保护合规审计要求",duty:"平台应定期开展个人信息保护合规审计，超100万人信息每两年至少一次"},
+  {name:"国家网络身份认证公共服务管理办法",cat:"rule",st:"e",release:"2025-05-23",effective:"2025-05-23",desc:"国家网络身份认证公共服务",duty:"平台可接入国家网络身份认证，减少直接收集公民身份信息"},
+  {name:"数据出境安全评估办法",cat:"rule",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估",duty:"向境外提供重要数据或100万人以上个人信息须申报安全评估"},
+  {name:"工信部关于进一步提升移动互联网应用服务能力的通知",cat:"rule",st:"e",release:"2023-02-27",effective:"2023-02-27",desc:"APP安装卸载、服务体验、个人信息保护",duty:"APP应告知收集使用规则，提供便捷注销和撤回同意功能"},
   {name:"工信部关于开展信息通信服务感知提升行动的通知",cat:"rule",st:"e",release:"2021-11-01",effective:"2021-11-01",desc:"双清单、隐私政策改进、服务感知提升"},
-  {name:"APP违法违规收集使用个人信息行为认定方法",cat:"rule",st:"e",release:"2019-12-30",effective:"2019-12-30",desc:"9类31种违规行为的认定标准"},
-  {name:"儿童个人信息网络保护规定",cat:"rule",st:"e",release:"2019-08-23",effective:"2019-10-01",desc:"14岁以下儿童个人信息监护人同意"},
+  {name:"APP违法违规收集使用个人信息行为认定方法",cat:"rule",st:"e",release:"2019-12-30",effective:"2019-12-30",desc:"9类31种违规行为的认定标准",duty:"平台自查是否存在未告知、超范围、强制同意等违规行为"},
+  {name:"儿童个人信息网络保护规定",cat:"rule",st:"e",release:"2019-08-23",effective:"2019-10-01",desc:"14岁以下儿童个人信息监护人同意",duty:"收集14岁以下儿童个人信息须取得监护人同意并制定专门规则"},
   {name:"关于进一步规范移动智能终端应用软件预置行为的通告",cat:"rule",st:"e",release:"2022-12-14",effective:"2023-01-01",desc:"不可卸载APP范围限定"},
   {name:"关于实施个人信息保护认证的公告",cat:"rule",st:"e",release:"2022-11-18",effective:"2022-11-18",desc:"个人信息保护认证管理"},
-  {name:"常见类型移动互联网应用程序必要个人信息范围规定",cat:"rule",st:"e",release:"2021-03-22",effective:"2021-03-22",desc:"常见APP类型必要个人信息范围"},
-  {name:"移动智能终端应用软件预置和分发管理暂行规定",cat:"rule",st:"e",release:"2017-07-01",effective:"2017-07-01",desc:"预置APP可卸载、分发平台实名认证"},
-  {name:"个人信息安全规范（GB/T 35273-2020）",cat:"standard",st:"e",release:"2020-03-06",effective:"2020-10-01",desc:"个人信息收集、存储、使用、共享安全要求"},
+  {name:"常见类型移动互联网应用程序必要个人信息范围规定",cat:"rule",st:"e",release:"2021-03-22",effective:"2021-03-22",desc:"常见APP类型必要个人信息范围",duty:"APP只能收集本类型服务所必需的个人信息"},
+  {name:"移动智能终端应用软件预置和分发管理暂行规定",cat:"rule",st:"e",release:"2017-07-01",effective:"2017-07-01",desc:"预置APP可卸载、分发平台实名认证",duty:"预置APP应可卸载，分发平台应实名认证和安全检测"},
+  {name:"个人信息安全规范（GB/T 35273-2020）",cat:"standard",st:"e",release:"2020-03-06",effective:"2020-10-01",desc:"个人信息收集、存储、使用、共享安全要求",duty:"平台应按国标落实个人信息收集存储使用共享全流程安全要求"},
   {name:"APP用户权益保护测评规范 超范围收集个人信息",cat:"standard",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 超范围收集个人信息的检测标准"},
   {name:"APP用户权益保护测评规范 定向推送",cat:"standard",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 定向推送合规检测"},
   {name:"APP用户权益保护测评规范 个人信息获取行为",cat:"standard",st:"e",release:"2021-11",effective:"2021-11",desc:"T/ISC-0011 个人信息获取行为检测"},
@@ -194,8 +195,8 @@ var DOMAINS=[{
   id:"fraud",icon:"📵",color:"#e65100",
   name:"电信反诈",
   laws:[
-  {name:"反电信网络诈骗法",cat:"law",st:"e",release:"2022-09-02",effective:"2022-12-01",desc:"电信治理、金融治理、互联网治理、实名制"},
-  {name:"反洗钱法",cat:"law",st:"e",release:"2006-10-31",effective:"2007-01-01",desc:"反洗钱义务、大额交易报告、客户身份识别"},
+  {name:"反电信网络诈骗法",cat:"law",st:"e",release:"2022-09-02",effective:"2022-12-01",desc:"电信治理、金融治理、互联网治理、实名制",duty:"平台应落实实名制管理，建立异常交易监测机制，配合执法"},
+  {name:"反洗钱法",cat:"law",st:"e",release:"2006-10-31",effective:"2007-01-01",desc:"反洗钱义务、大额交易报告、客户身份识别",duty:"平台应建立反洗钱内控制度，客户身份识别，报告大额可疑交易"},
   {name:"金融机构反洗钱和反恐怖融资监督管理办法",cat:"rule",st:"e",release:"2021-08-01",effective:"2021-08-01",desc:"反洗钱内控制度、风险评估"}
   ]
 },
@@ -203,14 +204,14 @@ var DOMAINS=[{
   id:"payment",icon:"💳",color:"#00838f",
   name:"支付合规",
   laws:[
-  {name:"电子商务法",cat:"law",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还"},
-  {name:"明码标价和禁止价格欺诈规定",cat:"rule",st:"e",release:"2022-04-14",effective:"2022-07-01",desc:"明码标价义务、虚假优惠、先涨后降等欺诈认定"},
+  {name:"电子商务法",cat:"law",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",duty:"平台应核验经营者身份和行政许可，保障押金退还，建立知识产权保护机制"},
+  {name:"明码标价和禁止价格欺诈规定",cat:"rule",st:"e",release:"2022-04-14",effective:"2022-07-01",desc:"明码标价义务、虚假优惠、先涨后降等欺诈认定",duty:"平台应明码标价，禁止虚假优惠、先涨后降等欺诈行为"},
   {name:"电信用户申诉处理办法",cat:"rule",st:"e",release:"2016-05-26",effective:"2016-07-01",desc:"电信用户申诉受理、处理流程"},
   {name:"网络支付服务数据安全要求（GB/T 42015-2022）",cat:"standard",st:"e",release:"2022-12-30",effective:"2022-12-30",desc:"网络支付数据安全要求"},
   {name:"非银行支付机构条例（征求意见稿）",cat:"group",st:"p",release:"2021-01-20",desc:"非银行支付机构设立、变更、终止监管"},
   {name:"支付机构外汇业务管理办法",cat:"rule",st:"",desc:"跨境外汇支付备案、交易、数据报送"},
   {name:"网上银行系统信息安全通用规范（JR/T 0068-2020）",cat:"standard",st:"e",release:"2020-11-01",desc:"网上银行安全技术要求"},
-  {name:"金融产品网络营销管理办法",cat:"rule",st:"e",release:"2026-04-24",effective:"2026-04-24",desc:"金融产品网络营销规范"}
+  {name:"金融产品网络营销管理办法",cat:"rule",st:"e",release:"2026-04-24",effective:"2026-04-24",desc:"金融产品网络营销规范",duty:"平台营销金融产品须确保营销方持牌，显著提示风险，禁止诱导"}
   ]
 },
 {
@@ -226,17 +227,17 @@ var DOMAINS=[{
   id:"antitrust",icon:"⚖️",color:"#5d4037",
   name:"互联网反不正当竞争",
   laws:[
-  {name:"反垄断法（2022修订）",cat:"law",st:"e",release:"2022-06-24",effective:"2022-08-01",desc:"平台经济反垄断适用"},
-  {name:"反不正当竞争法",cat:"law",st:"e",release:"2019-04-23",effective:"2019-04-23",desc:"混淆行为、虚假宣传、商业诋毁、网络领域不正当竞争",penalty:"罚款10万-500万元"},
+  {name:"反垄断法（2022修订）",cat:"law",st:"e",release:"2022-06-24",effective:"2022-08-01",desc:"平台经济反垄断适用",duty:"平台不得达成垄断协议、滥用市场支配地位"},
+  {name:"反不正当竞争法",cat:"law",st:"e",release:"2019-04-23",effective:"2019-04-23",desc:"混淆行为、虚假宣传、商业诋毁、网络领域不正当竞争",penalty:"罚款10万-500万元",duty:"平台不得实施混淆、虚假宣传、商业诋毁等不正当竞争行为"},
   {name:"著作权法（2020修订）",cat:"law",st:"e",release:"2020-11-11",effective:"2021-06-01",desc:"侵权赔偿上限提高至500万、惩罚性赔偿"},
   {name:"专利法（2020修订）",cat:"law",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"专利保护期、惩罚性赔偿、开放许可"},
   {name:"商标法（2019修订）",cat:"law",st:"e",release:"2019-04-23",effective:"2019-11-01",desc:"商标注册、使用、保护、恶意注册规制"},
-  {name:"网络反不正当竞争暂行规定",cat:"rule",st:"e",release:"2024-05-11",effective:"2024-09-01",desc:"刷单炒信、流量劫持、恶意不兼容、数据爬取"},
+  {name:"网络反不正当竞争暂行规定",cat:"rule",st:"e",release:"2024-05-11",effective:"2024-09-01",desc:"刷单炒信、流量劫持、恶意不兼容、数据爬取",duty:"平台禁止刷单炒信、流量劫持、恶意不兼容、非法数据爬取"},
   {name:"公平竞争审查条例",cat:"regulation",st:"e",release:"2024-06-06",effective:"2024-08-01",desc:"政策措施公平竞争审查"},
   {name:"专利法实施细则（2023修订）",cat:"regulation",st:"e",release:"2023-12-21",effective:"2024-01-20",desc:"专利审查、专利权评价报告"},
   {name:"禁止滥用知识产权排除、限制竞争行为规定",cat:"rule",st:"e",release:"2023-08-01",effective:"2023-08-01",desc:"知识产权行使中垄断行为认定"},
   {name:"禁止垄断协议规定",cat:"rule",st:"e",release:"2023-04-15",effective:"2023-04-15",desc:"横向/纵向垄断协议、轴辐协议、安全港规则"},
-  {name:"平台经济领域反垄断指南",cat:"standard",st:"e",release:"2021-02-07",effective:"2021-02-07",desc:"二选一、大数据杀熟、扼杀式并购认定"},
+  {name:"平台经济领域反垄断指南",cat:"standard",st:"e",release:"2021-02-07",effective:"2021-02-07",desc:"二选一、大数据杀熟、扼杀式并购认定",duty:"禁止二选一、大数据杀熟、扼杀式收购，达标须申报"},
   {name:"关于经营者集中申报的指导意见",cat:"standard",st:"e",release:"2018-09-29",effective:"2018-09-29",desc:"申报标准、营业额计算、申报程序"},
   {name:"关于规范网络转载版权秩序的通知",cat:"rule",st:"e",release:"2015-04-22",effective:"2015-04-22",desc:"转载授权、署名要求"},
   {name:"著作权法实施条例",cat:"regulation",st:"e",release:"2013-01-30",effective:"2013-03-01",desc:"著作权法具体实施规定"},
@@ -251,9 +252,9 @@ var DOMAINS=[{
   id:"ad",icon:"📺",color:"#ad1457",
   name:"互联网广告合规",
   laws:[
-  {name:"广告法",cat:"law",st:"e",release:"2021-04-29",effective:"2021-04-29",desc:"广告内容准则、行为规范、特殊行业广告限制",penalty:"罚款20万-200万元"},
-  {name:"互联网广告管理办法",cat:"rule",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任"},
-  {name:"规范促销行为暂行规定",cat:"rule",st:"e",release:"2020-10-29",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制"}
+  {name:"广告法",cat:"law",st:"e",release:"2021-04-29",effective:"2021-04-29",desc:"广告内容准则、行为规范、特殊行业广告限制",penalty:"罚款20万-200万元",duty:"平台作为广告发布者应审核广告真实性，互联网广告须显著标识"},
+  {name:"互联网广告管理办法",cat:"rule",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任",duty:"广告须可识别标注广告，一键关闭，直播带货明确广告责任主体"},
+  {name:"规范促销行为暂行规定",cat:"rule",st:"e",release:"2020-10-29",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制",duty:"有奖销售须明示奖品信息和概率，促销价格须真实"}
   ]
 },
 {
@@ -270,13 +271,13 @@ var DOMAINS=[{
   id:"consumer",icon:"🛡️",color:"#f57c00",
   name:"消费者权益保护",
   laws:[
-  {name:"未成年人保护法（网络保护专章）",cat:"law",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"防沉迷、个人信息保护、不良信息防治"},
-  {name:"消费者权益保护法",cat:"law",st:"e",release:"2013-10-25",effective:"2014-03-15",desc:"七天无理由退货、格式条款限制、三倍赔偿"},
-  {name:"未成年人网络保护条例",cat:"regulation",st:"e",release:"2023-10-16",effective:"2024-01-01",desc:"未成年人模式、防沉迷、网络欺凌防治"},
-  {name:"消费者权益保护法实施条例",cat:"regulation",st:"e",release:"2024-03-19",effective:"2024-07-01",desc:"直播带货平台先行赔付、自动续费提示"},
-  {name:"电子商务法",cat:"law",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还"},
-  {name:"网络交易监督管理办法",cat:"rule",st:"e",release:"2021-03-15",effective:"2021-05-01",desc:"信息公示、直播带货合规、自动续费规则"},
-  {name:"关于进一步严格管理切实防止未成年人沉迷网络游戏的通知",cat:"rule",st:"e",release:"2021-08-30",effective:"2021-09-01",desc:"周五六日各1小时"},
+  {name:"未成年人保护法（网络保护专章）",cat:"law",st:"e",release:"2020-10-17",effective:"2021-06-01",desc:"防沉迷、个人信息保护、不良信息防治",duty:"平台应设置未成年人模式，防沉迷，过滤有害信息"},
+  {name:"消费者权益保护法",cat:"law",st:"e",release:"2013-10-25",effective:"2014-03-15",desc:"七天无理由退货、格式条款限制、三倍赔偿",duty:"平台应保障七天无理由退货，格式条款须显著提示"},
+  {name:"未成年人网络保护条例",cat:"regulation",st:"e",release:"2023-10-16",effective:"2024-01-01",desc:"未成年人模式、防沉迷、网络欺凌防治",duty:"平台应为未成年人设置专属保护模式，限制时长和消费"},
+  {name:"消费者权益保护法实施条例",cat:"regulation",st:"e",release:"2024-03-19",effective:"2024-07-01",desc:"直播带货平台先行赔付、自动续费提示",duty:"自动续费须显著提醒并提供便捷取消，直播带货承担先行赔付责任"},
+  {name:"电子商务法",cat:"law",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",duty:"平台应核验经营者身份和行政许可，保障押金退还，建立知识产权保护机制"},
+  {name:"网络交易监督管理办法",cat:"rule",st:"e",release:"2021-03-15",effective:"2021-05-01",desc:"信息公示、直播带货合规、自动续费规则",duty:"平台应公示经营者信息，直播带货保存完整回放，自动续费需用户同意"},
+  {name:"关于进一步严格管理切实防止未成年人沉迷网络游戏的通知",cat:"rule",st:"e",release:"2021-08-30",effective:"2021-09-01",desc:"周五六日各1小时",duty:"游戏平台仅周五六日和法定节假日20-21时向未成年人提供1小时服务"},
   {name:"关于防止未成年人沉迷网络游戏的通知",cat:"rule",st:"e",release:"2019-11-19",effective:"2019-11-19",desc:"充值限额、宵禁、实名制"},
   {name:"国务院办公厅关于加强金融消费者权益保护工作的指导意见",cat:"rule",st:"e",release:"2015-11-13",effective:"2015-11-13",desc:"金融消费者八项权益"},
   {name:"中国人民银行金融消费者权益保护实施办法",cat:"rule",st:"e",release:"2020-09-15",effective:"2020-11-01",desc:"金融消费者信息保护、投诉处理"},
@@ -286,7 +287,7 @@ var DOMAINS=[{
   {name:"关于启动网络游戏防沉迷实名验证工作的通知",cat:"rule",st:"e",release:"2011-10-01",effective:"2011-10-01",desc:"防沉迷实名验证系统"},
   {name:"文化部、商务部关于加强网络游戏虚拟货币管理工作的通知",cat:"rule",st:"e",release:"2009-06-04",effective:"2009-06-04",desc:"虚拟货币发行、交易、退换"},
   {name:"未成年人用户数量巨大和对未成年人群体具有显著影响的网络平台服务提供者认定办法",cat:"rule",st:"e",release:"2026-02-28",effective:"2026-02-28",desc:"未成年人网络平台认定标准"},
-  {name:"政务移动互联网应用程序规范化管理办法",cat:"regulation",st:"e",release:"2026-01-28",effective:"2026-01-28",desc:"政务APP规范化管理"},
+  {name:"政务移动互联网应用程序规范化管理办法",cat:"regulation",st:"e",release:"2026-01-28",effective:"2026-01-28",desc:"政务APP规范化管理",duty:"政务APP应精简整合，保障数据安全"},
   {name:"可能影响未成年人身心健康的网络信息分类办法",cat:"rule",st:"e",release:"2026-01-23",effective:"2026-01-23",desc:"未成年人网络信息分类"}
   ]
 },
@@ -305,14 +306,14 @@ var DOMAINS=[{
   id:"license",icon:"📋",color:"#283593",
   name:"业务资质",
   laws:[
-  {name:"网络安全法",cat:"law",st:"e",release:"2016-11-07",effective:"2017-06-01",desc:"等级保护、CII义务、实名认证"},
+  {name:"网络安全法",cat:"law",st:"e",release:"2016-11-07",effective:"2017-06-01",desc:"等级保护、CII义务、实名认证",duty:"平台应完成等保定级备案，CII须满足特殊安全要求，落实用户实名制"},
   {name:"密码法",cat:"law",st:"e",release:"2019-10-26",effective:"2020-01-01",desc:"商用密码分类管理"},
   {name:"电子签名法",cat:"law",st:"e",release:"2019-04-23",effective:"2019-04-23",desc:"电子签名法律效力"},
-  {name:"关键信息基础设施安全保护条例",cat:"regulation",st:"e",release:"2021-08-17",effective:"2021-09-01",desc:"CII认定与安全保护"},
+  {name:"关键信息基础设施安全保护条例",cat:"regulation",st:"e",release:"2021-08-17",effective:"2021-09-01",desc:"CII认定与安全保护",duty:"CII平台须设专门安全管理机构，定期安全检测，采购产品须安全审查"},
   {name:"商用密码管理条例",cat:"regulation",st:"e",release:"2023-06-29",effective:"2023-07-01",desc:"商用密码科研、生产、销售管理"},
-  {name:"网络安全审查办法",cat:"rule",st:"e",release:"2022-01-04",effective:"2022-02-15",desc:"CII采购审查、100万+PII上市审查"},
-  {name:"关于开展移动互联网应用程序备案工作的通知",cat:"rule",st:"e",release:"2023-08-09",effective:"2023-08-09",desc:"APP主办者备案制度"},
-  {name:"互联网信息服务管理办法",cat:"regulation",st:"e",release:"2000-09-25",effective:"2000-09-25",desc:"经营性ICP许可、非经营性ICP备案"},
+  {name:"网络安全审查办法",cat:"rule",st:"e",release:"2022-01-04",effective:"2022-02-15",desc:"CII采购审查、100万+PII上市审查",duty:"CII平台采购产品或超100万用户信息平台赴国外上市须申报安全审查"},
+  {name:"关于开展移动互联网应用程序备案工作的通知",cat:"rule",st:"e",release:"2023-08-09",effective:"2023-08-09",desc:"APP主办者备案制度",duty:"APP主办者应向电信主管部门完成备案，未备案不得上线"},
+  {name:"互联网信息服务管理办法",cat:"regulation",st:"e",release:"2000-09-25",effective:"2000-09-25",desc:"经营性ICP许可、非经营性ICP备案",duty:"平台应取得ICP许可或完成ICP备案，未许可不得从事信息服务"},
   {name:"中华人民共和国电信条例",cat:"regulation",st:"e",release:"2000-09-25",effective:"2000-09-25",desc:"电信业务许可、资源管理、服务、安全"},
   {name:"电信业务分类目录",cat:"rule",st:"",desc:"增值电信业务（ICP/EDI/SP等）分类"},
   {name:"电信业务经营许可管理办法",cat:"rule",st:"e",release:"2017-07-03",effective:"2017-09-01",desc:"增值电信许可证申请条件"},
@@ -324,11 +325,11 @@ var DOMAINS=[{
   {name:"等保2.0·基本要求（GB/T 22239-2019）",cat:"standard",st:"e",release:"2019-05-10",effective:"2019-12-01",desc:"等级保护基本要求"},
   {name:"等保2.0·测评要求（GB/T 28448-2019）",cat:"standard",st:"e",release:"2019-05-10",effective:"2019-12-01",desc:"等级保护测评要求"},
   {name:"关键信息基础设施商用密码使用管理规定",cat:"rule",st:"e",release:"2025-07-01",effective:"2025-07-01",desc:"CII商用密码使用管理"},
-  {name:"国家网络安全事件报告管理办法",cat:"rule",st:"e",release:"2025-09-15",effective:"2025-09-15",desc:"网络安全事件报告管理"},
+  {name:"国家网络安全事件报告管理办法",cat:"rule",st:"e",release:"2025-09-15",effective:"2025-09-15",desc:"网络安全事件报告管理",duty:"平台发生网络安全事件应在规定时限内报告，重大事件1小时内报告"},
   {name:"云计算服务安全评估办法",cat:"rule",st:"e",release:"2019-07-22",effective:"2019-09-01",desc:"云计算服务安全评估"},
   {name:"人工智能气象应用服务办法",cat:"rule",st:"e",release:"2025-04-30",effective:"2025-04-30",desc:"AI气象应用服务管理"},
   {name:"终端设备直连卫星服务管理规定",cat:"rule",st:"e",release:"2025-04-30",effective:"2025-04-30",desc:"卫星直连服务管理"},
-  {name:"人脸识别技术应用安全管理办法",cat:"rule",st:"e",release:"2025-03-21",effective:"2025-03-21",desc:"人脸识别技术应用安全规范"},
+  {name:"人脸识别技术应用安全管理办法",cat:"rule",st:"e",release:"2025-03-21",effective:"2025-03-21",desc:"人脸识别技术应用安全规范",duty:"人脸识别须单独同意，非必要不得强制采集，须提供替代验证方式"},
   {name:"互联网上网服务营业场所管理条例",cat:"regulation",st:"e",release:"2016-02-06",effective:"2016-02-06",desc:"互联网上网服务营业场所管理"}
   ]
 },
@@ -336,13 +337,13 @@ var DOMAINS=[{
   id:"marketing",icon:"📣",color:"#6a1b9a",
   name:"营销合规",
   laws:[
-  {name:"广告法",cat:"law",st:"e",release:"2021-04-29",effective:"2021-04-29",desc:"广告内容准则、行为规范、特殊行业广告限制",penalty:"罚款20万-200万元"},
-  {name:"电子商务法",cat:"law",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还"},
-  {name:"互联网广告管理办法",cat:"rule",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任"},
-  {name:"互联网信息服务算法推荐管理规定",cat:"rule",st:"e",release:"2022-01-04",effective:"2022-03-01",desc:"算法备案、透明度、用户关闭权"},
-  {name:"网络直播营销管理办法（试行）",cat:"rule",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核"},
-  {name:"关于规范网络直播打赏加强未成年人保护的意见",cat:"rule",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏"},
-  {name:"规范促销行为暂行规定",cat:"rule",st:"e",release:"2020-10-29",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制"}
+  {name:"广告法",cat:"law",st:"e",release:"2021-04-29",effective:"2021-04-29",desc:"广告内容准则、行为规范、特殊行业广告限制",penalty:"罚款20万-200万元",duty:"平台作为广告发布者应审核广告真实性，互联网广告须显著标识"},
+  {name:"电子商务法",cat:"law",st:"e",release:"2018-08-31",effective:"2019-01-01",desc:"经营者登记、平台审核义务、押金退还",duty:"平台应核验经营者身份和行政许可，保障押金退还，建立知识产权保护机制"},
+  {name:"互联网广告管理办法",cat:"rule",st:"e",release:"2023-02-25",effective:"2023-05-01",desc:"广告可识别性、一键关闭、直播带货广告责任",duty:"广告须可识别标注广告，一键关闭，直播带货明确广告责任主体"},
+  {name:"互联网信息服务算法推荐管理规定",cat:"rule",st:"e",release:"2022-01-04",effective:"2022-03-01",desc:"算法备案、透明度、用户关闭权",duty:"平台应完成算法备案，提供算法透明度说明，提供关闭个性化推荐选项"},
+  {name:"网络直播营销管理办法（试行）",cat:"rule",st:"e",release:"2021-04-23",effective:"2021-05-25",desc:"直播间运营者合规义务、商品审核",duty:"平台应核验直播间资质，建立商品审核机制，保存直播回放不少于60日"},
+  {name:"关于规范网络直播打赏加强未成年人保护的意见",cat:"rule",st:"e",release:"2022-05-07",effective:"2022-05-07",desc:"禁止未成年人打赏",duty:"平台应禁止未成年人打赏，建立打赏冷静期，单次打赏设上限"},
+  {name:"规范促销行为暂行规定",cat:"rule",st:"e",release:"2020-10-29",effective:"2020-12-01",desc:"有奖销售、价格促销、虚假促销规制",duty:"有奖销售须明示奖品信息和概率，促销价格须真实"}
   ]
 },
 {
@@ -350,11 +351,11 @@ var DOMAINS=[{
   name:"贸易合规",
   laws:[
   {name:"出口管制法",cat:"law",st:"e",release:"2020-10-17",effective:"2020-12-01",desc:"两用物项出口管制"},
-  {name:"促进和规范数据跨境流动规定",cat:"rule",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单"},
-  {name:"个人信息出境标准合同办法",cat:"rule",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径"},
-  {name:"数据出境安全评估办法",cat:"rule",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估"},
+  {name:"促进和规范数据跨境流动规定",cat:"rule",st:"e",release:"2024-03-22",effective:"2024-03-22",desc:"豁免场景、自贸区负面清单",duty:"平台数据出境前应评估场景，签署标准合同或申报安全评估"},
+  {name:"个人信息出境标准合同办法",cat:"rule",st:"e",release:"2023-02-24",effective:"2023-06-01",desc:"非CII运营者出境合同路径",duty:"平台向境外提供个人信息须与接收方签署标准合同并备案"},
+  {name:"数据出境安全评估办法",cat:"rule",st:"e",release:"2022-07-07",effective:"2022-09-01",desc:"重要数据/100万+PII出境安全评估",duty:"向境外提供重要数据或100万人以上个人信息须申报安全评估"},
   {name:"阻断外国法律与措施不当域外适用办法",cat:"rule",st:"e",release:"2021-01-09",desc:"应对域外适用阻断机制"},
-  {name:"个人信息出境认证办法",cat:"rule",st:"e",release:"2025-10-17",effective:"2025-10-17",desc:"个人信息出境认证管理"}
+  {name:"个人信息出境认证办法",cat:"rule",st:"e",release:"2025-10-17",effective:"2025-10-17",desc:"个人信息出境认证管理",duty:"平台数据出境可选择专业机构认证方式"}
   ]
 }
 ];
@@ -661,6 +662,7 @@ function showDetail(id){
       if(l.effective)catHtml+="<span>✅ "+l.effective+"</span>";
       if(l.penalty)catHtml+="<span>⚡ "+l.penalty+"</span>";
       catHtml+="</div>";
+      if(l.duty)catHtml+='<div class="duty">📌 '+l.duty+"</div>";
       catHtml+='<div class="links"><a href="'+getSrc(l.name)+'" target="_blank" rel="noopener">🔗 查看原文</a></div></div>';
     }
     html+='<div class="cat-group"><div class="cat-header">'+CAT_LABELS[key]+' <span class="cat-count">'+sortedLaws.length+"</span></div>"+catHtml+"</div>";
