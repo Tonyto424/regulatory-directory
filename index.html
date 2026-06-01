@@ -609,6 +609,7 @@ function renderCases(filter){
       html2+='<div class="case-meta"><span class="tag">'+(DOMAIN_IDS[item.domain]||item.domain)+"</span> "+item.date+'</div>';
       html2+='<div class="case-summary">'+item.summary+'</div>';
       if(item.url)html2+='<div class="links" style="margin-top:6px"><a href="'+item.url+'" target="_blank" rel="noopener">🔗 查看原文</a></div>';
+      html2+='</div>';
     } else {
       html2+='<div class="case-item" style="border-left-color:'+dc+'"><div class="case-title"><a href="'+item.url+'" target="_blank" rel="noopener">'+item.title+'</a></div>';
       html2+='<div class="case-meta"><span class="tag">'+(DOMAIN_IDS[item.domain]||item.domain)+"</span> "+item.date+' · 来源:'+item.source+'</div>';
