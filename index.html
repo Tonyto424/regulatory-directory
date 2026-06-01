@@ -109,6 +109,19 @@ var CAT_LABELS={
   "ethics":"🤝 公序良俗"
 };
 var CAT_ORDER=["law","regulation","rule","standard","group","ethics"];
+
+var INTERP_SOURCES = [
+  {name:"🏛️ 国家法律法规数据库", s: function(n){ return "https://flk.npc.gov.cn/search.html?key="+encodeURIComponent(n); }},
+  {name:"📚 北大法宝", s: function(n){ return "https://www.pkulaw.com/law?keywords="+encodeURIComponent(n); }},
+  {name:"⚖️ 法信（最高法）", s: function(n){ return "https://www.faxin.cn/search.aspx?key="+encodeURIComponent(n); }},
+  {name:"📰 中国政府网·解读", s: function(n){ return "https://sousuo.www.gov.cn/sousuo/search.shtml?code=17da70961b7b1c62&dataTypeId=107&searchWord="+encodeURIComponent(n)+"+%E8%A7%A3%E8%AF%BB"; }},
+  {name:"📖 中国人大网·立法释义", s: function(n){ return "https://www.npc.gov.cn/npc/c2/c30834/search/index.html?keyword="+encodeURIComponent(n); }},
+  {name:"🏢 金杜律所", s: function(n){ return "https://www.kwm.com/cn/zh/insights.html?search="+encodeURIComponent(n); }},
+  {name:"🏢 君合律所", s: function(n){ return "https://www.junhe.com/study?keywords="+encodeURIComponent(n); }},
+  {name:"🏢 中伦律所", s: function(n){ return "https://www.zhonglun.com/Insight.aspx?keyword="+encodeURIComponent(n); }},
+  {name:"🏢 方达律所", s: function(n){ return "https://www.fangdalaw.com/insights?search="+encodeURIComponent(n); }},
+  {name:"🏢 大成律所", s: function(n){ return "https://www.dentons.cn/zh/insights?keyword="+encodeURIComponent(n); }}
+];
 var DOMAINS=[{
   id:"content",icon:"📢",color:"#c62828",
   name:"内容安全",
@@ -671,6 +684,13 @@ function showDetail(id){
       catHtml+="</div>";
       if(l.duty)catHtml+='<div class="duty">📌 '+l.duty+"</div>";
       catHtml+='<div class="links"><a href="'+getSrc(l.name)+'" target="_blank" rel="noopener">🔗 查看原文</a></div></div>';
+      // 解读搜索链接
+      catHtml+='<div class="interp" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:2px">';
+      catHtml+='<span style="font-size:9px;color:#999;margin-right:2px">🔍 解读：</span>';
+      for(var si=0;si<INTERP_SOURCES.length;si++){
+        catHtml+='<a href="'+INTERP_SOURCES[si].s(l.name)+'" target="_blank" rel="noopener" style="font-size:8px;padding:1px 4px;border-radius:3px;background:#f5f5fa;color:#666;text-decoration:none;white-space:nowrap">'+INTERP_SOURCES[si].name+'</a>';
+      }
+      catHtml+='</div></div>';
     }
     html+='<div class="cat-group"><div class="cat-header">'+CAT_LABELS[key]+' <span class="cat-count">'+sortedLaws.length+"</span></div>"+catHtml+"</div>";
   }
