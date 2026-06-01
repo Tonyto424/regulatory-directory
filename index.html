@@ -90,15 +90,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
   <div id="homeView"><div class="grid" id="domainGrid"></div></div>
   <div id="detailView"><div class="detail-header"><button class="back-btn" onclick="showHome()">← 返回</button><span class="detail-title" id="detailTitle"></span></div><div id="detailList"></div></div>
   <div id="sourcesView"><h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2><div id="sourcesContent"></div></div>
-  <div id="enforcementView" style="display:none"><h2 style="margin-bottom:12px;font-size:18px">🚨 执法事件 <span style="font-size:12px;color:#888;font-weight:400">（实时更新·最新事件）</span></h2><div class="case-filter" id="enfFilter"></div><div class="case-count" id="enfCount"></div><div id="enfContent"></div></div>
-  <div id="casesView"><h2 style="margin-bottom:12px;font-size:18px">⚖️ 互联网合规案例</h2><div class="case-filter" id="caseFilter"></div><div class="case-count" id="caseCount"></div><div id="casesContent"></div></div>
+  <div id="casesView"><h2 style="margin-bottom:12px;font-size:18px">⚖️ 合规事件 <span style="font-size:12px;color:#888;font-weight:400">（30条执法事件 + 12个典型案例）</span></h2><div class="case-filter" id="caseFilter"></div><div class="case-count" id="caseCount"></div><div id="casesContent"></div></div>
   <div id="noResult">🔍 未找到相关法规</div>
 </div>
 <div class="bottom-nav">
   <button class="btn active" id="navHome" onclick="switchView('home')"><span class="bi">🏠</span>合规领域</button>
   <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
-  <button class="btn" id="navCases" onclick="switchView('cases')"><span class="bi">⚖️</span>案例</button>
-  <button class="btn" id="navEnf" onclick="switchView('enforcement')"><span class="bi">🚨</span>执法事件</button>
+  <button class="btn" id="navCases" onclick="switchView('cases')"><span class="bi">⚖️</span>合规事件</button>
 </div>
 
 <script>
@@ -573,45 +571,51 @@ var DOMAIN_IDS={content:"内容安全",privacy:"隐私保护",fraud:"电信反�
 var curCaseFilter="all";
 function renderCases(filter){
   if(!filter){filter=curCaseFilter;}else{curCaseFilter=filter;}
-  var i,c,clist=[];
-  for(i=0;i<CASES.length;i++){
-    c=CASES[i];
-    if(filter=="all"||c.domain==filter){clist.push(clist.length);}
+  // 合并12个典型案例 + 30条执法事件
+  var allItems=[];
+  for(var i=0;i<CASES.length;i++){
+    var c=CASES[i];c._type="case";allItems.push(c);
   }
-  clist.sort(function(a,b){return CASES[b].date.localeCompare(CASES[a].date);});
-  var fhtml='<button class="btn'+(filter=="all"?" active":"")+'" onclick="renderCases(\'all\')">全部('+CASES.length+")</button>";
+  for(var i=0;i<ENF_EVENTS.length;i++){
+    var e=ENF_EVENTS[i];
+    var bmap={"anti-fraud":"fraud","content-safety":"content","privacy":"privacy","cyber":"license","ai":"content","trade-secret":"secret","qualification":"license","anti-bribery":"bribery","advertising":"ad","consumer":"consumer"};
+    var dm=bmap[e.r]||"content";
+    allItems.push({_type:"event",title:e.t,domain:dm,date:e.y,source:"",url:e.u1||"",summary:e.d,_tp:e.tp});
+  }
+  allItems.sort(function(a,b){return b.date.localeCompare(a.date);});
+  var flist=[];
+  for(var i=0;i<allItems.length;i++){
+    if(filter=="all"||allItems[i].domain==filter){flist.push(allItems[i]);}
+  }
   var domains=["content","privacy","fraud","payment","bribery","antitrust","ad","secret","consumer","finance","license","marketing","trade"];
-  for(i=0;i<domains.length;i++){
+  var fhtml='<button class="btn'+(filter=="all"?" active":"")+'" onclick="renderCases(\'all\')">全部('+flist.length+')</button>';
+  for(var i=0;i<domains.length;i++){
     var d=domains[i],cnt=0;
-    for(var j=0;j<CASES.length;j++){if(CASES[j].domain==d){cnt++;}}
+    for(var j=0;j<allItems.length;j++){if(allItems[j].domain==d)cnt++;}
     if(cnt>0){
-      fhtml+='<button class="btn'+(filter==d?" active":"")+'" onclick="renderCases(\''+d+'\')">'+DOMAIN_IDS[d]+"("+cnt+")</button>";
+      fhtml+='<button class="btn'+(filter==d?" active":"")+'" onclick="renderCases(\''+d+'\')">'+(DOMAIN_IDS[d]||d)+"("+cnt+")</button>";
     }
   }
   document.getElementById("caseFilter").innerHTML=fhtml;
-  if(typeof _newCases!="undefined"&&_newCases.length>0){
-    for(var ci=0;ci<_newCases.length;ci++){
-      var cfilters=document.getElementById("caseFilter").querySelectorAll(".btn");
-      for(var cj=0;cj<cfilters.length;cj++){
-        if(cfilters[cj].innerHTML.indexOf("全部")<0&&_newCases[ci].domain==cfilters[cj].getAttribute("onclick").replace(/.*\(|\)$/g,"")){
-          cfilters[cj].innerHTML+='<span class="new-tag" style="font-size:9px;padding:0 4px">新</span>';
-          break;
-        }
-      }
+  document.getElementById("caseCount").innerHTML="共 "+flist.length+" 条记录";
+  var html2="";
+  for(var i=0;i<flist.length;i++){
+    var item=flist[i];
+    var dc="#1a73e8";
+    for(var jj=0;jj<DOMAINS.length;jj++){if(DOMAINS[jj].id==item.domain){dc=DOMAINS[jj].color;break;}}
+    if(item._type=="event"){
+      var tpLabel=ENF_TP[item._tp]||"",tpCls=ENF_TPC[item._tp]||"st-d";
+      html2+='<div class="case-item" style="border-left-color:'+dc+'"><div class="case-title"><span class="st '+tpCls+'" style="margin-right:6px;font-size:11px">'+tpLabel+'</span>'+item.title+'</div>';
+      html2+='<div class="case-meta"><span class="tag">'+(DOMAIN_IDS[item.domain]||item.domain)+"</span> "+item.date+'</div>';
+      html2+='<div class="case-summary">'+item.summary+'</div>';
+      if(item.url)html2+='<div class="links" style="margin-top:6px"><a href="'+item.url+'" target="_blank" rel="noopener">🔗 查看原文</a></div>';
+    } else {
+      html2+='<div class="case-item" style="border-left-color:'+dc+'"><div class="case-title"><a href="'+item.url+'" target="_blank" rel="noopener">'+item.title+'</a></div>';
+      html2+='<div class="case-meta"><span class="tag">'+(DOMAIN_IDS[item.domain]||item.domain)+"</span> "+item.date+' · 来源:'+item.source+'</div>';
+      html2+='<div class="case-summary">'+item.summary+'</div></div>';
     }
   }
-  document.getElementById("caseCount").innerHTML="共 "+clist.length+" 个案例";
-  var html2="";
-  for(i=0;i<clist.length;i++){
-    c=CASES[clist[i]];
-    var dc="#1a73e8";
-    for(var jj=0;jj<DOMAINS.length;jj++){if(DOMAINS[jj].id==c.domain){dc=DOMAINS[jj].color;break;}}
-    html2+='<div class="case-item" style="border-left-color:'+dc+'">';
-    html2+='<div class="case-title"><a href="'+c.url+'" target="_blank" rel="noopener">'+c.title+"</a></div>";
-    html2+='<div class="case-meta"><span class="tag">'+DOMAIN_IDS[c.domain]+"</span> "+c.date+" · 来源:"+c.source+"</div>";
-    html2+='<div class="case-summary">'+c.summary+"</div></div>";
-  }
-  if(!html2){html2='<div style="text-align:center;padding:60px 20px;color:#999">暂无案例</div>';}
+  if(!html2){html2='<div style="text-align:center;padding:60px 20px;color:#999">暂无记录</div>';}
   document.getElementById("casesContent").innerHTML=html2;
 }
 
@@ -716,31 +720,6 @@ const ENF_RD = {"anti-fraud":{"ic":"🛡️","nm":"反诈"},"content-safety":{"i
 const ENF_COLORS = {"anti-fraud":"#e65100","content-safety":"#c62828","privacy":"#1565c0","cyber":"#2e7d32","ai":"#6a1b9a","trade-secret":"#4e342e","qualification":"#283593","anti-bribery":"#3e2723","advertising":"#ad1457","consumer":"#f57c00"};
 const ENF_TP = {"pun":"⚖️ 行政处罚","warn":"⚠️ 监管通报","case":"⚖️ 典型案例","info":"📋 监管数据","new":"🆕 新规"};
 const ENF_TPC = {"pun":"st-e","warn":"st-p","case":"st-e","info":"st-d","new":"st-p"};
-let enfFilter = "all";
-function renderEnforcement(filter){
-  if(!filter)filter=enfFilter;else enfFilter=filter;
-  let evs=[...ENF_EVENTS];
-  if(filter!=="all")evs=evs.filter(e=>e.r===filter);
-  evs.sort((x,y)=>y.y.localeCompare(x.y));
-  let fhtml='<button class="btn'+(filter==="all"?" active":"")+' onclick="renderEnforcement(\'all\')">全部('+evs.length+')</button>';
-  let areas={};for(let e of ENF_EVENTS){if(!areas[e.r])areas[e.r]=0;areas[e.r]++;}
-  for(let key in ENF_RD){if(areas[key]){let ic=ENF_RD[key].ic||"📋",nm=ENF_RD[key].nm||key;fhtml+='<button class="btn'+(filter===key?" active":"")+' onclick="renderEnforcement(\''+key+'\')">'+ic+nm+'('+areas[key]+')</button>';}}
-  document.getElementById("enfFilter").innerHTML=fhtml;
-  document.getElementById("enfCount").innerHTML="共 "+evs.length+" 件事件";
-  let html2="";
-  for(let e of evs){
-    let color=ENF_COLORS[e.r]||"#1a73e8";
-    let tpLabel=ENF_TP[e.tp]||e.tp,tpCls=ENF_TPC[e.tp]||"st-d";
-    let bizs=e.b.split(",").map(b=>{let m={store:"📱应用市场",browser:"🌐浏览器",video:"🎬视频",music:"🎵音乐",game:"🎮游戏",dev:"👥开发者",ad:"📢广告",xiaoyi:"🤖小艺",harmony:"🪄鸿蒙",ALL:"全业务"};return m[b]||b;}).join(" ");
-    html2+='<div class="case-item" style="border-left-color:'+color+'"><div class="case-title"><span class="st '+tpCls+'" style="margin-right:6px;font-size:11px">'+tpLabel+'</span>'+e.t+'</div>';
-    html2+='<div class="case-meta"><span class="tag">'+(ENF_RD[e.r]?ENF_RD[e.r].ic:"")+" "+(ENF_RD[e.r]?ENF_RD[e.r].nm:"")+'</span> '+e.y+' · '+bizs+'</div>';
-    html2+='<div class="case-summary">'+e.d+'</div>';
-    if(e.u1)html2+='<div class="links" style="margin-top:6px"><a href="'+e.u1+'" target="_blank" rel="noopener">🔗 查看原文</a></div>';
-    html2+='</div>';
-  }
-  if(!html2)html2='<div style="text-align:center;padding:60px 20px;color:#999">暂无事件</div>';
-  document.getElementById("enfContent").innerHTML=html2;
-}
 function renderSources(){
   var html='<div class="source-group"><h3>🏛️ 政府监管部门网站（'+SOURCES_GOV.length+' 个）</h3><div class="source-grid">';
   for(var i=0;i<SOURCES_GOV.length;i++)html+='<div class="source-item"><span class="sn">'+SOURCES_GOV[i].n+'</span><a href="'+SOURCES_GOV[i].u+'" target="_blank" rel="noopener">访问 ↗</a></div>';
@@ -766,14 +745,11 @@ function switchView(v){
   document.getElementById("navHome").classList.remove("active");
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
-  if(document.getElementById("navEnf"))document.getElementById("navEnf").classList.remove("active");
   document.getElementById("homeView").style.display=v=="home"?"block":"none";
   document.getElementById("sourcesView").style.display=v=="sources"?"block":"none";
   document.getElementById("casesView").style.display=v=="cases"?"block":"none";
-  if(document.getElementById("enforcementView"))document.getElementById("enforcementView").style.display=v=="enforcement"?"block":"none";
   if(v=="home"){document.getElementById("navHome").classList.add("active");}
   else if(v=="cases"){document.getElementById("navCases").classList.add("active");renderCases();}
-  else if(v=="enforcement"){if(document.getElementById("navEnf"))document.getElementById("navEnf").classList.add("active");renderEnforcement();}
   else if(v=="sources"){document.getElementById("navSources").classList.add("active");}
 }
 function doSearch(){
