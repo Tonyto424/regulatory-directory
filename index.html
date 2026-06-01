@@ -90,6 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
   <div id="homeView"><div class="grid" id="domainGrid"></div></div>
   <div id="detailView"><div class="detail-header"><button class="back-btn" onclick="showHome()">← 返回</button><span class="detail-title" id="detailTitle"></span></div><div id="detailList"></div></div>
   <div id="sourcesView"><h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2><div id="sourcesContent"></div></div>
+  <div id="enforcementView" style="display:none"><h2 style="margin-bottom:12px;font-size:18px">🚨 执法事件 <span style="font-size:12px;color:#888;font-weight:400">（实时更新·最新事件）</span></h2><div class="case-filter" id="enfFilter"></div><div class="case-count" id="enfCount"></div><div id="enfContent"></div></div>
   <div id="casesView"><h2 style="margin-bottom:12px;font-size:18px">⚖️ 互联网合规案例</h2><div class="case-filter" id="caseFilter"></div><div class="case-count" id="caseCount"></div><div id="casesContent"></div></div>
   <div id="noResult">🔍 未找到相关法规</div>
 </div>
@@ -97,6 +98,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
   <button class="btn active" id="navHome" onclick="switchView('home')"><span class="bi">🏠</span>合规领域</button>
   <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
   <button class="btn" id="navCases" onclick="switchView('cases')"><span class="bi">⚖️</span>案例</button>
+  <button class="btn" id="navEnf" onclick="switchView('enforcement')"><span class="bi">🚨</span>执法事件</button>
 </div>
 
 <script>
@@ -676,6 +678,69 @@ function showDetail(id){
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
 }
+
+// 执法事件数据（从法规洞察站同步）
+const ENF_EVENTS = [
+{"y":"2026.05","t":"五部门联合公布《互联网信息内容多渠道分发服务管理规定》（2026.9.1施行）","tp":"🆕 新规","b":"video,music,browser,store,game,ad,xiaoyi","r":"content-safety","d":"网信办+公安部+文旅部+市监总局+广电总局联合发布，规范MCN/多频道网络机构，要求依法取得行政许可和备案", "u1":"https://www.cac.gov.cn/2026-05/29/c_1781795876572880.htm","l1":"网信办"},
+{"y":"2026.05","t":"三部门联合印发《智能体规范应用与创新发展实施意见》","tp":"🆕 新规","b":"xiaoyi,ad,harmony,store","r":"ai","d":"网信办+发改委+工信部联合印发，明确智能体定义（自主感知/记忆/决策/交互/执行），提出19个典型应用场景", "u1":"https://www.news.cn/politics/20260508/aa31c404610e4cc59f47fea3ab04929b/c.html","l1":"新华网"},
+{"y":"2026.05","t":"截至4月30日累计868款生成式AI服务在国家网信办完成备案","tp":"📋 监管数据","b":"xiaoyi,harmony,ad,store","r":"ai","d":"2026.3-4月新增72款AI服务备案、49款完成登记。已发布十七批深度合成服务算法备案信息", "u1":"https://www.stcn.com/article/detail/3907795.html","l1":"证券时报"},
+{"y":"2026.04","t":"中央网信办召开全国网络法治工作会议部署2026年重点立法","tp":"📋 监管数据","b":"ALL","r":"content-safety","d":"强调推进重点网络立法、拓展涉外网络法治建设、持续完善网络法律规范体系", "u1":"https://m.10jqka.com.cn/20260408/c675840875.shtml","l1":"同花顺"},
+{"y":"2026.04","t":"中央网信办等三部门开展2026年个人信息保护系列专项行动","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,xiaoyi,ad","r":"privacy","d":"7大重点：APP/SDK违规收集、互联网广告、教育/交通/卫生健康/金融领域专项治理、个人信息犯罪打击", "u1":"https://www.gov.cn/lianbo/202604/content_7064584.htm","l1":"中国政府网"},
+{"y":"2026.04","t":"《人工智能拟人化互动服务管理暂行办法》发布","tp":"🆕 新规","b":"xiaoyi,ad,harmony","r":"ai","d":"规范AI拟人化交互服务，要求标识清晰、防范诱导沉迷、保护用户权益", "u1":"https://www.cac.gov.cn/2026-04/10/c_1777558395078289.htm","l1":"网信办"},
+{"y":"2026.04","t":"人工智能、数据、算法写入2026年国务院立法工作计划","tp":"📋 监管数据","b":"xiaoyi,harmony,dev,ad,store","r":"ai","d":"国务院立法工作计划明确将AI、数据、算法相关立法列入重点推进项目", "u1":"https://news.sohu.com/a/1021212502_585328","l1":"搜狐"},
+{"y":"2026.03","t":"中关村论坛共议北京人工智能地方立法","tp":"📋 监管数据","b":"xiaoyi,harmony,ad","r":"ai","d":"清华法学院院长建议以既有法律体系为基础推进AI治理，避免新设统一监管机构", "u1":"https://www.tsinghua.edu.cn/info/1182/125051.htm","l1":"清华大学"},
+{"y":"2026.02","t":"《网络交易平台规则监督管理办法》《直播电商监督管理办法》正式施行","tp":"🆕 新规","b":"store,game,ad,video","r":"consumer","d":"规范\"仅退款\"\"大数据杀熟\"\"二选一\"；数字人主播纳入监管；明确四类主体责任", "u1":"https://sfj.beijing.gov.cn/sfj/sfdt/fzxc74/743915772/index.html","l1":"北京司法局"},
+{"y":"2026.01","t":"新修订《网络安全法》《个人信息出境认证办法》正式施行","tp":"🆕 新规","b":"ALL","r":"cyber","d":"网络安全法新增人工智能发展条款、完善法律责任；个人信息出境新增认证路径", "u1":"https://sdxw.iqilu.com/w/article/YS0yMS0xNjk1OTU2NA==.html","l1":"闪电新闻"},
+{"y":"2025.12","t":"工信部通报24款APP及SDK存在侵害用户权益行为（2025年第6批）","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,xiaoyi","r":"privacy","d":"工信部2025年第6批通报，24款涉教育、工具等领域APP及SDK存在违规收集个人信息等问题", "u1":"https://www.miit.gov.cn/jgsj/xgj/fwjd/art/2025/art_8ffdfc334b8a4931baa8d7cc638b8799.html","l1":"工信部"},
+{"y":"2025.10","t":"工信部通报42款APP及SDK存在侵害用户权益行为","tp":"⚠️ 监管通报","b":"store,browser,game,video,music","r":"privacy","d":"四部门联合开展2025年个人信息保护专项行动，42款APP及SDK被通报", "u1":"https://www.cls.cn/detail/2183685","l1":"财联社"},
+{"y":"2025.10","t":"市场监管总局公布十起互联网违法广告典型案例","tp":"⚖️ 行政处罚","b":"ad,store,browser,game,music","r":"advertising","d":"前三季度查处互联网违法广告案件22185件、罚没1.11亿元", "u1":"http://www.law-lib.com/fzdt/newshtml/fzjd/20251016194922.htm","l1":"法律门户"},
+{"y":"2025.09","t":"国家网信办发布网络安全·数据安全·个人信息保护执法典型案例（10起）","tp":"⚖️ 行政处罚","b":"store,browser,game,dev,ad,xiaoyi,harmony","r":"cyber","d":"网信系统查处网页篡改、数据泄露、违法违规处理个人信息、新技术新应用未经评估上线等案件", "u1":"https://www.cac.gov.cn/2025-09/16/c_1759741437315419.htm","l1":"网信办"},
+{"y":"2025.09","t":"迪奥（上海）因跨境传输个人信息被处罚","tp":"⚖️ 行政处罚","b":"dev,ad,harmony","r":"privacy","d":"迪奥因未履行数据出境安全评估、缺失用户单独同意、未采取加密去标识化措施三项违规被处罚", "u1":"https://www.secrss.com/articles/82893","l1":"安全内参"},
+{"y":"2025.09","t":"成都快购（快手）被市场监管总局罚没超2600万元","tp":"⚖️ 行政处罚","b":"store,game,ad","r":"consumer","d":"未履行信息公示义务、向平台内经营者收取不合理费用、未对消费者尽到安全保障义务", "u1":"https://www.xhby.net/content/s697ca54ae4b0e0ccbc2e34e6.html","l1":"新华报业"},
+{"y":"2025.09","t":"\"清朗·整治AI技术滥用\"专项行动处置4200余款违规AI产品","tp":"⚠️ 监管通报","b":"xiaoyi,harmony,ad,store","r":"ai","d":"截至9月已处置4200余款违规AI产品，较行动初期增长20%", "u1":"https://segmentfault.com/a/1190000047304813","l1":"思否"},
+{"y":"2025.08","t":"网信部门行政处罚裁量权基准适用规定发布","tp":"🆕 新规","b":"ALL","r":"content-safety","d":"明确裁量权基准划分为不予处罚、减轻、从轻、一般、从重五个阶次", "u1":"https://www.cac.gov.cn/2025-06/27/c_1752736438457815.htm","l1":"网信办"},
+{"y":"2025.06","t":"72款移动应用被通报违法违规收集使用个人信息","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,xiaoyi","r":"privacy","d":"国家计算机病毒应急处理中心检测发现72款移动应用存在违法违规收集使用个人信息，涵盖17项违规行为", "u1":"https://finance.eastmoney.com/a/202602033640015824.html","l1":"东方财富"},
+{"y":"2025.06","t":"市场监管总局公布十起违法广告典型案例","tp":"⚖️ 行政处罚","b":"ad,store,browser,game,music","r":"advertising","d":"截至4月底查处违法广告案件11459件、罚没8830.9万元", "u1":"https://www.samr.gov.cn/xw/zj/art/2025/art_80ee21faaae940809d483f002a8ecbea.html","l1":"市场监管总局"},
+{"y":"2025.06","t":"市场监管总局查处广告违法案件4.45万件罚没2.52亿元（全年）","tp":"📋 监管数据","b":"ad,store,browser,game,video,music","r":"advertising","d":"聚焦医疗、金融、食品等重点领域，整治普通食品疗效化宣传、直播带货虚假广告、AI换脸违法广告等", "u1":"https://www.chinanews.com/cj/2026/03-14/10586858.shtml","l1":"中新网"},
+{"y":"2025.04","t":"开山猴AI写作平台生成暴力恐怖内容被查处","tp":"⚖️ 行政处罚","b":"store,game,xiaoyi","r":"ai","d":"AI写作平台未设置内容审核拦截机制，暂停AI功能15日", "u1":"https://juejin.cn/post/7557377430034792490","l1":"掘金"},
+{"y":"2025.04","t":"工信部通报52款APP及SDK存在侵害用户权益行为（2025年第1批）","tp":"⚠️ 监管通报","b":"store,browser,game,video,music","r":"privacy","d":"2025年首批通报，52款APP及SDK涉及违规收集个人信息、强制索权等", "u1":"https://wap.miit.gov.cn/jgsj/xgj/gzdt/art/2025/art_296958d2adef46d78e4eada4aeeb3d0d.html","l1":"工信部"},
+{"y":"2025","t":"全国公安机关侦破电诈案件25.8万起，拦截诈骗电话36亿次","tp":"📋 监管数据","b":"store,game,browser,ad","r":"anti-fraud","d":"\"断流\"\"拔钉\"\"斩链\"专项行动抓捕金主头目542名", "u1":"https://news.cctv.cn/2026/01/08/ARTIYSUsqZZllssjSRGwiKJ9260108.shtml","l1":"央视网"},
+{"y":"2025","t":"全国网信系统约谈5811家网站平台、下架App2133款","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,ad,xiaoyi","r":"content-safety","d":"2025年关闭违法网站10946家、下架App200款；2025年下架App2133款、下线小程序192款", "u1":"https://www.cac.gov.cn/2025-04/27/c_1747548228751408.htm","l1":"网信办"},
+{"y":"2025","t":"广东某科技公司网页被篡改为违法内容遭处罚","tp":"⚖️ 行政处罚","b":"ALL","r":"cyber","d":"办公系统存在任意文件上传漏洞，未及时修复致网页被篡改，违反《网络安全法》", "u1":"https://www.cac.gov.cn/2025-09/16/c_1759741437315419.htm","l1":"网信办"},
+{"y":"2025","t":"浙江某科技公司App提供AI换脸服务未进行安全评估被下架","tp":"⚖️ 行政处罚","b":"store,xiaoyi,ad","r":"ai","d":"提供深度合成换脸服务未按规定安全评估、深度合成内容未作显著标识，被网信办依法下架", "u1":"https://www.cac.gov.cn/2025-09/16/c_1759741437315419.htm","l1":"网信办"},
+{"y":"2025","t":"上海网信办案例：物流科技公司ES数据库泄露","tp":"⚖️ 行政处罚","b":"dev,store,browser","r":"cyber","d":"某物流运输网络科技企业未关闭ES数据库9200端口，数据被境外IP窃取", "u1":"https://www.jswx.gov.cn/csj/sh/202601/t20260116_1302534.shtml","l1":"上海网信办"},
+{"y":"2025.11","t":"山西老葛商贸直播带货虚假宣传被罚款560万元","tp":"⚖️ 行政处罚","b":"store,ad","r":"advertising","d":"直播营销30余种商品时使用无法证明的夸大用语，构成虚假宣传或价格欺诈", "u1":"https://yjj.sh.gov.cn/zjyw/20251129/43ddecf0481d4204af565f2c14e21099.html","l1":"上海药监局"},
+{"y":"2025.02","t":"最高法发布7起电信网络诈骗及其关联犯罪典型案例","tp":"⚖️ 典型案例","b":"store,game,browser","r":"anti-fraud","d":"严惩跨境电诈集团首要分子、打击利用未成年人实施电诈、针对海外留学生诈骗等案例", "u1":"https://m.055110.com/xs/1/25425.html","l1":"律师门户"}
+];
+const ENF_RD = {"anti-fraud":{"ic":"🛡️","nm":"反诈"},"content-safety":{"ic":"📰","nm":"内容安全"},"privacy":{"ic":"🔐","nm":"隐私合规"},"cyber":{"ic":"🛡️","nm":"网络安全"},"ai":{"ic":"🤖","nm":"AI治理"},"trade-secret":{"ic":"🔒","nm":"商业秘密保护"},"qualification":{"ic":"📋","nm":"资质合规"},"anti-bribery":{"ic":"⚖️","nm":"反商业贿赂"},"advertising":{"ic":"📢","nm":"广告法遵从"},"consumer":{"ic":"👤","nm":"消费者权益保护"}};
+const ENF_COLORS = {"anti-fraud":"#e65100","content-safety":"#c62828","privacy":"#1565c0","cyber":"#2e7d32","ai":"#6a1b9a","trade-secret":"#4e342e","qualification":"#283593","anti-bribery":"#3e2723","advertising":"#ad1457","consumer":"#f57c00"};
+const ENF_TP = {"pun":"⚖️ 行政处罚","warn":"⚠️ 监管通报","case":"⚖️ 典型案例","info":"📋 监管数据","new":"🆕 新规"};
+const ENF_TPC = {"pun":"st-e","warn":"st-p","case":"st-e","info":"st-d","new":"st-p"};
+let enfFilter = "all";
+function renderEnforcement(filter){
+  if(!filter)filter=enfFilter;else enfFilter=filter;
+  let evs=[...ENF_EVENTS];
+  if(filter!=="all")evs=evs.filter(e=>e.r===filter);
+  evs.sort((x,y)=>y.y.localeCompare(x.y));
+  let fhtml='<button class="btn'+(filter==="all"?" active":"")+' onclick="renderEnforcement(\'all\')">全部('+evs.length+')</button>';
+  let areas={};for(let e of ENF_EVENTS){if(!areas[e.r])areas[e.r]=0;areas[e.r]++;}
+  for(let key in ENF_RD){if(areas[key]){let ic=ENF_RD[key].ic||"📋",nm=ENF_RD[key].nm||key;fhtml+='<button class="btn'+(filter===key?" active":"")+' onclick="renderEnforcement(\''+key+'\')">'+ic+nm+'('+areas[key]+')</button>';}}
+  document.getElementById("enfFilter").innerHTML=fhtml;
+  document.getElementById("enfCount").innerHTML="共 "+evs.length+" 件事件";
+  let html2="";
+  for(let e of evs){
+    let color=ENF_COLORS[e.r]||"#1a73e8";
+    let tpLabel=ENF_TP[e.tp]||e.tp,tpCls=ENF_TPC[e.tp]||"st-d";
+    let bizs=e.b.split(",").map(b=>{let m={store:"📱应用市场",browser:"🌐浏览器",video:"🎬视频",music:"🎵音乐",game:"🎮游戏",dev:"👥开发者",ad:"📢广告",xiaoyi:"🤖小艺",harmony:"🪄鸿蒙",ALL:"全业务"};return m[b]||b;}).join(" ");
+    html2+='<div class="case-item" style="border-left-color:'+color+'"><div class="case-title"><span class="st '+tpCls+'" style="margin-right:6px;font-size:11px">'+tpLabel+'</span>'+e.t+'</div>';
+    html2+='<div class="case-meta"><span class="tag">'+(ENF_RD[e.r]?ENF_RD[e.r].ic:"")+" "+(ENF_RD[e.r]?ENF_RD[e.r].nm:"")+'</span> '+e.y+' · '+bizs+'</div>';
+    html2+='<div class="case-summary">'+e.d+'</div>';
+    if(e.u1)html2+='<div class="links" style="margin-top:6px"><a href="'+e.u1+'" target="_blank" rel="noopener">🔗 查看原文</a></div>';
+    html2+='</div>';
+  }
+  if(!html2)html2='<div style="text-align:center;padding:60px 20px;color:#999">暂无事件</div>';
+  document.getElementById("enfContent").innerHTML=html2;
+}
 function renderSources(){
   var html='<div class="source-group"><h3>🏛️ 政府监管部门网站（'+SOURCES_GOV.length+' 个）</h3><div class="source-grid">';
   for(var i=0;i<SOURCES_GOV.length;i++)html+='<div class="source-item"><span class="sn">'+SOURCES_GOV[i].n+'</span><a href="'+SOURCES_GOV[i].u+'" target="_blank" rel="noopener">访问 ↗</a></div>';
@@ -701,12 +766,14 @@ function switchView(v){
   document.getElementById("navHome").classList.remove("active");
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
-  document.getElementById("navCases").classList.remove("active");
+  if(document.getElementById("navEnf"))document.getElementById("navEnf").classList.remove("active");
   document.getElementById("homeView").style.display=v=="home"?"block":"none";
   document.getElementById("sourcesView").style.display=v=="sources"?"block":"none";
   document.getElementById("casesView").style.display=v=="cases"?"block":"none";
+  if(document.getElementById("enforcementView"))document.getElementById("enforcementView").style.display=v=="enforcement"?"block":"none";
   if(v=="home"){document.getElementById("navHome").classList.add("active");}
   else if(v=="cases"){document.getElementById("navCases").classList.add("active");renderCases();}
+  else if(v=="enforcement"){if(document.getElementById("navEnf"))document.getElementById("navEnf").classList.add("active");renderEnforcement();}
   else if(v=="sources"){document.getElementById("navSources").classList.add("active");}
 }
 function doSearch(){

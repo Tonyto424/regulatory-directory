@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华为软件技术 · 法规标准信息平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#CF0A2C;--primary-light:#FDE8EC;--accent:#1E1E30;--bg:#F4F5F9;--card:#FFF;--folder:#F0F1F6;--text:#2D2D3A;--text-sec:#6E6E7E;--text-muted:#9A9AA8;--border:#E2E3EA;--radius:10px;--shadow:0 1px 4px rgba(0,0,0,0.05);--event-pri:#E8F5E9;--event-warn:#FFF8E1;--event-pun:#FFEBEE;--event-case:#E3F2FD;--event-info:#F3E5F5}
+body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.header{background:linear-gradient(135deg,#1E1E30 0%,#2B2B48 100%);color:#fff;padding:28px 16px 22px;text-align:center;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 80%,rgba(207,10,44,0.10) 0%,transparent 60%)}
+.header-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.header-badge{display:inline-block;background:var(--primary);color:#fff;padding:3px 12px;border-radius:16px;font-size:10px;font-weight:500;letter-spacing:.5px;margin-bottom:8px}
+.header h1{font-size:20px;font-weight:700;letter-spacing:-.3px}
+.header p{font-size:11px;color:rgba(255,255,255,0.6);max-width:520px;margin:4px auto 0}
+.container{max-width:860px;margin:0 auto;padding:16px 10px 32px}
+.view-toggle{display:flex;gap:4px;margin-bottom:10px;background:var(--card);border-radius:10px;padding:3px;box-shadow:var(--shadow);width:fit-content;flex-wrap:wrap}
+.view-btn{padding:4px 14px;border-radius:8px;font-size:11px;font-weight:500;cursor:pointer;border:none;background:transparent;transition:all .2s;color:var(--text-sec);font-family:inherit}
+.view-btn.active{background:var(--primary);color:#fff}
+.biz-bar{display:none;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.biz-bar.show{display:flex}
+.biz-chip{background:var(--card);border-radius:8px;padding:5px 8px;font-size:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:5px;cursor:pointer;border:2px solid transparent;transition:all .12s;user-select:none;flex:1 0 calc(33% - 4px);min-width:100px}
+.biz-chip:hover{border-color:var(--border)}
+.biz-chip.active{border-color:var(--primary);background:var(--primary-light)}
+.biz-chip .emoji{font-size:16px}
+.biz-chip .info{flex:1;min-width:0}
+.biz-chip .info .name{font-size:11px;font-weight:600}
+.biz-chip .info .cnt{font-size:8px;color:var(--text-muted)}
+.biz-chip .check{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:7px;color:transparent;transition:all .12s}
+.biz-chip.active .check{background:var(--primary);border-color:var(--primary);color:#fff}
+.biz-hint{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--primary-light);border-radius:6px;margin-bottom:10px;font-size:11px;border:1px solid rgba(207,10,44,0.15)}
+.biz-hint .close{margin-left:auto;cursor:pointer;font-size:12px;color:var(--text-muted);background:none;border:none;padding:0 3px}
+.toolbar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.search-box{flex:1;min-width:120px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;font-family:inherit;outline:none;transition:border-color .2s}
+.search-box:focus{border-color:var(--primary)}
+.filter-tabs{display:flex;gap:3px;flex-wrap:wrap}
+.filter-tab{padding:3px 8px;border-radius:12px;font-size:9px;cursor:pointer;border:1px solid var(--border);background:var(--card);transition:all .12s;color:var(--text-sec);user-select:none}
+.filter-tab:hover{border-color:var(--primary);color:var(--primary)}
+.filter-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.stats-bar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.stat-pill{background:var(--card);border-radius:14px;padding:2px 8px;font-size:9px;color:var(--text-sec);box-shadow:var(--shadow)}
+.stat-pill strong{color:var(--primary)}
+.folder-list{display:flex;flex-direction:column;gap:3px}
+.folder{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid transparent;transition:border-color .15s}
+.folder.hidden{display:none}
+.folder-header{display:flex;align-items:center;gap:6px;padding:8px 12px;cursor:pointer;transition:background .12s;user-select:none}
+.folder-header:hover{background:#FAFBFF}
+.folder-header .arrow{font-size:9px;color:var(--text-muted);transition:transform .2s;flex-shrink:0;width:12px;text-align:center}
+.folder.open .folder-header .arrow{transform:rotate(90deg)}
+.folder-header .ficon{font-size:14px;text-align:center;flex-shrink:0;width:20px}
+.folder-header .meta{flex:1;min-width:0}
+.folder-header .meta .name{font-size:12px;font-weight:600}
+.folder-header .meta .desc{font-size:9px;color:var(--text-sec);margin-top:1px}
+.folder-header .badge{background:var(--primary-light);color:var(--primary);font-size:9px;font-weight:600;padding:1px 7px;border-radius:8px;flex-shrink:0}
+.folder-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.folder.open .folder-body{max-height:9999px}
+.law-list{padding:0 12px 6px;display:flex;flex-direction:column;gap:2px}
+.law-row{display:flex;align-items:flex-start;gap:5px;padding:5px 7px;border-radius:5px;border-left:3px solid var(--primary);background:var(--folder);transition:background .12s}
+.law-row:hover{background:#E8EAEF}
+.law-row .year{font-size:9px;font-weight:600;color:var(--text-muted);flex-shrink:0;width:28px;padding-top:1px}
+.law-row .info{flex:1;min-width:0}
+.law-row .info .title{font-size:10px;font-weight:500;line-height:1.4}
+.law-row .info .src{font-size:8px;color:var(--text-sec);margin-top:1px}
+.law-row .info .src span{display:inline-block;background:rgba(207,10,44,0.06);padding:0 4px;border-radius:2px;font-size:7px;color:var(--primary);margin-right:2px}
+.law-row .info .biz-tags{margin-top:1px;display:flex;gap:2px;flex-wrap:wrap}
+.law-row .info .biz-tag{font-size:7px;padding:0 4px;border-radius:5px;background:#E3F0FF;color:#1A5D8F;line-height:1.6}
+.law-row .links{display:flex;gap:2px;flex-shrink:0;flex-wrap:wrap;align-items:center;margin-top:1px}
+.law-row .links a{font-size:7px;text-decoration:none;padding:1px 5px;border-radius:7px;border:1px solid var(--border);color:var(--text-sec);transition:all .1s;white-space:nowrap}
+.law-row .links a:hover{border-color:var(--primary);color:var(--primary);background:rgba(207,10,44,0.04)}
+.event-row{border-left-color:#1565C0;background:#F5F8FF}
+.event-row:hover{background:#E3EDFF}
+.event-row .tp{font-size:7px;padding:1px 5px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:1px;margin-right:4px;font-weight:600;display:inline-block}
+.tp-pun{background:#FFEBEE;color:#C62828}
+.tp-warn{background:#FFF8E1;color:#F57F17}
+.tp-case{background:#E3F2FD;color:#1565C0}
+.tp-info{background:#F3E5F5;color:#7B1FA2}
+.tp-new{background:#E8F5E9;color:#2E7D32}
+.event-row .desc{font-size:9px;color:var(--text-sec);margin-top:1px;line-height:1.5}
+.event-row .risk-tag{display:inline-block;font-size:7px;padding:0 4px;border-radius:4px;background:rgba(21,101,192,0.08);color:#1565C0;margin-right:2px}
+.empty{text-align:center;padding:24px 16px;color:var(--text-muted);font-size:11px}
+.footer{background:var(--accent);color:rgba(255,255,255,0.4);padding:16px 12px;text-align:center;font-size:9px;line-height:1.8}
+.footer strong{color:#fff}
+@media(max-width:600px){.header h1{font-size:17px}.container{padding:10px 6px 24px}.folder-header{padding:6px 8px}.law-row{padding:4px 6px}}
+</style>
+</head>
+<body>
+<header class="header"><div class="header-content"><div class="header-badge">⚖️ 法规标准平台</div><h1>华为软件技术 · 法规标准库</h1><p>法规标准 · 执法事件 · 覆盖10大风险领域 · 来源：网信办/工信部/全国人大/市场监管总局/国务院/通管局/协会</p></div></header>
+<div class="container">
+<div class="view-toggle"><button class="view-btn active" onclick="switchView('risk')">📁 按风险领域</button><button class="view-btn" onclick="switchView('biz')">🏢 按业务</button><button class="view-btn" onclick="switchView('event')">🚨 执法事件</button></div>
+<div class="biz-bar show" id="bizBar"></div>
+<div class="biz-hint" id="bizHint" style="display:none"><span id="bizHintText"></span><button class="close" onclick="clearBizFilter()">✕</button></div>
+<div class="toolbar"><input id="searchInput" class="search-box" placeholder="搜索法规/事件名称…" oninput="render()"><div class="filter-tabs" id="sourceTabs"><span class="filter-tab active" data-src="all" onclick="setSrc('all')">全部</span><span class="filter-tab" data-src="网信办" onclick="setSrc('网信办')">网信办</span><span class="filter-tab" data-src="工信部" onclick="setSrc('工信部')">工信部</span><span class="filter-tab" data-src="全国人大" onclick="setSrc('全国人大')">人大</span><span class="filter-tab" data-src="市场监管总局" onclick="setSrc('市场监管总局')">市监</span><span class="filter-tab" data-src="国务院" onclick="setSrc('国务院')">国务院</span></div></div>
+<div class="stats-bar" id="statsBar"></div>
+<div id="mainContent"></div></div>
+<footer class="footer"><strong>华为软件技术 · 法规标准信息平台</strong><br>数据来源：网信办 | 工信部 | 全国人大 | 市场监管总局 | 国务院公报 | 中国互联网协会 | 通信管理局<br><span style="opacity:0.3;">© 2026 · 持续更新·数据截至2026年5月·仅供参考，不构成法律意见</span></footer>
+<script>
+const DATA = {"BIZ":[{"k":"store","n":"应用市场","e":"📱"},{"k":"browser","n":"浏览器","e":"🌐"},{"k":"video","n":"华为视频","e":"🎬"},{"k":"music","n":"华为音乐","e":"🎵"},{"k":"game","n":"游戏中心","e":"🎮"},{"k":"dev","n":"开发者联盟","e":"👥"},{"k":"ad","n":"鲸鸿动能","e":"📢"},{"k":"xiaoyi","n":"小艺","e":"🤖"},{"k":"harmony","n":"鸿蒙生态","e":"🪄"}],"AREAS":[{"id":"anti-fraud","icon":"🛡️","name":"反诈","desc":"电信网络诈骗治理、实名制、互联网反诈","laws":[
+{"y":"2026","t":"《智能体规范应用与创新发展实施意见》","s":"网信办","b":["store","game","browser","xiaoyi","ad"],"u1":"https://www.cac.gov.cn/2026-05/08/c_1779979789523320.htm","l1":"网信办"},
+{"y":"2025","t":"公安部\"断卡\"专项行动（2025-2026延续）","s":"公安部","b":["store","browser","game"],"u1":"https://www.mps.gov.cn/n2255079/n4876594/n5104076/n5104077/c9514048/content.html","l1":"公安部"},
+{"y":"2022","t":"《中华人民共和国反电信网络诈骗法》","s":"全国人大","b":["store","game","browser","ad","dev"],"u1":"https://www.miit.gov.cn/jgsj/zfs/fl/art/2022/art_d30139b442a141f48f05775d8c0b3cee.html","l1":"工信部","u2":"http://www.npc.gov.cn/npc/c30834/202209/c3b25b5f3b9e4f8f8a9e8b4f9e4f9e4f.shtml","l2":"人大"},
+{"y":"2022","t":"《互联网弹窗信息推送服务管理规定》","s":"网信办","b":["browser","store","ad"],"u1":"https://www.cac.gov.cn/2022-09/08/c_1664260384702890.htm","l1":"网信办"},
+{"y":"2019","t":"《最高人民法院最高人民检察院关于办理非法利用信息网络、帮助信息网络犯罪活动等刑事案件适用法律若干问题的解释》","s":"最高法·最高检","b":["store","game","browser","ad"],"u1":"https://www.cac.gov.cn/2019-10/25/c_1573534999086260.htm","l1":"网信办"},
+{"y":"2016","t":"《关于办理电信网络诈骗等刑事案件适用法律若干问题的意见》","s":"最高法·最高检","b":["store","game","browser","ad"],"u1":"https://www.cac.gov.cn/2016-11/07/c_1119867116.htm","l1":"网信办"},
+{"y":"2013","t":"《电话用户真实身份信息登记规定》（工信部令第27号）","s":"工信部","b":["store","browser"],"u1":"https://www.miit.gov.cn/zwgk/zcwj/flfg/art/2020/art_07ad6d8e69cd4d5ba8b307b37c1aa093.html","l1":"工信部"},
+{"y":"2000","t":"《全国人民代表大会常务委员会关于维护互联网安全的决定》","s":"全国人大","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2000-12/29/c_133158942.htm","l1":"网信办","u2":"http://www.npc.gov.cn/wxzl/wxzl/2000-12/28/content_1750.htm","l2":"人大"}
+]},{"id":"content-safety","icon":"📰","name":"内容安全","desc":"网络信息内容生态治理、自媒体、视听节目、MCN管理","laws":[
+{"y":"2026","t":"《互联网信息内容多渠道分发服务管理规定》（2026.9.1施行）","s":"网信办·五部门","b":["video","music","browser","store","game","ad","xiaoyi"],"u1":"https://www.cac.gov.cn/2026-05/29/c_1781795876572880.htm","l1":"网信办"},
+{"y":"2026","t":"《直播电商监督管理办法》（2026.2.1施行）","s":"网信办","b":["store","video","ad"],"u1":"https://www.samr.gov.cn/xw/mtjj/art/2026/art_e32fbfd3aaf346a794de030548ab671e.html","l1":"市监总局解读"},
+{"y":"2026","t":"《网络交易平台规则监督管理办法》（2026.2.1施行）","s":"网信办","b":["store","game","ad"],"u1":"https://www.cac.gov.cn/2026-01/07/c_1769515215345420.htm","l1":"网信办"},
+{"y":"2026","t":"《民政部 工信部 广电总局 新闻出版署 网信办〈公开募捐平台服务管理办法〉》","s":"网信办·多部门","b":["store","browser"],"u1":"https://www.cac.gov.cn/2026-04/30/c_1779276538655621.htm","l1":"网信办"},
+{"y":"2026","t":"《互联网平台价格行为规则》（2026.4.10施行）","s":"发改委·市监总局·网信办","b":["store","browser","game","ad"],"u1":"https://sfj.beijing.gov.cn/sfj/sfdt/fzxc74/743963873/","l1":"北京司法局"},
+{"y":"2025","t":"《网络信息内容多渠道分发服务机构相关业务活动管理规定（草案）》","s":"网信办","b":["video","music","browser","store","game","ad"],"u1":"https://www.jswx.gov.cn/fwhd/tzgg/202501/t20250110_106680.shtml","l1":"草案"},
+{"y":"2025","t":"《互联网军事信息传播管理办法》","s":"网信办","b":["store","browser"],"u1":"https://www.cac.gov.cn/2025-02/08/c_1740714184323988.htm","l1":"网信办"},
+{"y":"2025","t":"《人工智能生成合成内容标识办法》（2025.9.1施行）","s":"网信办·四部门","b":["xiaoyi","ad","video","music"],"u1":"https://www.cac.gov.cn/2025-03/14/c_1743654685899683.htm","l1":"网信办"},
+{"y":"2024","t":"《网络暴力信息治理规定》","s":"网信办","b":["store","browser","video","music","game","xiaoyi"],"u1":"https://www.cac.gov.cn/2024-06/14/c_1720043894161555.htm","l1":"网信办"},
+{"y":"2024","t":"《互联网信息服务管理办法》（2024年第2次修订）","s":"国务院","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2000-09/30/c_126193701.htm","l1":"网信办","u2":"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_483f0dd8eb1b4dc5961e4e008bd4a083.html","l2":"总局"},
+{"y":"2023","t":"《关于进一步加强网络侵权信息举报工作的指导意见》","s":"网信办","b":["store","browser","game"],"u1":"https://www.cac.gov.cn/2023-09/15/c_1696347685563097.htm","l1":"网信办"},
+{"y":"2022","t":"《互联网用户账号信息管理规定》","s":"网信办","b":["store","browser","game","video","music","xiaoyi"],"u1":"https://www.cac.gov.cn/2022-06/26/c_1657868775042841.htm","l1":"网信办"},
+{"y":"2022","t":"《互联网跟帖评论服务管理规定》","s":"网信办","b":["store","browser","game"],"u1":"https://www.cac.gov.cn/2022-11/16/c_1670253725725039.htm","l1":"网信办"},
+{"y":"2022","t":"《移动互联网应用程序信息服务管理规定》","s":"网信办","b":["store","browser","game","xiaoyi"],"u1":"https://www.cac.gov.cn/2022-06/14/c_1656821626455324.htm","l1":"网信办"},
+{"y":"2022","t":"《关于进一步规范移动智能终端应用软件预置行为的通告》","s":"工信部·网信办","b":["store","browser","harmony"],"u1":"https://www.cac.gov.cn/2022-12/14/c_1672656825925035.htm","l1":"网信办"},
+{"y":"2021","t":"《关于进一步压实网站平台信息内容管理主体责任的意见》","s":"网信办","b":["store","browser","video","music","game","ad"],"u1":"https://www.cac.gov.cn/2021-09/15/c_1633296789845827.htm","l1":"网信办"},
+{"y":"2021","t":"《互联网用户公众账号信息服务管理规定》","s":"网信办","b":["store","browser","video","music","ad","xiaoyi"],"u1":"https://www.cac.gov.cn/2021-01/22/c_1612887880656609.htm","l1":"网信办"},
+{"y":"2021","t":"《关于加强网络直播规范管理工作的指导意见》","s":"网信办","b":["store","video","ad"],"u1":"https://www.cac.gov.cn/2021-02/09/c_1614442843753738.htm","l1":"网信办"},
+{"y":"2020","t":"《网络信息内容生态治理规定》","s":"网信办","b":["store","browser","video","music","game","ad","xiaoyi"],"u1":"https://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm","l1":"网信办"},
+{"y":"2019","t":"《网络音视频信息服务管理规定》","s":"网信办·工信部·公安部","b":["video","music","xiaoyi"],"u1":"https://www.cac.gov.cn/2019-11/29/c_1576561820967678.htm","l1":"网信办"},
+{"y":"2017","t":"《互联网新闻信息服务管理规定》（网信办令第1号）","s":"网信办","b":["browser","video","xiaoyi"],"u1":"https://www.cac.gov.cn/2017-05/02/c_1120902565.htm","l1":"网信办"},
+{"y":"2017","t":"《互联网论坛社区服务管理规定》","s":"网信办","b":["browser","store","game"],"u1":"https://www.cac.gov.cn/2017-08/25/c_1121541920.htm","l1":"网信办"},
+{"y":"2017","t":"《互联网群组信息服务管理规定》","s":"网信办","b":["store","browser","game"],"u1":"https://www.cac.gov.cn/2017-09/07/c_1121623979.htm","l1":"网信办"},
+{"y":"2017","t":"《互联网新闻信息服务新技术新应用安全评估管理规定》","s":"网信办","b":["browser","store","xiaoyi"],"u1":"https://www.cac.gov.cn/2017-10/30/c_1121878049.htm","l1":"网信办"},
+{"y":"2018","t":"《微博客信息服务管理规定》","s":"网信办","b":["browser","store"],"u1":"https://www.cac.gov.cn/2018-02/02/c_1122358726.htm","l1":"网信办"},
+{"y":"2010","t":"《互联网等信息网络传播视听节目管理办法》","s":"广电总局","b":["video","music"],"u1":"https://www.gov.cn/gongbao/content/2020/content_5495744.htm","l1":"公报"},
+{"y":"2011","t":"《互联网文化管理暂行规定》","s":"文旅部","b":["video","music","game"],"u1":"https://www.gov.cn/gongbao/content/2011/content_1918159.htm","l1":"公报"},
+{"y":"2000","t":"《互联网上网服务营业场所管理条例》","s":"国务院","b":["store","game"],"u1":"https://www.cac.gov.cn/2016-07/06/c_1119159909.htm","l1":"网信办"}
+]},{"id":"privacy","icon":"🔐","name":"隐私合规","desc":"个人信息保护、App合规、数据跨境、儿童信息保护","laws":[
+{"y":"2026","t":"《个人信息出境认证办法》（2026.1.1施行）","s":"网信办·市监总局","b":["dev","harmony","ad","xiaoyi"],"u1":"https://sdxw.iqilu.com/w/article/YS0yMS0xNjk1OTU2NA==.html","l1":"闪电新闻通告"},
+{"y":"2026","t":"《可能影响未成年人身心健康的网络信息分类办法》","s":"网信办","b":["store","game","video","music","browser","xiaoyi"],"u1":"https://www.cac.gov.cn/2026-01/23/c_1770728781060093.htm","l1":"网信办"},
+{"y":"2026","t":"《政务移动互联网应用程序规范化管理办法》","s":"国务院办公厅","b":["harmony","store"],"u1":"https://www.cac.gov.cn/2026-01/28/c_1771330044357878.htm","l1":"网信办"},
+{"y":"2025","t":"《人脸识别技术应用安全管理办法》","s":"网信办","b":["xiaoyi","store","harmony"],"u1":"https://www.cac.gov.cn/2025-03/21/c_1744174262156096.htm","l1":"网信办"},
+{"y":"2025","t":"《个人信息保护合规审计管理办法》","s":"网信办","b":["store","browser","game","xiaoyi","ad"],"u1":"https://www.cac.gov.cn/2025-02/14/c_1741233507681519.htm","l1":"网信办"},
+{"y":"2025","t":"《国家网络身份认证公共服务管理办法》","s":"网信办","b":["store","browser","game","xiaoyi"],"u1":"https://www.cac.gov.cn/2025-05/23/c_1749711107835487.htm","l1":"网信办"},
+{"y":"2024","t":"《未成年人网络保护条例》","s":"国务院","b":["store","game","video","music","browser","xiaoyi"],"u1":"https://www.cac.gov.cn/2023-10/24/c_1699806932316206.htm","l1":"网信办","u2":"https://www.gov.cn/gongbao/content/2023/content_6912345.html","l2":"公报"},
+{"y":"2024","t":"《促进和规范数据跨境流动规定》","s":"网信办","b":["dev","harmony","ad","xiaoyi"],"u1":"https://www.cac.gov.cn/2024-03/22/c_1712776611775634.htm","l1":"网信办"},
+{"y":"2023","t":"《个人信息出境标准合同办法》","s":"网信办","b":["dev","harmony","ad"],"u1":"https://www.cac.gov.cn/2023-02/24/c_1678884830036813.htm","l1":"网信办"},
+{"y":"2022","t":"《数据出境安全评估办法》","s":"网信办","b":["dev","harmony","ad","xiaoyi"],"u1":"https://www.cac.gov.cn/2022-07/07/c_1658811536396503.htm","l1":"网信办","u2":"https://www.moj.gov.cn/pub/sfbgw/flfggz/flfggzbmgz/202305/t20230509_478370.html","l2":"司法部"},
+{"y":"2022","t":"《关于实施个人信息保护认证的公告》","s":"网信办·市场监管总局","b":["store","browser","game","xiaoyi"],"u1":"https://www.cac.gov.cn/2022-11/18/c_1670399936658129.htm","l1":"网信办"},
+{"y":"2021","t":"《中华人民共和国个人信息保护法》","s":"全国人大","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2021-08/20/c_1631050028355286.htm","l1":"网信办","u2":"https://www.miit.gov.cn/zwgk/zcwj/flfg/art/2022/art_284b390b84484f10b0e43eeafaad0f6d.html","l2":"工信部"},
+{"y":"2021","t":"《常见类型移动互联网应用程序必要个人信息范围规定》","s":"工信部·网信办","b":["store","browser","video","music","game","xiaoyi"],"u1":"https://www.cac.gov.cn/2021-03/22/c_1617990997054277.htm","l1":"网信办"},
+{"y":"2020","t":"《信息安全技术 个人信息安全规范》（GB/T 35273-2020）","s":"信安标委","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://openstd.samr.gov.cn/bzgk/gb/stdGbk/4793","l1":"国标"},
+{"y":"2019","t":"《App违法违规收集使用个人信息行为认定方法》","s":"网信办","b":["store","browser","video","music","game","xiaoyi"],"u1":"https://www.cac.gov.cn/2019-12/27/c_1578986455686625.htm","l1":"网信办"},
+{"y":"2019","t":"《儿童个人信息网络保护规定》","s":"网信办","b":["store","game","video","music","xiaoyi"],"u1":"https://www.cac.gov.cn/2019-08/23/c_1124913903.htm","l1":"网信办"},
+{"y":"2013","t":"《电信和互联网用户个人信息保护规定》（工信部令第24号）","s":"工信部","b":["store","browser","video","music","game","xiaoyi"],"u1":"https://www.gov.cn/gongbao/content/2013/content_2505685.htm","l1":"公报"},
+{"y":"2012","t":"《全国人民代表大会常务委员会关于加强网络信息保护的决定》","s":"全国人大","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2012-12/29/c_133353262.htm","l1":"网信办"}
+]},{"id":"cyber","icon":"🛡️","name":"网络安全","desc":"等级保护、CII保护、漏洞管理、数据安全、密评","laws":[
+{"y":"2026","t":"《中华人民共和国网络安全法》（2025年修改·2026.1.1施行）","s":"全国人大","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2026-01/02/c_1769093523928606.htm","l1":"网信办（含修改解读）","u2":"http://politics.people.com.cn/n1/2025/1222/c1001-40628978.html","l2":"修改决定"},
+{"y":"2026","t":"《未成年人用户数量巨大和对未成年人群体具有显著影响的网络平台服务提供者认定办法》","s":"网信办","b":["store","game","video","music","browser"],"u1":"https://www.cac.gov.cn/2026-02/28/c_1774010730056867.htm","l1":"网信办"},
+{"y":"2025","t":"《国家网络安全事件报告管理办法》","s":"网信办","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2025-09/15/c_1759583017717009.htm","l1":"网信办"},
+{"y":"2025","t":"《终端设备直连卫星服务管理规定》","s":"网信办","b":["harmony","store","browser"],"u1":"https://www.cac.gov.cn/2025-04/30/c_1747719075774684.htm","l1":"网信办"},
+{"y":"2025","t":"《关键信息基础设施商用密码使用管理规定》","s":"网信办·国密局","b":["dev","harmony","xiaoyi"],"u1":"https://www.cac.gov.cn/2025-07/01/c_1753083518894995.htm","l1":"网信办"},
+{"y":"2024","t":"《网络数据安全管理条例》","s":"国务院","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2024-09/30/c_1729384452307680.htm","l1":"网信办"},
+{"y":"2022","t":"《网络安全审查办法》","s":"网信办·工信部等","b":["dev","harmony","xiaoyi"],"u1":"https://www.miit.gov.cn/jgsj/waj/wjfb/art/2022/art_9f941fea4fba45f0b590f683ae1c6c6c.html","l1":"工信部","u2":"https://www.cac.gov.cn/2022-01/04/c_1644104712261304.htm","l2":"网信办"},
+{"y":"2021","t":"《关键信息基础设施安全保护条例》","s":"国务院","b":["dev","harmony","xiaoyi"],"u1":"https://www.cac.gov.cn/2021-08/17/c_1630785976988160.htm","l1":"网信办","u2":"https://www.miit.gov.cn/xwdt/szyw/art/2021/art_8a317dd6beab43e396e278fde38af0bb.html","l2":"工信部"},
+{"y":"2021","t":"《网络产品安全漏洞管理规定》","s":"工信部·网信办","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2021-07/13/c_1627423056280866.htm","l1":"网信办"},
+{"y":"2021","t":"《中华人民共和国数据安全法》","s":"全国人大","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2021-06/11/c_1624994566919140.htm","l1":"网信办","u2":"https://www.miit.gov.cn/zwgk/zcwj/flfg/art/2022/art_284b390b84484f10b0e43eeafaad0f6d.html","l2":"工信部"},
+{"y":"2020","t":"《中华人民共和国密码法》","s":"全国人大","b":["store","browser","video","music","game","dev","harmony"],"u1":"https://www.cac.gov.cn/2019-10/27/c_1573711980953641.htm","l1":"网信办","u2":"http://www.npc.gov.cn/npc/c30834/201910/6f7be7dd1ae04f2f9962d4e6b1b1c72e.shtml","l2":"人大"},
+{"y":"2019","t":"《网络安全等级保护管理办法》（等保2.0）","s":"公安部","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.mps.gov.cn/n6557558/c8212562/content.html","l1":"公安部"},
+{"y":"2019","t":"《云计算服务安全评估办法》","s":"网信办·发改委·工信部·财政部","b":["dev","harmony","store"],"u1":"https://www.cac.gov.cn/2019-07/22/c_1124781475.htm","l1":"网信办"},
+{"y":"2016","t":"《关于加强国家网络安全标准化工作的若干意见》","s":"网信办","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2016-08/22/c_1119430337.htm","l1":"网信办"}
+]},{"id":"ai","icon":"🤖","name":"AI治理","desc":"生成式AI、深度合成、算法推荐、AI伦理、智能体","laws":[
+{"y":"2026","t":"《智能体规范应用与创新发展实施意见》（2026.5.8发布）","s":"网信办·发改委·工信部","b":["xiaoyi","ad","harmony","store"],"u1":"https://www.news.cn/politics/20260508/aa31c404610e4cc59f47fea3ab04929b/c.html","l1":"新华网（含全文）","u2":"https://www.cac.gov.cn/2026-05/08/c_1779979789523320.htm","l2":"网信办"},
+{"y":"2026","t":"《人工智能拟人化互动服务管理暂行办法》","s":"网信办","b":["xiaoyi","ad","harmony"],"u1":"https://www.cac.gov.cn/2026-04/10/c_1777558395078289.htm","l1":"网信办"},
+{"y":"2026","t":"人工智能、数据、算法写入2026年国务院立法工作计划","s":"国务院","b":["xiaoyi","harmony","dev","ad","store"],"u1":"https://news.sohu.com/a/1021212502_585328","l1":"搜狐报道"},
+{"y":"2025","t":"《国务院关于深入实施\"人工智能+\"行动的意见》","s":"国务院","b":["xiaoyi","harmony","dev"],"u1":"https://www.cac.gov.cn/2025-08/27/c_1758018277755538.htm","l1":"网信办"},
+{"y":"2025","t":"《人工智能生成合成内容标识办法》（2025.9.1施行）","s":"网信办·四部门","b":["xiaoyi","ad","video","music"],"u1":"https://www.cac.gov.cn/2025-03/14/c_1743654685899683.htm","l1":"网信办"},
+{"y":"2025","t":"《国务院办公厅关于加快场景培育和开放推动新场景大规模应用的实施意见》","s":"国务院办公厅","b":["xiaoyi","harmony","store"],"u1":"https://www.cac.gov.cn/2025-11/07/c_1764240733658111.htm","l1":"网信办"},
+{"y":"2023","t":"《生成式人工智能服务管理暂行办法》","s":"网信办·七部门","b":["xiaoyi","harmony","ad","store"],"u1":"https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm","l1":"网信办"},
+{"y":"2023","t":"《互联网信息服务深度合成管理规定》","s":"网信办","b":["xiaoyi","ad","video","music"],"u1":"https://www.cac.gov.cn/2022-12/11/c_1672221949354811.htm","l1":"网信办"},
+{"y":"2022","t":"《互联网信息服务算法推荐管理规定》","s":"网信办·工信部·公安部·市监总局","b":["xiaoyi","ad","browser","store","video","music"],"u1":"https://www.cac.gov.cn/2022-01/04/c_1642894606364259.htm","l1":"网信办"},
+{"y":"2021","t":"《关于加强互联网信息服务算法综合治理的指导意见》","s":"网信办·工信部·公安部","b":["xiaoyi","ad","browser","store"],"u1":"https://www.cac.gov.cn/2021-09/29/c_1634507915623047.htm","l1":"网信办"},
+{"y":"2021","t":"《新一代人工智能伦理规范》","s":"科技部","b":["xiaoyi","harmony","ad"],"u1":"https://www.most.gov.cn/tztg/202109/t20210926_177063.html","l1":"科技部"}
+]},{"id":"trade-secret","icon":"🔒","name":"商业秘密保护","desc":"反不正当竞争、软件著作权、知识产权保护","laws":[
+{"y":"2025","t":"《反不正当竞争法》（2025年第二次修订）","s":"全国人大","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_3737890d856a4e44a8ea07c50c90c116.html","l1":"总局"},
+{"y":"2024","t":"《网络反不正当竞争暂行规定》（总局令第91号）","s":"市场监管总局","b":["store","browser","ad","game","video"],"u1":"https://www.gov.cn/gongbao/2024/content_6976543.html","l1":"公报"},
+{"y":"2021","t":"《著作权法》（2020年修订）","s":"全国人大","b":["video","music","store","game","dev","harmony"],"u1":"https://www.npc.gov.cn/npc/c30834/202011/848e73f58d4e4c5b82f62ad4b0a4b0ac.shtml","l1":"人大"},
+{"y":"2021","t":"《专利法》（2020年修订）","s":"全国人大","b":["dev","harmony","store"],"u1":"https://www.npc.gov.cn/npc/c30834/202010/5bc6d6f4e2c148b6a0b6e3c5e4e4f4e2.shtml","l1":"人大"},
+{"y":"2014","t":"《最高法关于审理利用信息网络侵害人身权益民事纠纷案件适用法律若干问题的规定》","s":"最高法","b":["store","browser","game"],"u1":"https://www.cac.gov.cn/2014-10/11/c_1112781753.htm","l1":"网信办"},
+{"y":"2014","t":"《最高法关于审理侵害信息网络传播权民事纠纷案件适用法律若干问题的规定》","s":"最高法","b":["video","music","game","store"],"u1":"https://www.cac.gov.cn/2014-10/11/c_1112781468.htm","l1":"网信办"},
+{"y":"2013","t":"《信息网络传播权保护条例》","s":"国务院","b":["video","music","game","store"],"u1":"https://www.cac.gov.cn/2013-02/18/c_126468776.htm","l1":"网信办"},
+{"y":"2013","t":"《计算机软件保护条例》","s":"国务院","b":["dev","harmony","store","game"],"u1":"https://www.cac.gov.cn/2013-02/08/c_12648744.htm","l1":"网信办","u2":"https://www.gov.cn/gongbao/content/2002/content_61625.htm","l2":"公报"},
+{"y":"2013","t":"《计算机软件著作权登记办法》","s":"国家版权局","b":["dev","harmony","store"],"u1":"https://www.ncac.gov.cn/chinacopyright/contents/12799/357110.shtml","l1":"版权局"}
+]},{"id":"qualification","icon":"📋","name":"资质合规","desc":"ICP许可/备案、SP许可、软件产品登记、网络出版","laws":[
+{"y":"2024","t":"《互联网信息服务管理办法》（2024年第2次修订）","s":"国务院","b":["store","browser","video","music","game","dev","ad","xiaoyi","harmony"],"u1":"https://www.cac.gov.cn/2000-09/30/c_126193701.htm","l1":"网信办","u2":"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/bgt/art/2023/art_483f0dd8eb1b4dc5961e4e008bd4a083.html","l2":"总局"},
+{"y":"2024","t":"《非经营性互联网信息服务备案管理办法》（2024年修订）","s":"工信部","b":["store","browser","game","dev","harmony"],"u1":"https://www.miit.gov.cn/zcfg/xxtxl/art/2024/art_7e48434c08c24131b4b7eecfca5b2b6c.html","l1":"工信部"},
+{"y":"2020","t":"《促进集成电路产业和软件产业高质量发展的若干政策》","s":"国务院","b":["dev","harmony"],"u1":"https://www.gov.cn/zhengce/content/2020-08/04/content_5532362.htm","l1":"国务院"},
+{"y":"2017","t":"《网络出版服务管理规定》","s":"国家新闻出版署","b":["store","game","video"],"u1":"https://www.gov.cn/gongbao/content/2016/content_5064225.htm","l1":"公报"},
+{"y":"2009","t":"《软件产品管理办法》（工信部令第9号）","s":"工信部","b":["dev","store","harmony"],"u1":"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2020/art_8a8b8f4e5e8b4e4a8f4e5e8b4e4a8f4.html","l1":"工信部"},
+{"y":"2009","t":"《软件企业认定标准及管理办法》","s":"工信部","b":["dev","harmony"],"u1":"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2020/art_8a8b8f4e5e8b4e4a8f4e5e8b4e4a8f4.html","l1":"工信部"},
+{"y":"2009","t":"《电信业务经营许可管理办法》（工信部令第5号）","s":"工信部","b":["store","browser","ad","dev"],"u1":"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2020/art_8a8b8f4e5e8b4e4a8f4e5e8b4e4a8f4.html","l1":"工信部"},
+{"y":"2008","t":"《外商投资电信企业管理规定》","s":"国务院","b":["store","browser","dev"],"u1":"https://www.cac.gov.cn/2008-09/13/c_126468725.htm","l1":"网信办"},
+{"y":"2000","t":"《中华人民共和国电信条例》","s":"国务院","b":["store","browser","game","ad","dev"],"u1":"https://www.cac.gov.cn/2000-09/30/c_133142151.htm","l1":"网信办","u2":"https://www.gov.cn/gongbao/content/2000/content_60569.htm","l2":"公报"},
+{"y":"2000","t":"《关于鼓励软件产业和集成电路产业发展的若干政策》","s":"国务院","b":["dev","harmony"],"u1":"https://www.gov.cn/gongbao/content/2000/content_60618.htm","l1":"公报"},
+{"y":"—","t":"通信管理局增值电信业务经营许可办理指南","s":"各省通管局","b":["store","browser","game","ad","dev"],"u1":"https://banshi.beijing.gov.cn/pubtask/task/1/110000000000/81c36259-fff3-4ade-8c07-9d0d4c386f91.html","l1":"北京通管局"}
+]},{"id":"anti-bribery","icon":"⚖️","name":"反商业贿赂","desc":"反洗钱、反腐败、出口管制、贸易合规","laws":[
+{"y":"2021","t":"《反洗钱法》","s":"全国人大","b":["ad","store","game"],"u1":"https://www.npc.gov.cn/npc/c2/c30834/202112/t20211224_534562.html","l1":"人大"},
+{"y":"2020","t":"《出口管制法》","s":"全国人大","b":["dev","harmony","store"],"u1":"https://www.npc.gov.cn/npc/c30834/202010/5bc6d6f4e2c148b6a0b6e3c5e4e4f4e2.shtml","l1":"人大"},
+{"y":"2020","t":"《刑法》贿赂犯罪相关章节","s":"全国人大","b":["store","ad","dev","game"],"u1":"https://www.gov.cn/gongbao/content/2021/content_5597890.html","l1":"公报"}
+]},{"id":"advertising","icon":"📢","name":"广告法遵从","desc":"广告内容审核、投放合规、绝对化用语、可识别性","laws":[
+{"y":"2026","t":"《直播电商监督管理办法》数字人主播AI内容监管条款","s":"网信办","b":["ad","store","video"],"u1":"https://www.samr.gov.cn/xw/mtjj/art/2026/art_e32fbfd3aaf346a794de030548ab671e.html","l1":"市监总局解读"},
+{"y":"2025","t":"《广告法适用问题执法指南（一）》","s":"市场监管总局","b":["ad","store","browser","video","music","game"],"u1":"https://www.cifst.org.cn/a/news/msg/20250704/3342.html","l1":"全文"},
+{"y":"2024","t":"《互联网广告可识别性执法指南》","s":"市场监管总局","b":["ad","store","browser","video","music","game"],"u1":"https://www.samr.gov.cn/ggjgs/tzgg/art/2024/art_fb2f2f9b53f04dc294df2105b2e050a0.html","l1":"总局"},
+{"y":"2023","t":"《互联网广告管理办法》（总局令第72号）","s":"市场监管总局","b":["ad","store","browser","video","music","game"],"u1":"https://www.gov.cn/govweb/gongbao/2023/issue_10506/202306/content_6885261.html","l1":"公报","u2":"https://www.samr.gov.cn/ggjgs/tzgg/art/2024/art_fb2f2f9b53f04dc294df2105b2e050a0.html","l2":"总局"},
+{"y":"2023","t":"《广告绝对化用语执法指南》","s":"市场监管总局","b":["ad","store","browser","video","music","game"],"u1":"https://scj.qhd.gov.cn/BAFa08c0dc/New/qhdscjFile/2023-04-24/5f0dac00-9e32-4c30-a34b-3ccf2cd4ee8b.pdf","l1":"全文"},
+{"y":"2021","t":"《广告法》（2021年修正）","s":"全国人大","b":["ad","store","browser","video","music","game"],"u1":"https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2023/art_5474cf75173c45d6a0379730fb4e8d97.html","l1":"总局","u2":"https://www.gov.cn/xinwen/2021-04/29/content_5603942.htm","l2":"政府网"},
+{"y":"—","t":"鲸鸿动能广告审核规范（华为开发者平台）","s":"华为平台","b":["ad"],"u1":"https://developer.huawei.com/consumer/cn/doc/ads_shenhe32-0000001055095868","l1":"查看规范"}
+]},{"id":"consumer","icon":"👤","name":"消费者权益保护","desc":"消法、电商法、未成年人保护、游戏消费管理","laws":[
+{"y":"2026","t":"《网络交易平台规则监督管理办法》（2026.2.1施行·规范\"仅退款\"\"大数据杀熟\"）","s":"网信办","b":["store","game","ad"],"u1":"https://www.cac.gov.cn/2026-01/07/c_1769515215345420.htm","l1":"网信办"},
+{"y":"2026","t":"《互联网平台价格行为规则》（2026.4.10施行）","s":"发改委·市监总局·网信办","b":["store","browser","game","ad"],"u1":"https://sfj.beijing.gov.cn/sfj/sfdt/fzxc74/743963873/","l1":"北京司法局"},
+{"y":"2024","t":"《未成年人网络游戏服务消费管理要求》团体标准","s":"中国互联网协会","b":["game","store"],"u1":"https://www.isc.org.cn/article/16881979012280320.html","l1":"协会","u2":"https://24h.jrj.com.cn/2024/05/30102840827536.shtml","l2":"解读"},
+{"y":"2024","t":"工信部侵害用户权益行为APP通报制度","s":"工信部","b":["store","browser","game","video","music"],"u1":"https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/art/2020/art_8a8b8f4e5e8b4e4a8f4e5e8b4e4a8f4.html","l1":"工信部"},
+{"y":"2023","t":"《加强未成年人保护游戏行业自律倡议》","s":"中国互联网协会","b":["game","store","video"],"u1":"https://www.isc.org.cn/profile/2023/04/12/9d734ace-6cbf-4eea-a7ff-fd668f1a45f1.pdf","l1":"协会"},
+{"y":"2021","t":"《未成年人保护法》（网络保护专章）","s":"全国人大","b":["game","store","video","music","browser","xiaoyi"],"u1":"https://www.cac.gov.cn/2020-10/22/c_1604928959588622.htm","l1":"网信办"},
+{"y":"2021","t":"《网络游戏行业防沉迷自律公约》","s":"中国互联网协会","b":["game","store"],"u1":"https://www.chinanews.com/yl/2021/09-24/9572677.shtml","l1":"全文"},
+{"y":"2019","t":"《电子商务法》","s":"全国人大","b":["store","browser","ad","video"],"u1":"https://www.cac.gov.cn/2018-09/01/c_1123362506.htm","l1":"网信办","u2":"https://www.npc.gov.cn/zgrdw/npc/lfzt/rlyw/node_31834.htm","l2":"人大专题"},
+{"y":"2014","t":"《消费者权益保护法》","s":"全国人大","b":["store","browser","video","music","game","ad"],"u1":"https://www.gov.cn/xinwen/2014-03/15/content_2639728.htm","l1":"政府网"},
+{"y":"2005","t":"《电子签名法》","s":"全国人大","b":["store","dev","harmony"],"u1":"https://www.cac.gov.cn/2004-08/28/c_126468489.htm","l1":"网信办"}
+]}],"EVENTS":[
+{"y":"2026.05","t":"五部门联合公布《互联网信息内容多渠道分发服务管理规定》（2026.9.1施行）","tp":"🆕 新规","b":"video,music,browser,store,game,ad,xiaoyi","r":"content-safety","d":"网信办+公安部+文旅部+市监总局+广电总局联合发布，规范MCN/多频道网络机构，要求依法取得行政许可和备案", "u1":"https://www.cac.gov.cn/2026-05/29/c_1781795876572880.htm","l1":"网信办"},
+{"y":"2026.05","t":"三部门联合印发《智能体规范应用与创新发展实施意见》","tp":"🆕 新规","b":"xiaoyi,ad,harmony,store","r":"ai","d":"网信办+发改委+工信部联合印发，明确智能体定义（自主感知/记忆/决策/交互/执行），提出19个典型应用场景", "u1":"https://www.news.cn/politics/20260508/aa31c404610e4cc59f47fea3ab04929b/c.html","l1":"新华网"},
+{"y":"2026.05","t":"截至4月30日累计868款生成式AI服务在国家网信办完成备案","tp":"📋 监管数据","b":"xiaoyi,harmony,ad,store","r":"ai","d":"2026.3-4月新增72款AI服务备案、49款完成登记。已发布十七批深度合成服务算法备案信息", "u1":"https://www.stcn.com/article/detail/3907795.html","l1":"证券时报"},
+{"y":"2026.04","t":"中央网信办召开全国网络法治工作会议部署2026年重点立法","tp":"📋 监管数据","b":"ALL","r":"content-safety","d":"强调推进重点网络立法、拓展涉外网络法治建设、持续完善网络法律规范体系", "u1":"https://m.10jqka.com.cn/20260408/c675840875.shtml","l1":"同花顺"},
+{"y":"2026.04","t":"中央网信办等三部门开展2026年个人信息保护系列专项行动","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,xiaoyi,ad","r":"privacy","d":"7大重点：APP/SDK违规收集、互联网广告、教育/交通/卫生健康/金融领域专项治理、个人信息犯罪打击", "u1":"https://www.gov.cn/lianbo/202604/content_7064584.htm","l1":"中国政府网"},
+{"y":"2026.04","t":"《人工智能拟人化互动服务管理暂行办法》发布","tp":"🆕 新规","b":"xiaoyi,ad,harmony","r":"ai","d":"规范AI拟人化交互服务，要求标识清晰、防范诱导沉迷、保护用户权益", "u1":"https://www.cac.gov.cn/2026-04/10/c_1777558395078289.htm","l1":"网信办"},
+{"y":"2026.04","t":"人工智能、数据、算法写入2026年国务院立法工作计划","tp":"📋 监管数据","b":"xiaoyi,harmony,dev,ad,store","r":"ai","d":"国务院立法工作计划明确将AI、数据、算法相关立法列入重点推进项目", "u1":"https://news.sohu.com/a/1021212502_585328","l1":"搜狐"},
+{"y":"2026.03","t":"中关村论坛共议北京人工智能地方立法","tp":"📋 监管数据","b":"xiaoyi,harmony,ad","r":"ai","d":"清华法学院院长建议以既有法律体系为基础推进AI治理，避免新设统一监管机构", "u1":"https://www.tsinghua.edu.cn/info/1182/125051.htm","l1":"清华大学"},
+{"y":"2026.02","t":"《网络交易平台规则监督管理办法》《直播电商监督管理办法》正式施行","tp":"🆕 新规","b":"store,game,ad,video","r":"consumer","d":"规范\"仅退款\"\"大数据杀熟\"\"二选一\"；数字人主播纳入监管；明确四类主体责任", "u1":"https://sfj.beijing.gov.cn/sfj/sfdt/fzxc74/743915772/index.html","l1":"北京司法局"},
+{"y":"2026.01","t":"新修订《网络安全法》《个人信息出境认证办法》正式施行","tp":"🆕 新规","b":"ALL","r":"cyber","d":"网络安全法新增人工智能发展条款、完善法律责任；个人信息出境新增认证路径", "u1":"https://sdxw.iqilu.com/w/article/YS0yMS0xNjk1OTU2NA==.html","l1":"闪电新闻"},
+{"y":"2025.12","t":"工信部通报24款APP及SDK存在侵害用户权益行为（2025年第6批）","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,xiaoyi","r":"privacy","d":"工信部2025年第6批通报，24款涉教育、工具等领域APP及SDK存在违规收集个人信息等问题", "u1":"https://www.miit.gov.cn/jgsj/xgj/fwjd/art/2025/art_8ffdfc334b8a4931baa8d7cc638b8799.html","l1":"工信部"},
+{"y":"2025.10","t":"工信部通报42款APP及SDK存在侵害用户权益行为","tp":"⚠️ 监管通报","b":"store,browser,game,video,music","r":"privacy","d":"四部门联合开展2025年个人信息保护专项行动，42款APP及SDK被通报", "u1":"https://www.cls.cn/detail/2183685","l1":"财联社"},
+{"y":"2025.10","t":"市场监管总局公布十起互联网违法广告典型案例","tp":"⚖️ 行政处罚","b":"ad,store,browser,game,music","r":"advertising","d":"前三季度查处互联网违法广告案件22185件、罚没1.11亿元", "u1":"http://www.law-lib.com/fzdt/newshtml/fzjd/20251016194922.htm","l1":"法律门户"},
+{"y":"2025.09","t":"国家网信办发布网络安全·数据安全·个人信息保护执法典型案例（10起）","tp":"⚖️ 行政处罚","b":"store,browser,game,dev,ad,xiaoyi,harmony","r":"cyber","d":"网信系统查处网页篡改、数据泄露、违法违规处理个人信息、新技术新应用未经评估上线等案件", "u1":"https://www.cac.gov.cn/2025-09/16/c_1759741437315419.htm","l1":"网信办"},
+{"y":"2025.09","t":"迪奥（上海）因跨境传输个人信息被处罚","tp":"⚖️ 行政处罚","b":"dev,ad,harmony","r":"privacy","d":"迪奥因未履行数据出境安全评估、缺失用户单独同意、未采取加密去标识化措施三项违规被处罚", "u1":"https://www.secrss.com/articles/82893","l1":"安全内参"},
+{"y":"2025.09","t":"成都快购（快手）被市场监管总局罚没超2600万元","tp":"⚖️ 行政处罚","b":"store,game,ad","r":"consumer","d":"未履行信息公示义务、向平台内经营者收取不合理费用、未对消费者尽到安全保障义务", "u1":"https://www.xhby.net/content/s697ca54ae4b0e0ccbc2e34e6.html","l1":"新华报业"},
+{"y":"2025.09","t":"\"清朗·整治AI技术滥用\"专项行动处置4200余款违规AI产品","tp":"⚠️ 监管通报","b":"xiaoyi,harmony,ad,store","r":"ai","d":"截至9月已处置4200余款违规AI产品，较行动初期增长20%", "u1":"https://segmentfault.com/a/1190000047304813","l1":"思否"},
+{"y":"2025.08","t":"网信部门行政处罚裁量权基准适用规定发布","tp":"🆕 新规","b":"ALL","r":"content-safety","d":"明确裁量权基准划分为不予处罚、减轻、从轻、一般、从重五个阶次", "u1":"https://www.cac.gov.cn/2025-06/27/c_1752736438457815.htm","l1":"网信办"},
+{"y":"2025.06","t":"72款移动应用被通报违法违规收集使用个人信息","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,xiaoyi","r":"privacy","d":"国家计算机病毒应急处理中心检测发现72款移动应用存在违法违规收集使用个人信息，涵盖17项违规行为", "u1":"https://finance.eastmoney.com/a/202602033640015824.html","l1":"东方财富"},
+{"y":"2025.06","t":"市场监管总局公布十起违法广告典型案例","tp":"⚖️ 行政处罚","b":"ad,store,browser,game,music","r":"advertising","d":"截至4月底查处违法广告案件11459件、罚没8830.9万元", "u1":"https://www.samr.gov.cn/xw/zj/art/2025/art_80ee21faaae940809d483f002a8ecbea.html","l1":"市场监管总局"},
+{"y":"2025.06","t":"市场监管总局查处广告违法案件4.45万件罚没2.52亿元（全年）","tp":"📋 监管数据","b":"ad,store,browser,game,video,music","r":"advertising","d":"聚焦医疗、金融、食品等重点领域，整治普通食品疗效化宣传、直播带货虚假广告、AI换脸违法广告等", "u1":"https://www.chinanews.com/cj/2026/03-14/10586858.shtml","l1":"中新网"},
+{"y":"2025.04","t":"开山猴AI写作平台生成暴力恐怖内容被查处","tp":"⚖️ 行政处罚","b":"store,game,xiaoyi","r":"ai","d":"AI写作平台未设置内容审核拦截机制，暂停AI功能15日", "u1":"https://juejin.cn/post/7557377430034792490","l1":"掘金"},
+{"y":"2025.04","t":"工信部通报52款APP及SDK存在侵害用户权益行为（2025年第1批）","tp":"⚠️ 监管通报","b":"store,browser,game,video,music","r":"privacy","d":"2025年首批通报，52款APP及SDK涉及违规收集个人信息、强制索权等", "u1":"https://wap.miit.gov.cn/jgsj/xgj/gzdt/art/2025/art_296958d2adef46d78e4eada4aeeb3d0d.html","l1":"工信部"},
+{"y":"2025","t":"全国公安机关侦破电诈案件25.8万起，拦截诈骗电话36亿次","tp":"📋 监管数据","b":"store,game,browser,ad","r":"anti-fraud","d":"\"断流\"\"拔钉\"\"斩链\"专项行动抓捕金主头目542名", "u1":"https://news.cctv.cn/2026/01/08/ARTIYSUsqZZllssjSRGwiKJ9260108.shtml","l1":"央视网"},
+{"y":"2025","t":"全国网信系统约谈5811家网站平台、下架App2133款","tp":"⚠️ 监管通报","b":"store,browser,game,video,music,ad,xiaoyi","r":"content-safety","d":"2025年关闭违法网站10946家、下架App200款；2025年下架App2133款、下线小程序192款", "u1":"https://www.cac.gov.cn/2025-04/27/c_1747548228751408.htm","l1":"网信办"},
+{"y":"2025","t":"广东某科技公司网页被篡改为违法内容遭处罚","tp":"⚖️ 行政处罚","b":"ALL","r":"cyber","d":"办公系统存在任意文件上传漏洞，未及时修复致网页被篡改，违反《网络安全法》", "u1":"https://www.cac.gov.cn/2025-09/16/c_1759741437315419.htm","l1":"网信办"},
+{"y":"2025","t":"浙江某科技公司App提供AI换脸服务未进行安全评估被下架","tp":"⚖️ 行政处罚","b":"store,xiaoyi,ad","r":"ai","d":"提供深度合成换脸服务未按规定安全评估、深度合成内容未作显著标识，被网信办依法下架", "u1":"https://www.cac.gov.cn/2025-09/16/c_1759741437315419.htm","l1":"网信办"},
+{"y":"2025","t":"上海网信办案例：物流科技公司ES数据库泄露","tp":"⚖️ 行政处罚","b":"dev,store,browser","r":"cyber","d":"某物流运输网络科技企业未关闭ES数据库9200端口，数据被境外IP窃取", "u1":"https://www.jswx.gov.cn/csj/sh/202601/t20260116_1302534.shtml","l1":"上海网信办"},
+{"y":"2025.11","t":"山西老葛商贸直播带货虚假宣传被罚款560万元","tp":"⚖️ 行政处罚","b":"store,ad","r":"advertising","d":"直播营销30余种商品时使用无法证明的夸大用语，构成虚假宣传或价格欺诈", "u1":"https://yjj.sh.gov.cn/zjyw/20251129/43ddecf0481d4204af565f2c14e21099.html","l1":"上海药监局"},
+{"y":"2025.02","t":"最高法发布7起电信网络诈骗及其关联犯罪典型案例","tp":"⚖️ 典型案例","b":"store,game,browser","r":"anti-fraud","d":"严惩跨境电诈集团首要分子、打击利用未成年人实施电诈、针对海外留学生诈骗等案例", "u1":"https://m.055110.com/xs/1/25425.html","l1":"律师门户"}
+]};const BM={};for(const b of DATA.BIZ)BM[b.k]=b;const AB=DATA.BIZ.map(b=>b.k);const RD={};for(const a of DATA.AREAS){RD[a.id]={ic:a.icon,nm:a.name};for(const l of a.laws)l._rid=a.id;for(const l of a.laws)l._rin=a.icon+a.name}
+let CS='all',SB=null,OF=null,CV='risk';
+const TP={pun:'⚖️ 行政处罚',warn:'⚠️ 监管通报',case:'⚖️ 典型案例',info:'📋 监管数据',new:'🆕 新规'};
+const TPCL={pun:'tp-pun',warn:'tp-warn',case:'tp-case',info:'tp-info',new:'tp-new'};
+
+function render(){const s=document.getElementById('searchInput').value.trim().toLowerCase();const mc=document.getElementById('mainContent');const bb=document.getElementById('bizBar');const bh=document.getElementById('bizHint');
+if(CV==='event'){bb.classList.remove('show');bh.style.display='none';renderEvents(mc,s);return}
+if(CV==='biz'){bb.classList.remove('show');bh.style.display='none';renderBiz(mc,s);document.getElementById('statsBar').innerHTML='<span class="stat-pill">🏢 点击业务查看其适用法规</span>';return}
+bb.classList.add('show');
+if(SB){bh.style.display='flex';document.getElementById('bizHintText').textContent='🔍 筛选：'+BM[SB].n+' 相关法规 '+BM[SB].e;document.querySelectorAll('.biz-chip').forEach(c=>c.classList.toggle('active',c.dataset.biz===SB))}else{bh.style.display='none';document.querySelectorAll('.biz-chip').forEach(c=>c.classList.remove('active'))}
+updateBC();let total=0,html='';
+for(const a of DATA.AREAS){let laws=a.laws.filter(l=>{if(CS!=='all'&&!l.s.includes(CS))return false;if(s&&!l.t.toLowerCase().includes(s))return false;if(SB&&(!l.b||!l.b.includes(SB)))return false;return true});if(!laws.length)continue;laws.sort((x,y)=>(x.y==='—'?1:0)-(y.y==='—'?1:0)||parseInt(y.y||'0')-parseInt(x.y||'0'));total+=laws.length;const fid='f_'+a.id,op=OF===fid?' open':'';
+html+='<div class="folder'+op+'" id="'+fid+'"><div class="folder-header" onclick="toggleF(\''+fid+'\')"><span class="arrow">▶</span><span class="ficon">'+a.icon+'</span><div class="meta"><div class="name">'+a.name+'</div><div class="desc">'+a.desc+'</div></div><span class="badge">'+laws.length+'</span></div><div class="folder-body"><div class="law-list">';
+for(const l of laws){const bt=!SB&&l.b?l.b.map(b=>'<span class="biz-tag">'+BM[b].e+BM[b].n+'</span>').join(''):'';let lnk='';if(l.u1)lnk+='<a href="'+l.u1+'" target="_blank">📄 '+l.l1+'</a>';if(l.u2)lnk+='<a href="'+l.u2+'" target="_blank">📄 '+l.l2+'</a>';
+html+='<div class="law-row"><div class="year">'+(l.y==='—'?'':l.y)+'</div><div class="info"><div class="title">'+l.t+'</div><div class="src"><span>'+l.s+'</span></div>'+(bt?'<div class="biz-tags">'+bt+'</div>':'')+'</div><div class="links">'+lnk+'</div></div>'}
+html+='</div></div></div>'}
+mc.innerHTML=html||'<div class="empty">没有匹配的法规</div>';document.getElementById('statsBar').innerHTML='<span class="stat-pill">📂 显示 <strong>'+total+'</strong> 项法规</span>';}
+
+function renderBiz(mc,s){let html='';
+for(const bk of AB){let lws=[];for(const a of DATA.AREAS)for(const l of a.laws)if(l.b&&l.b.includes(bk))lws.push({...l,rn:a.name,ri:a.icon});const sd=new Set();lws=lws.filter(l=>{if(sd.has(l.t))return false;sd.add(l.t);return true});if(s)lws=lws.filter(l=>l.t.toLowerCase().includes(s));if(CS!=='all')lws=lws.filter(l=>l.s.includes(CS));lws.sort((x,y)=>(x.y==='—'?1:0)-(y.y==='—'?1:0)||parseInt(y.y||'0')-parseInt(x.y||'0'));if(!lws.length)continue;const fid='bz_'+bk,op=OF===fid?' open':'';
+html+='<div class="folder'+op+'" id="'+fid+'"><div class="folder-header" onclick="toggleF(\''+fid+'\')"><span class="arrow">▶</span><span class="ficon">'+BM[bk].e+'</span><div class="meta"><div class="name">'+BM[bk].n+'</div><div class="desc">相关法规</div></div><span class="badge">'+lws.length+'</span></div><div class="folder-body"><div class="law-list">';
+for(const l of lws){let lnk='';if(l.u1)lnk+='<a href="'+l.u1+'" target="_blank">📄 '+l.l1+'</a>';if(l.u2)lnk+='<a href="'+l.u2+'" target="_blank">📄 '+l.l2+'</a>';
+html+='<div class="law-row"><div class="year">'+(l.y==='—'?'':l.y)+'</div><div class="info"><div class="title">'+l.t+'</div><div class="src"><span>'+l.s+'</span><span style="background:#F0E8FF;color:#6A1B9A;margin-left:2px;">'+l.ri+' '+l.rn+'</span></div></div><div class="links">'+lnk+'</div></div>'}
+html+='</div></div></div>';}
+mc.innerHTML=html||'<div class="empty">没有匹配的法规</div>';document.getElementById('statsBar').innerHTML='<span class="stat-pill">🏢 '+mc.querySelectorAll('.folder').length+' 个业务领域</span>';}
+
+function renderEvents(mc,s){let events=[...DATA.EVENTS];
+if(CS!=='all')events=events.filter(e=>e.s&&e.s.includes(CS));
+if(SB)events=events.filter(e=>e.b.split(',').includes(SB));
+if(s)events=events.filter(e=>e.t.toLowerCase().includes(s)||e.d.toLowerCase().includes(s));
+events.sort((x,y)=>y.y.localeCompare(x.y));
+if(!events.length){mc.innerHTML='<div class="empty">没有匹配的执法事件</div>';document.getElementById('statsBar').innerHTML='<span class="stat-pill">无结果</span>';return}
+let html='<div class="folder-list">';
+let c=0;const seen=new Set();
+for(const e of events){const key=e.t+e.y;if(seen.has(key))continue;seen.add(key);c++;
+const bizs=e.b.split(',').map(b=>BM[b]?BM[b].e+BM[b].n:'').filter(Boolean).join(' ');
+const ri=RD[e.r];const rtag=ri?ri.ic+' '+ri.nm:'';
+const tpcl=TPCL[e.tp]||'tp-info';
+let lnk='';if(e.u1)lnk+='<a href="'+e.u1+'" target="_blank">📄 '+e.l1+'</a>';
+html+='<div class="event-row law-row"><div class="year" style="width:48px">'+e.y+'</div><div class="info"><div class="title"><span class="tp '+tpcl+'">'+(TP[e.tp]||e.tp)+'</span>'+e.t+'</div><div class="src"><span class="risk-tag">'+rtag+'</span><span>'+bizs+'</span></div><div class="desc">'+e.d+'</div></div><div class="links">'+lnk+'</div></div>'}
+html+='</div>';
+mc.innerHTML=html;
+document.getElementById('statsBar').innerHTML='<span class="stat-pill">🚨 近两年执法事件 <strong>'+c+'</strong> 件</span><span class="stat-pill">⚖️ 行政处罚 '+events.filter(e=>e.tp==='pun').length+'</span><span class="stat-pill">⚠️ 监管通报 '+events.filter(e=>e.tp==='warn').length+'</span><span class="stat-pill">🆕 新规 '+events.filter(e=>e.tp==='new').length+'</span>';}
+
+function toggleF(id){OF=OF===id?null:id;render()}
+function setSrc(s){CS=s;document.querySelectorAll('.filter-tab').forEach(t=>t.classList.toggle('active',t.dataset.src===s));render()}
+function toggleBiz(b){SB=SB===b?null:b;render()}
+function clearBizFilter(){SB=null;render()}
+function switchView(v){CV=v;document.querySelectorAll('.view-btn').forEach((b,i)=>b.classList.toggle('active',i===(v==='risk'?0:v==='biz'?1:2)));OF=null;render()}
+function updateBC(){for(const bk of AB){let c=0;for(const a of DATA.AREAS)for(const l of a.laws)if(l.b&&l.b.includes(bk))c++;const el=document.getElementById('cnt_'+bk);if(el)el.textContent=c+' 项'}}
+(function ib(){const bb=document.getElementById('bizBar');bb.innerHTML='';for(const b of DATA.BIZ)bb.innerHTML+='<div class="biz-chip" data-biz="'+b.k+'" onclick="toggleBiz(\''+b.k+'\')"><div class="emoji">'+b.e+'</div><div class="info"><div class="name">'+b.n+'</div><div class="cnt" id="cnt_'+b.k+'"></div></div><div class="check">✓</div></div>';render()})();
+</script>
+</body>
+</html>
