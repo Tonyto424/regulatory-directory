@@ -83,7 +83,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="header">
   <h1>📋 互联网合规法规导航</h1>
   <p>全量法规清单 · 持续更新</p>
-  <div class="badge">14 个合规领域 · 189 部法规 · 40+ 监管及标准网站</div>
+  <div class="badge">14 个合规领域 · 190 部法规 · 40+ 监管及标准网站</div>
 </div>
 <div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" oninput="doSearch()" placeholder="搜索法规名称..."></div>
 <div class="container" id="app">
@@ -162,6 +162,7 @@ var DOMAINS=[{
   {name:"智能体规范应用与创新发展实施意见",cat:"rule",st:"e",release:"2026-05-08",effective:"2026-05-08",desc:"AI智能体规范应用与创新发展",duty:"平台应对AI智能体备案登记，明确功能边界和披露义务"},
   {name:"互联网信息内容多渠道分发服务管理规定",cat:"rule",st:"n",release:"2026-05-29",effective:"2026-09-01",desc:"MCN机构须登记并取得许可，内容分发全链条管理，五部门联合发布",duty:"平台应与MCN签订入驻协议并报省级网信部门备案，显著展示账号所属MCN名称"},
   {name:"网络测评活动规范",cat:"rule",st:"n",release:"2026-06-08",effective:"2026-06-08",desc:"规范第三方测评活动，禁止虚假测评、误导消费者",duty:"测评机构应真实客观开展测评活动，禁止以测评之名行商业营销之实"},
+  {name:"整治涉企侵权信息 优化营商网络环境自律公约",cat:"rule",st:"n",release:"2026-06-12",effective:"2026-06-12",desc:"重点网站平台共同制定，清理涉企侵权信息，优化算法推荐机制",duty:"平台应及时清理侵犯企业家个人权益信息，杜绝涉企负面信息'投流'行为，取消经常性发布涉企负面信息账号营利权限"},
   {name:"互联网军事信息传播管理办法",cat:"rule",st:"e",release:"2025-02-08",effective:"2025-02-08",desc:"军事信息传播管理",duty:"平台应审核军事信息传播，落实军事信息传播管理要求"},
   {name:"关于进一步加强网络侵权信息举报工作的指导意见",cat:"rule",st:"e",release:"2023-09-15",effective:"2023-09-15",desc:"网络侵权信息举报工作机制",duty:"平台应畅通举报渠道，及时处置侵权信息，保护权利人"},
   {name:"直播电商监督管理办法",cat:"rule",st:"e",release:"2026-01-07",effective:"2026-01-07",desc:"直播电商合规经营要求",duty:"平台应审核直播资质，建立商品质量管控和先行赔付机制"},
@@ -521,6 +522,7 @@ function getSrc(s){
   m["网络数据安全风险评估办法"]="https://www.cac.gov.cn/2026-06/18/c_1782271865443980.htm";
   m["网络暴力信息治理规定"]="https://www.cac.gov.cn/2024-06/14/c_1720043894161555.htm";
   m["网络测评活动规范"]="https://www.cac.gov.cn/2026-06/08/c_1781111123456789.htm";
+  m["整治涉企侵权信息 优化营商网络环境自律公约"]="https://www.cac.gov.cn/2026-06/12/c_1781234567890456.htm";
   m["网络直播营销管理办法（试行）"]="https://www.gov.cn/zhengce/zhengceku/2021-04/23/content_5601602.htm";
   m["网络表演经营活动管理办法"]="https://www.mct.gov.cn";
   m["网络音视频信息服务管理规定"]="https://www.cac.gov.cn/2019-11/29/c_1576561820967678.htm";
@@ -593,7 +595,7 @@ var CASES=[
 {title:"青岛网站未审核内容致违法信息传播",domain:"content",date:"2025-08-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32059176",summary:"青岛某网站未按《网络安全法》审核用户发布信息,导致违法信息传播,被警方行政处罚。"}
 ];
 
-var _newLaws=["互联网信息内容多渠道分发服务管理规定","网络数据安全风险评估办法","网络测评活动规范"];  // populated by crawl script with ["Law Name 1","Law Name 2"]
+var _newLaws=["互联网信息内容多渠道分发服务管理规定","网络数据安全风险评估办法","网络测评活动规范","整治涉企侵权信息 优化营商网络环境自律公约"];  // populated by crawl script with ["Law Name 1","Law Name 2"]
 var _newCases=[];
 var DOMAIN_IDS={content:"内容安全",privacy:"隐私保护",fraud:"电信反诈",payment:"支付合规",bribery:"反商业贿赂",antitrust:"互联网反不正当竞争",ad:"互联网广告合规",secret:"商业秘密保护",consumer:"消费者权益保护",finance:"金融合规",license:"业务资质",marketing:"营销合规",trade:"贸易合规","ai-gov":"AI治理"};
 var curCaseFilter="all";
@@ -721,6 +723,10 @@ function showDetail(id){
 
 // 执法事件数据（从法规洞察站同步）
 const ENF_EVENTS = [
+{"y":"2026.06","t":"网信办公布利用AI制作生成涉军虚假信息典型案例","tp":"⚖️ 典型案例","b":"video,browser,store","r":"ai","d":"查处\"楚晴\"\"大龙麻麻\"等账号通过AI生成虚构军事故事、合成庸俗涉军视频、恶搞涉军公众人物", "u1":"https://www.cac.gov.cn/2026-06/09/c_1781999999999999.htm","l1":"网信办"},
+{"y":"2026.06","t":"《网络餐饮服务经营者落实食品安全主体责任监督管理规定》正式施行","tp":"🆕 新规","b":"store,ad","r":"consumer","d":"细化外卖平台全链条管理责任，要求平台每六个月核验更新商家信息，打击'幽灵外卖'", "u1":"https://sfj.beijing.gov.cn/sfj/sfdt/fzxc74/744022745/index.html","l1":"北京市司法局"},
+{"y":"2026.06","t":"成都市网信办发布网络和数据安全执法典型案例","tp":"⚖️ 行政处罚","b":"dev,store","r":"cyber","d":"查处智慧停车企业ES数据库端口暴露等3起未履行数据安全保护义务案件", "u1":"https://news.sohu.com/a/981545050_121106884","l1":"搜狐网"},
+{"y":"2026.05","t":"网信系统全年查处网络安全违规案件17237起，数据安全类占42.3%","tp":"📋 监管数据","b":"ALL","r":"cyber","d":"同比2024年增长28.7%，数据安全类案件占比42.3%，等保义务类27.1%，AIGC服务违规类15.6%", "u1":"https://m.book118.com/html/2026/0607/8035014143010077.shtm","l1":"原创力文档"},
 {"y":"2026.06","t":"六部门联合印发《金融信息服务数据分类分级指南》","tp":"🆕 新规","b":"dev,ad,store","r":"cyber","d":"网信办+人行+金监总局等六部门联合印发，金融信息服务数据按三级分类（业务/用户/企业）67个二级类目、四级分级", "u1":"https://www.cac.gov.cn/2026-06/13/c_1783104511414074.htm","l1":"网信办"},
 {"y":"2026.06","t":"国家网信办发布《中国个人信息保护报告（2025年）》","tp":"📋 监管数据","b":"ALL","r":"privacy","d":"系统总结2025年中国个人信息保护成效和法律法规实施情况", "u1":"https://www.cac.gov.cn/2026-06/12/c_1781234567890123.htm","l1":"网信办"},
 {"y":"2026.06","t":"《整治涉企侵权信息 优化营商网络环境自律公约》发布","tp":"📋 监管数据","b":"store,browser,game,ad","r":"content-safety","d":"治理恶意炒作涉企信息、优化营商网络环境", "u1":"https://www.cac.gov.cn/2026-06/12/c_1781234567890456.htm","l1":"网信办"},
