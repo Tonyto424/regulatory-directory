@@ -88,36 +88,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" oninput="doSearch()" placeholder="搜索法规名称..."></div>
 <div class="container" id="app">
   <div id="homeView"><div class="grid" id="domainGrid"></div></div>
-  <div id="dailyView" style="display:none;">
-    <div style="background:#fff8e1;border:1px solid #ffc107;border-radius:12px;padding:16px 20px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <span style="font-size:15px;font-weight:700;color:#e65100;">📢 每日合规动态（2026-06-29）</span>
-        <a href="javascript:void(0)" onclick="document.getElementById('dailyUpdate').style.display=document.getElementById('dailyUpdate').style.display==='none'?'block':'none'" style="font-size:12px;color:#1a73e8;text-decoration:underline;">展开/收起</a>
-      </div>
-      <div id="dailyUpdate">
-        <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#c62828;">🚨 重点预警：</b></p>
-        <ul style="font-size:13px;line-height:1.7;margin:4px 0 10px 18px;">
-          <li><b>《人工智能拟人化互动服务管理暂行办法》7月15日施行</b> — 仅剩16天，AI拟人化服务须完成合规改造</li>
-          <li><b>《网络数据安全风险评估办法》8月20日施行</b> — 重要数据处理者须每年度开展风险评估</li>
-          <li><b>《网络测评活动规范》已发布</b> — 规范测评活动，涉及资质认证和利益披露要求</li>
-        </ul>
-        <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#1a5276;">📜 新法规：</b></p>
-        <ul style="font-size:13px;line-height:1.7;margin:4px 0 10px 18px;">
-          <li>6月18日 · 三部门联合公布《网络数据安全风险评估办法》(8月20日施行)</li>
-          <li>6月13日 · 六部门联合印发《金融信息服务数据分类分级指南》</li>
-          <li>6月12日 · 网信办发布《整治涉企侵权信息 优化营商网络环境自律公约》</li>
-          <li>6月08日 · 网信办/市监总局联合印发《网络测评活动规范》</li>
-        </ul>
-        <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#1a5276;">⚡ 监管动态：</b></p>
-        <ul style="font-size:13px;line-height:1.7;margin:4px 0 0 18px;">
-          <li>6月18日 · 金融监管总局发布AI安全开发应用指导意见(32项)</li>
-          <li>6月11日 · 中央网信办通报30款App个人信息收集使用问题</li>
-          <li>6月09日 · 公安部公布10起涉高考网络谣言典型案例</li>
-          <li>6月05日 · 网信公安重拳整治AI造假信息专项行动</li>
-        </ul>
-        <p style="font-size:12px;color:#888;margin-top:10px;border-top:1px dashed #ddd;padding-top:8px;">🔗 <a href="https://tonyto424.github.io/regulatory-directory/" style="color:#1a73e8;">完整法规目录</a> | 每日合规报告推送到内部邮件组</p>
-      </div>
-    </div>
+    <div id="dailyView" style="display:none;">
+    <div id="dailyContent"></div>
+  </div>
   </div>
   <div id="detailView"><div class="detail-header"><button class="back-btn" onclick="showHome()">← 返回</button><span class="detail-title" id="detailTitle"></span></div><div id="detailList"></div></div>
   <div id="sourcesView"><h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2><div id="sourcesContent"></div></div>
@@ -127,8 +100,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="bottom-nav">
   <button class="btn active" id="navHome" onclick="switchView('home')"><span class="bi">🏠</span>合规领域</button>
   <button class="btn" id="navDaily" onclick="switchView('daily')"><span class="bi">📢</span>每日动态</button>
-  <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
   <button class="btn" id="navCases" onclick="switchView('cases')"><span class="bi">⚖️</span>合规事件</button>
+  <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
 </div>
 
 <script>
@@ -823,6 +796,105 @@ function renderSources(){
   html+='</div></div>';
   document.getElementById("sourcesContent").innerHTML=html;
 }
+function renderDaily(){
+  var html='<div style="margin-bottom:16px;"><h2 style="font-size:20px;margin-bottom:4px;">📢 每日合规动态（2026-06-29）</h2><p style="font-size:13px;color:#888;margin-bottom:16px;">基于最新监管信息自动汇总，点击标题查看原文</p></div>';
+  var newRules=[],penalties=[],events=[],dataPoints=[];
+  for(var i=0;i<ENF_EVENTS.length;i++){
+    var e=ENF_EVENTS[i];
+    if(e.tp.indexOf("新规")>=0){newRules.push(e);}
+    else if(e.tp.indexOf("行政")>=0||e.tp.indexOf("案例")>=0){penalties.push(e);}
+    else if(e.tp.indexOf("通报")>=0){events.push(e);}
+    else {dataPoints.push(e);}
+  }
+  // 重点预警
+  var warnItems=[];
+  for(var i=0;i<DOMAINS.length;i++){
+    for(var j=0;j<DOMAINS[i].laws.length;j++){
+      var l=DOMAINS[i].laws[j];
+      if(l.st=="n"||l.st=="p"){warnItems.push({name:l.name,st:l.st,desc:l.desc,domain:DOMAINS[i].name,duty:l.duty,icon:DOMAINS[i].icon});}
+    }
+  }
+  if(warnItems.length>0&&newRules.length>0){
+    html+='<div style="background:#fff3e0;border:1px solid #ffc107;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
+    html+='<div style="font-size:15px;font-weight:700;color:#e65100;margin-bottom:10px;">🚨 重点预警 <span style="font-size:12px;font-weight:400;color:#888;">（即将生效/新发布法规）</span></div>';
+    for(var i=0;i<Math.min(warnItems.length,5);i++){
+      var wi=warnItems[i];
+      var badge=wi.st=="n"?'<span style="background:#e3f2fd;color:#1565c0;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;">新发布</span>':'<span style="background:#e8f5e9;color:#2e7d32;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;">即将施行</span>';
+      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #e65100;">';
+      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+wi.icon+'  <b>《'+wi.name+'》</b>'+badge+'</div>';
+      if(wi.desc)html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>法规要点：</b>'+wi.desc+'</div>';
+      if(wi.duty)html+='<div style="font-size:12px;color:#e65100;margin:4px 0;background:#fff8e1;padding:6px 8px;border-radius:6px;">📌 <b>合规启示：</b>'+wi.duty+'</div>';
+      // Add link to detail view
+      html+='<div style="font-size:11px;margin-top:4px;"><a href="https://tonyto424.github.io/regulatory-directory/" target="_blank" style="color:#1a73e8;">🔗 查看完整法规目录 →</a></div>';
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  // 新法规
+  if(newRules.length>0){
+    html+='<div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
+    html+='<div style="font-size:15px;font-weight:700;color:#1b5e20;margin-bottom:10px;">📜 新法规发布 <span style="font-size:12px;font-weight:400;color:#888;">（共'+newRules.length+'项）</span></div>';
+    for(var i=0;i<newRules.length;i++){
+      var nr=newRules[i];
+      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #2e7d32;">';
+      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(nr.u1?'<a href="'+nr.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+nr.t+' ↗</a>':'<b>'+nr.t+'</b>')+'</div>';
+      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+nr.y+'</div>';
+      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>法规要点：</b>'+nr.d+'</div>';
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  // 执法处罚
+  if(penalties.length>0){
+    html+='<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
+    html+='<div style="font-size:15px;font-weight:700;color:#c62828;margin-bottom:10px;">⚖️ 执法处罚 <span style="font-size:12px;font-weight:400;color:#888;">（共'+penalties.length+'件）</span></div>';
+    for(var i=0;i<penalties.length;i++){
+      var p=penalties[i];
+      var insight="";
+      if(p.r=="privacy"){insight="加强数据合规管理，确保个人信息收集使用符合法规要求";}
+      else if(p.r=="advertising"){insight="广告内容须真实准确，直播带货主播同样承担广告法责任";}
+      else if(p.r=="ai"){insight="AI生成内容须显著标识，建立内容审核机制，防止虚假信息传播";}
+      else if(p.r=="consumer"){insight="完善消费者权益保护机制，确保售后服务合规";}
+      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #c62828;">';
+      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(p.u1?'<a href="'+p.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+p.t+' ↗</a>':'<b>'+p.t+'</b>')+'</div>';
+      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+p.y+' · '+p.tp+'</div>';
+      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>事件要点：</b>'+p.d+'</div>';
+      if(insight){html+='<div style="font-size:12px;color:#e65100;margin:4px 0;background:#fff8e1;padding:6px 8px;border-radius:6px;">💡 <b>合规启示：</b>'+insight+'</div>';}
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  // 监管通报
+  if(events.length>0){
+    html+='<div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
+    html+='<div style="font-size:15px;font-weight:700;color:#1565c0;margin-bottom:10px;">⚠️ 监管通报 <span style="font-size:12px;font-weight:400;color:#888;">（共'+events.length+'条）</span></div>';
+    for(var i=0;i<events.length;i++){
+      var ev=events[i];
+      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #1565c0;">';
+      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(ev.u1?'<a href="'+ev.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+ev.t+' ↗</a>':'<b>'+ev.t+'</b>')+'</div>';
+      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+ev.y+' · '+ev.tp+'</div>';
+      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>要点：</b>'+ev.d+'</div>';
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  // 监管数据
+  if(dataPoints.length>0){
+    html+='<div style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
+    html+='<div style="font-size:15px;font-weight:700;color:#6a1b9a;margin-bottom:10px;">📊 监管数据 <span style="font-size:12px;font-weight:400;color:#888;">（共'+dataPoints.length+'条）</span></div>';
+    for(var i=0;i<dataPoints.length;i++){
+      var dp=dataPoints[i];
+      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #6a1b9a;">';
+      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(dp.u1?'<a href="'+dp.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+dp.t+' ↗</a>':'<b>'+dp.t+'</b>')+'</div>';
+      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+dp.y+'</div>';
+      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 '+dp.d+'</div>';
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  html+='<div style="text-align:center;font-size:12px;color:#999;padding:24px 0 40px;">📧 每日合规报告已推送到内部邮件组 · <a href="https://tonyto424.github.io/regulatory-directory/" style="color:#1a73e8;">查看完整法规目录 →</a></div>';
+  document.getElementById("dailyContent").innerHTML=html;
+}
 function showHome(){
   document.getElementById("homeView").style.display="block";
   document.getElementById("dailyView").style.display="none";
@@ -847,7 +919,7 @@ function switchView(v){
   document.getElementById("sourcesView").style.display=v=="sources"?"block":"none";
   document.getElementById("casesView").style.display=v=="cases"?"block":"none";
   if(v=="home"){document.getElementById("navHome").classList.add("active");}
-  else if(v=="daily"){document.getElementById("navDaily").classList.add("active");}
+  else if(v=="daily"){document.getElementById("navDaily").classList.add("active");renderDaily();}
   else if(v=="cases"){document.getElementById("navCases").classList.add("active");renderCases();}
   else if(v=="sources"){document.getElementById("navSources").classList.add("active");}
 }
