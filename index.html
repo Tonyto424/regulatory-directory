@@ -87,37 +87,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 </div>
 <div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" oninput="doSearch()" placeholder="搜索法规名称..."></div>
 <div class="container" id="app">
-  <div id="homeView"><div class="grid" id="domainGrid"></div>
-  <!-- 每日合规动态 -->
-  <div style="background:#fff8e1;border:1px solid #ffc107;border-radius:12px;padding:16px 20px;margin-bottom:16px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <span style="font-size:15px;font-weight:700;color:#e65100;">📢 每日合规动态（2026-06-29）</span>
-      <a href="javascript:void(0)" onclick="document.getElementById('dailyUpdate').style.display=document.getElementById('dailyUpdate').style.display==='none'?'block':'none'" style="font-size:12px;color:#1a73e8;text-decoration:underline;">展开/收起</a>
+  <div id="homeView"><div class="grid" id="domainGrid"></div></div>
+  <div id="dailyView" style="display:none;">
+    <div style="background:#fff8e1;border:1px solid #ffc107;border-radius:12px;padding:16px 20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <span style="font-size:15px;font-weight:700;color:#e65100;">📢 每日合规动态（2026-06-29）</span>
+        <a href="javascript:void(0)" onclick="document.getElementById('dailyUpdate').style.display=document.getElementById('dailyUpdate').style.display==='none'?'block':'none'" style="font-size:12px;color:#1a73e8;text-decoration:underline;">展开/收起</a>
+      </div>
+      <div id="dailyUpdate">
+        <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#c62828;">🚨 重点预警：</b></p>
+        <ul style="font-size:13px;line-height:1.7;margin:4px 0 10px 18px;">
+          <li><b>《人工智能拟人化互动服务管理暂行办法》7月15日施行</b> — 仅剩16天，AI拟人化服务须完成合规改造</li>
+          <li><b>《网络数据安全风险评估办法》8月20日施行</b> — 重要数据处理者须每年度开展风险评估</li>
+          <li><b>《网络测评活动规范》已发布</b> — 规范测评活动，涉及资质认证和利益披露要求</li>
+        </ul>
+        <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#1a5276;">📜 新法规：</b></p>
+        <ul style="font-size:13px;line-height:1.7;margin:4px 0 10px 18px;">
+          <li>6月18日 · 三部门联合公布《网络数据安全风险评估办法》(8月20日施行)</li>
+          <li>6月13日 · 六部门联合印发《金融信息服务数据分类分级指南》</li>
+          <li>6月12日 · 网信办发布《整治涉企侵权信息 优化营商网络环境自律公约》</li>
+          <li>6月08日 · 网信办/市监总局联合印发《网络测评活动规范》</li>
+        </ul>
+        <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#1a5276;">⚡ 监管动态：</b></p>
+        <ul style="font-size:13px;line-height:1.7;margin:4px 0 0 18px;">
+          <li>6月18日 · 金融监管总局发布AI安全开发应用指导意见(32项)</li>
+          <li>6月11日 · 中央网信办通报30款App个人信息收集使用问题</li>
+          <li>6月09日 · 公安部公布10起涉高考网络谣言典型案例</li>
+          <li>6月05日 · 网信公安重拳整治AI造假信息专项行动</li>
+        </ul>
+        <p style="font-size:12px;color:#888;margin-top:10px;border-top:1px dashed #ddd;padding-top:8px;">🔗 <a href="https://tonyto424.github.io/regulatory-directory/" style="color:#1a73e8;">完整法规目录</a> | 每日合规报告推送到内部邮件组</p>
+      </div>
     </div>
-    <div id="dailyUpdate">
-      <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#c62828;">🚨 重点预警：</b></p>
-      <ul style="font-size:13px;line-height:1.7;margin:4px 0 10px 18px;">
-        <li><b>《人工智能拟人化互动服务管理暂行办法》7月15日施行</b> — 仅剩16天，AI拟人化服务须完成合规改造</li>
-        <li><b>《网络数据安全风险评估办法》8月20日施行</b> — 重要数据处理者须每年度开展风险评估</li>
-        <li><b>《网络测评活动规范》已发布</b> — 规范测评活动，涉及资质认证和利益披露要求</li>
-      </ul>
-      <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#1a5276;">📜 新法规：</b></p>
-      <ul style="font-size:13px;line-height:1.7;margin:4px 0 10px 18px;">
-        <li>6月18日 · 三部门联合公布《网络数据安全风险评估办法》(8月20日施行)</li>
-        <li>6月13日 · 六部门联合印发《金融信息服务数据分类分级指南》</li>
-        <li>6月12日 · 网信办发布《整治涉企侵权信息 优化营商网络环境自律公约》</li>
-        <li>6月08日 · 网信办/市监总局联合印发《网络测评活动规范》</li>
-      </ul>
-      <p style="font-size:13px;line-height:1.8;margin:6px 0;"><b style="color:#1a5276;">⚡ 监管动态：</b></p>
-      <ul style="font-size:13px;line-height:1.7;margin:4px 0 0 18px;">
-        <li>6月18日 · 金融监管总局发布AI安全开发应用指导意见(32项)</li>
-        <li>6月11日 · 中央网信办通报30款App个人信息收集使用问题</li>
-        <li>6月09日 · 公安部公布10起涉高考网络谣言典型案例</li>
-        <li>6月05日 · 网信公安重拳整治AI造假信息专项行动</li>
-      </ul>
-      <p style="font-size:12px;color:#888;margin-top:10px;border-top:1px dashed #ddd;padding-top:8px;">🔗 <a href="https://tonyto424.github.io/regulatory-directory/" style="color:#1a73e8;">完整法规目录</a> | 每日合规报告推送到内部邮件组</p>
-    </div>
-  </div></div>
+  </div>
   <div id="detailView"><div class="detail-header"><button class="back-btn" onclick="showHome()">← 返回</button><span class="detail-title" id="detailTitle"></span></div><div id="detailList"></div></div>
   <div id="sourcesView"><h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2><div id="sourcesContent"></div></div>
   <div id="casesView"><h2 style="margin-bottom:12px;font-size:18px">⚖️ 合规事件 <span style="font-size:12px;color:#888;font-weight:400">（30条执法事件 + 12个典型案例）</span></h2><div class="case-filter" id="caseFilter"></div><div class="case-count" id="caseCount"></div><div id="casesContent"></div></div>
@@ -125,6 +126,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 </div>
 <div class="bottom-nav">
   <button class="btn active" id="navHome" onclick="switchView('home')"><span class="bi">🏠</span>合规领域</button>
+  <button class="btn" id="navDaily" onclick="switchView('daily')"><span class="bi">📢</span>每日动态</button>
   <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
   <button class="btn" id="navCases" onclick="switchView('cases')"><span class="bi">⚖️</span>合规事件</button>
 </div>
@@ -745,6 +747,7 @@ function showDetail(id){
   }
   document.getElementById("detailList").innerHTML=html;
   document.getElementById("homeView").style.display="none";
+  document.getElementById("dailyView").style.display="none";
   document.getElementById("detailView").style.display="block";
   document.getElementById("sourcesView").style.display="none";
   document.getElementById("noResult").style.display="none";
@@ -822,10 +825,12 @@ function renderSources(){
 }
 function showHome(){
   document.getElementById("homeView").style.display="block";
+  document.getElementById("dailyView").style.display="none";
   document.getElementById("detailView").style.display="none";
   document.getElementById("sourcesView").style.display="none";
   document.getElementById("noResult").style.display="none";
   document.getElementById("navHome").classList.add("active");
+  document.getElementById("navDaily").classList.remove("active");
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
 }
@@ -834,12 +839,15 @@ function switchView(v){
   document.getElementById("noResult").style.display="none";
   document.getElementById("detailView").style.display="none";
   document.getElementById("navHome").classList.remove("active");
+  document.getElementById("navDaily").classList.remove("active");
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
   document.getElementById("homeView").style.display=v=="home"?"block":"none";
+  document.getElementById("dailyView").style.display=v=="daily"?"block":"none";
   document.getElementById("sourcesView").style.display=v=="sources"?"block":"none";
   document.getElementById("casesView").style.display=v=="cases"?"block":"none";
   if(v=="home"){document.getElementById("navHome").classList.add("active");}
+  else if(v=="daily"){document.getElementById("navDaily").classList.add("active");}
   else if(v=="cases"){document.getElementById("navCases").classList.add("active");renderCases();}
   else if(v=="sources"){document.getElementById("navSources").classList.add("active");}
 }
@@ -848,10 +856,12 @@ function doSearch(){
   var nr=document.getElementById("noResult");
   if(!q){showHome();return;}
   document.getElementById("homeView").style.display="block";
+  document.getElementById("dailyView").style.display="none";
   document.getElementById("detailView").style.display="none";
   document.getElementById("sourcesView").style.display="none";
   document.getElementById("casesView").style.display="none";
   document.getElementById("navHome").classList.add("active");
+  document.getElementById("navDaily").classList.remove("active");
   document.getElementById("navSources").classList.remove("active");
   document.getElementById("navCases").classList.remove("active");
   var cards=document.querySelectorAll(".domain-card"),found=false,i,j,d,match;
@@ -865,7 +875,7 @@ function doSearch(){
   nr.style.display=found?"none":"block";
 }
 render();
-// Mark domains with new laws
+// Mark domains with new laws (after render, so cards exist)
 if(typeof _newLaws!="undefined"&&_newLaws.length>0){
   for(var ri=0;ri<DOMAINS.length;ri++){
     var dd=DOMAINS[ri];
@@ -873,7 +883,7 @@ if(typeof _newLaws!="undefined"&&_newLaws.length>0){
       for(var rk=0;rk<_newLaws.length;rk++){
         if(dd.laws[rj].name==_newLaws[rk]){
           var cardEl=document.getElementById("card-"+dd.id);
-          if(cardEl){cardEl.innerHTML='<div class="color-bar" style="background:'+dd.color+'"></div><div class="icon">'+dd.icon+'</div><div class="name">'+dd.name+'</div><div class="count">'+(dd.laws.length-(_newLaws.length||0))+'</div><div class="new-badge">新</div>';}
+          if(cardEl){cardEl.style.position="relative";cardEl.innerHTML='<div class="color-bar" style="background:'+dd.color+'"></div><div class="icon">'+dd.icon+'</div><div class="name">'+dd.name+'</div><div class="count">'+dd.laws.length+' 部</div><div class="new-badge">新</div>';}
           rj=dd.laws.length;
           break;
         }
@@ -896,7 +906,7 @@ if(typeof _newLaws!="undefined"&&_newLaws.length>0){
     }
   }
 }
-render();renderSources();
+renderSources();
 </script>
 </body>
 </html>
