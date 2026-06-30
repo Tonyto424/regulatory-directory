@@ -83,7 +83,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="header">
   <h1>📋 互联网合规法规导航</h1>
   <p>全量法规清单 · 持续更新</p>
-  <div class="badge">14 个合规领域 · 190 部法规 · 40+ 监管及标准网站</div>
+  <div class="badge">14 个合规领域 · 181 部法规 · 40+ 监管及标准网站</div>
 </div>
 <div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" oninput="doSearch()" placeholder="搜索法规名称..."></div>
 <div class="container" id="app">
@@ -94,7 +94,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
   </div>
   <div id="detailView"><div class="detail-header"><button class="back-btn" onclick="showHome()">← 返回</button><span class="detail-title" id="detailTitle"></span></div><div id="detailList"></div></div>
   <div id="sourcesView"><h2 style="margin-bottom:16px;font-size:18px">📎 参考源</h2><div id="sourcesContent"></div></div>
-  <div id="casesView"><h2 style="margin-bottom:12px;font-size:18px">⚖️ 合规事件 <span style="font-size:12px;color:#888;font-weight:400">（30条执法事件 + 12个典型案例）</span></h2><div class="case-filter" id="caseFilter"></div><div class="case-count" id="caseCount"></div><div id="casesContent"></div></div>
+  <div id="casesView"><h2 style="margin-bottom:12px;font-size:18px">⚖️ 合规事件 <span style="font-size:12px;color:#888;font-weight:400">（30条执法事件 + 17个典型案例）</span></h2><div class="case-filter" id="caseFilter"></div><div class="case-count" id="caseCount"></div><div id="casesContent"></div></div>
   <div id="noResult">🔍 未找到相关法规</div>
 </div>
 <div class="bottom-nav">
@@ -602,8 +602,8 @@ var CASES=[
 {title:"青岛网站未审核内容致违法信息传播",domain:"content",date:"2025-08-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32059176",summary:"青岛某网站未按《网络安全法》审核用户发布信息,导致违法信息传播,被警方行政处罚。"}
 ];
 
-var _newLaws=["金融信息服务数据分类分级指南", "广告引证内容执法指南", "关于银行业保险业人工智能安全开发应用的指导意见", "网络数据安全风险评估办法", "整治涉企侵权信息 优化营商网络环境自律公约", "网络测评活动规范", "金融产品网络营销管理办法", "人工智能应用伦理安全指引1.0", "互联网信息内容多渠道分发服务管理规定", "智能体规范应用与创新发展实施意见"];  // populated by crawl script with ["Law Name 1","Law Name 2"]  // populated by crawl script with ["Law Name 1","Law Name 2"]
-var _newCases=[];
+var _newLaws=["网络数据安全风险评估办法（2026）","小型个人信息处理者个人信息保护简化措施规定（征求意见稿）","公平竞争审查条例实施办法","平台经济领域竞争合规指引（2026版）"];
+var _newCases=["三部门联合公布《网络数据安全风险评估办法》（2026-06-18）","国家反垄断局：2025年罚没6.53亿元，审结经营者集中706件","41款移动应用因违规收集个人信息被通报（2026-05-14）","宁夏通信管理局通报11款APP小程序、下架3款（2026-06-25）","EU AI Act高风险AI系统合规要求2026年8月2日执行"];
 var DOMAIN_IDS={content:"内容安全",privacy:"隐私保护",fraud:"电信反诈",payment:"支付合规",bribery:"反商业贿赂",antitrust:"互联网反不正当竞争",ad:"互联网广告合规",secret:"商业秘密保护",consumer:"消费者权益保护",finance:"金融合规",license:"业务资质",marketing:"营销合规",trade:"贸易合规","ai-gov":"AI治理"};
 var curCaseFilter="all";
 function renderCases(filter){
