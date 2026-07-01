@@ -796,8 +796,8 @@ function renderSources(){
   html+='</div></div>';
   document.getElementById("sourcesContent").innerHTML=html;
 }
-function renderDaily(){
-  var html='<div style="margin-bottom:16px;"><h2 style="font-size:20px;margin-bottom:4px;">📢 每日合规动态（2026-06-29）</h2><p style="font-size:13px;color:#888;margin-bottom:16px;">基于最新监管信息自动汇总，点击标题查看原文</p></div>';
+function renderDaily(){var td=new Date(),yy=td.getFullYear(),mm=String(td.getMonth()+1).padStart(2,'0'),dd=String(td.getDate()).padStart(2,'0'),today=yy+'-'+mm+'-'+dd;
+  var html='<div style="margin-bottom:16px;"><h2 style="font-size:20px;margin-bottom:4px;">📢 每日合规动态（'+today+'）</h2><p style="font-size:13px;color:#888;margin-bottom:16px;">基于最新监管信息自动汇总，点击标题查看原文</p></div>';
   var newRules=[],penalties=[],events=[],dataPoints=[];
   for(var i=0;i<ENF_EVENTS.length;i++){
     var e=ENF_EVENTS[i];
