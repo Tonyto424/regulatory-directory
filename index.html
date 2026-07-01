@@ -805,25 +805,31 @@ function renderDaily(){var td=new Date(),yy=td.getFullYear(),mm=String(td.getMon
     else if(e.tp.indexOf("通报")>=0){events.push(e);}
     else {dataPoints.push(e);}
   }
+  // 排序辅助：按 dt 倒序（新→旧）
+  function sortByDt(arr){arr.sort(function(a,b){return a.dt>b.dt?-1:a.dt<b.dt?1:0;});}
+  sortByDt(newRules);sortByDt(penalties);sortByDt(events);sortByDt(dataPoints);
   // 重点预警
   var warnItems=[];
   for(var i=0;i<DOMAINS.length;i++){
     for(var j=0;j<DOMAINS[i].laws.length;j++){
       var l=DOMAINS[i].laws[j];
-      if(l.st=="n"||l.st=="p"){warnItems.push({name:l.name,st:l.st,desc:l.desc,domain:DOMAINS[i].name,duty:l.duty,icon:DOMAINS[i].icon});}
+      if(l.st=="n"||l.st=="p"){warnItems.push({name:l.name,st:l.st,desc:l.desc,domain:DOMAINS[i].name,duty:l.duty,icon:DOMAINS[i].icon,release:l.release,effective:l.effective});}
     }
   }
+  // 重点预警按 release 倒序
+  warnItems.sort(function(a,b){return a.release>b.release?-1:a.release<b.release?1:0;});
   if(warnItems.length>0&&newRules.length>0){
     html+='<div style="background:#fff3e0;border:1px solid #ffc107;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
     html+='<div style="font-size:15px;font-weight:700;color:#e65100;margin-bottom:10px;">🚨 重点预警 <span style="font-size:12px;font-weight:400;color:#888;">（即将生效/新发布法规）</span></div>';
     for(var i=0;i<Math.min(warnItems.length,5);i++){
       var wi=warnItems[i];
       var badge=wi.st=="n"?'<span style="background:#e3f2fd;color:#1565c0;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;">新发布</span>':'<span style="background:#e8f5e9;color:#2e7d32;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;">即将施行</span>';
+      var warnDate=wi.release?wi.release:'';var warnEff=wi.effective;
       html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #e65100;">';
       html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+wi.icon+'  <b>《'+wi.name+'》</b>'+badge+'</div>';
+      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+(warnDate?'发布：'+warnDate:'')+(warnEff&&warnEff!=warnDate?' · 施行：'+warnEff:'')+'</div>';
       if(wi.desc)html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>法规要点：</b>'+wi.desc+'</div>';
       if(wi.duty)html+='<div style="font-size:12px;color:#e65100;margin:4px 0;background:#fff8e1;padding:6px 8px;border-radius:6px;">📌 <b>合规启示：</b>'+wi.duty+'</div>';
-      // Add link to detail view
       html+='<div style="font-size:11px;margin-top:4px;"><a href="https://tonyto424.github.io/regulatory-directory/" target="_blank" style="color:#1a73e8;">🔗 查看完整法规目录 →</a></div>';
       html+='</div>';
     }
