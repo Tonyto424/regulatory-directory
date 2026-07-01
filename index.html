@@ -77,6 +77,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 .domain-card{position:relative}
 .case-count{font-size:13px;color:#888;margin-bottom:10px}
 @media(max-width:640px){.header{padding:32px 16px 24px}.header h1{font-size:22px}.container{padding:20px 12px 80px}#homeView .grid{grid-template-columns:repeat(2,1fr);gap:10px}.domain-card{padding:16px 10px}.domain-card .icon{font-size:26px}.source-grid{grid-template-columns:1fr}.law-item{padding:12px 14px}}
+
+/* tab badge for new count */
+.tab-badge{background:#ff5252;color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:3px;font-weight:600;display:inline-block;vertical-align:middle;line-height:16px}
+.daily-filter{display:flex;gap:6px;margin-bottom:14px}
+.daily-filter span{cursor:pointer;padding:5px 12px;border-radius:16px;font-size:13px;transition:all .15s;user-select:none}
+.daily-filter span:hover{opacity:.85}
+
 </style>
 </head>
 <body>
@@ -99,7 +106,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 </div>
 <div class="bottom-nav">
   <button class="btn active" id="navHome" onclick="switchView('home')"><span class="bi">🏠</span>合规领域</button>
-  <button class="btn" id="navDaily" onclick="switchView('daily')"><span class="bi">📢</span>每日动态</button>
+  <button class="btn" id="navDaily" onclick="switchView('daily')"><span class="bi">📢</span>每日动态<span id="dailyBadge" class="tab-badge" style="display:none"></span></button>
   <button class="btn" id="navCases" onclick="switchView('cases')"><span class="bi">⚖️</span>合规事件</button>
   <button class="btn" id="navSources" onclick="switchView('sources')"><span class="bi">📎</span>参考源</button>
 </div>
@@ -795,110 +802,96 @@ function renderSources(){
   html+='</div></div>';
   document.getElementById("sourcesContent").innerHTML=html;
 }
-function renderDaily(){var td=new Date(),yy=td.getFullYear(),mm=String(td.getMonth()+1).padStart(2,'0'),dd=String(td.getDate()).padStart(2,'0'),today=yy+'-'+mm+'-'+dd;
-  var html='<div style="margin-bottom:16px;"><h2 style="font-size:20px;margin-bottom:4px;">📢 每日合规动态（'+today+'）</h2><p style="font-size:13px;color:#888;margin-bottom:16px;">基于最新监管信息自动汇总，点击标题查看原文</p></div>';
-  var newRules=[],penalties=[],events=[],dataPoints=[];
+var _dailyFilter='30d';
+function renderDaily(filter){
+  if(filter!==undefined){_dailyFilter=filter;try{localStorage.setItem('dailyFilter',filter);}catch(e){}}
+  else{try{var saved=localStorage.getItem('dailyFilter');if(saved)_dailyFilter=saved;}catch(e){}updateDailyBadge();}
+  var td=new Date(),today=td.getTime();
+  var daysMap={'7d':7,'30d':30,'all':9999};
+  var maxDays=daysMap[_dailyFilter]||30;
+  var allEvents=[];
   for(var i=0;i<ENF_EVENTS.length;i++){
     var e=ENF_EVENTS[i];
-    if(e.tp.indexOf("新规")>=0){newRules.push(e);}
-    else if(e.tp.indexOf("行政")>=0||e.tp.indexOf("案例")>=0){penalties.push(e);}
-    else if(e.tp.indexOf("通报")>=0){events.push(e);}
-    else {dataPoints.push(e);}
-  }
-  // 排序辅助：按 dt 倒序（新→旧）
-  function sortByDt(arr){arr.sort(function(a,b){return a.dt>b.dt?-1:a.dt<b.dt?1:0;});}
-  sortByDt(newRules);sortByDt(penalties);sortByDt(events);sortByDt(dataPoints);
-  // 重点预警
-  var warnItems=[];
-  for(var i=0;i<DOMAINS.length;i++){
-    for(var j=0;j<DOMAINS[i].laws.length;j++){
-      var l=DOMAINS[i].laws[j];
-      if(l.st=="n"||l.st=="p"){warnItems.push({name:l.name,st:l.st,desc:l.desc,domain:DOMAINS[i].name,duty:l.duty,icon:DOMAINS[i].icon,release:l.release,effective:l.effective});}
+    if(_dailyFilter!=='all'&&e.dt){
+      var p=e.dt.split('-');
+      var ed=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2])||1);
+      if((today-ed.getTime())/86400000>maxDays)continue;
     }
+    allEvents.push(e);
   }
-  // 重点预警按 release 倒序
-  warnItems.sort(function(a,b){return a.release>b.release?-1:a.release<b.release?1:0;});
-  if(warnItems.length>0&&newRules.length>0){
-    html+='<div style="background:#fff3e0;border:1px solid #ffc107;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
-    html+='<div style="font-size:15px;font-weight:700;color:#e65100;margin-bottom:10px;">🚨 重点预警 <span style="font-size:12px;font-weight:400;color:#888;">（即将生效/新发布法规）</span></div>';
-    for(var i=0;i<Math.min(warnItems.length,5);i++){
-      var wi=warnItems[i];
-      var badge=wi.st=="n"?'<span style="background:#e3f2fd;color:#1565c0;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;">新发布</span>':'<span style="background:#e8f5e9;color:#2e7d32;font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;">即将施行</span>';
-      var warnDate=wi.release?wi.release:'';var warnEff=wi.effective;
-      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #e65100;">';
-      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+wi.icon+'  <b>《'+wi.name+'》</b>'+badge+'</div>';
-      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+(warnDate?'发布：'+warnDate:'')+(warnEff&&warnEff!=warnDate?' · 施行：'+warnEff:'')+'</div>';
-      if(wi.desc)html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>法规要点：</b>'+wi.desc+'</div>';
-      if(wi.duty)html+='<div style="font-size:12px;color:#e65100;margin:4px 0;background:#fff8e1;padding:6px 8px;border-radius:6px;">📌 <b>合规启示：</b>'+wi.duty+'</div>';
-      html+='<div style="font-size:11px;margin-top:4px;"><a href="https://tonyto424.github.io/regulatory-directory/" target="_blank" style="color:#1a73e8;">🔗 查看完整法规目录 →</a></div>';
+  allEvents.sort(function(a,b){return a.dt>b.dt?-1:a.dt<b.dt?1:0;});
+  var groups={};
+  for(var i=0;i<allEvents.length;i++){
+    var e=allEvents[i];var key=e.dt||'unknown';
+    if(!groups[key])groups[key]=[];
+    groups[key].push(e);
+  }
+  var dates=Object.keys(groups).sort().reverse();
+  function isNewItem(name){
+    if(typeof _newLaws==='undefined'||!_newLaws||!_newLaws.length)return false;
+    for(var k=0;k<_newLaws.length;k++){
+      if(name.indexOf(_newLaws[k])>=0||_newLaws[k].indexOf(name)>=0)return true;
+    }
+    return false;
+  }
+  var html='<div style="margin-bottom:12px;">';
+  html+='<h2 style="font-size:20px;margin-bottom:4px;">📢 每日合规动态</h2>';
+  html+='<p style="font-size:13px;color:#888;margin-bottom:12px;">基于最新监管信息自动汇总，点击标题查看原文</p>';
+  html+='<div class="daily-filter">';
+  var filts=['7d','30d','all'];
+  var flabels={'7d':'近7天','30d':'近30天','all':'全部'};
+  for(var fi=0;fi<filts.length;fi++){
+    var f=filts[fi];
+    var act=_dailyFilter===f?'background:#1a73e8;color:#fff;font-weight:600;':'background:#e8eaf6;color:#333;font-weight:400;';
+    html+='<span onclick="renderDaily(\''+f+'\')" style="'+act+'">'+flabels[f]+'</span>';
+  }
+  html+='</div></div>';
+  for(var di=0;di<dates.length;di++){
+    var date=dates[di];var items=groups[date];
+    var dateLabel=date;
+    if(date.length===10){var dp=date.split('-');dateLabel=parseInt(dp[1])+'月'+parseInt(dp[2])+'日';}
+    var newCount=0;
+    for(var si=0;si<items.length;si++){if(isNewItem(items[si].t))newCount++;}
+    html+='<div style="margin-bottom:10px;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);">';
+    html+='<div style="background:#f5f5f5;padding:7px 12px;font-size:13px;font-weight:600;color:#555;display:flex;justify-content:space-between;align-items:center;">';
+    html+='<span>📅 '+dateLabel+'<span style="font-size:11px;color:#999;font-weight:400;margin-left:5px;">（'+items.length+'条）</span></span>';
+    if(newCount>0)html+='<span style="background:#ff5252;color:#fff;font-size:11px;padding:1px 7px;border-radius:8px;font-weight:600;">'+newCount+'条新增</span>';
+    html+='</div>';
+    for(var ii=0;ii<items.length;ii++){
+      var e=items[ii];var nw=isNewItem(e.t);
+      var bc;if(e.tp.indexOf('新规')>=0)bc='#2e7d32';else if(e.tp.indexOf('行政')>=0||e.tp.indexOf('案例')>=0)bc='#c62828';else if(e.tp.indexOf('通报')>=0)bc='#1565c0';else bc='#6a1b9a';
+      html+='<div style="background:#fff;padding:9px 12px;border-left:3px solid '+bc+';'+(ii<items.length-1?'border-bottom:1px solid #f0f0f0;':'')+'">';
+      html+='<div style="font-size:13px;font-weight:600;margin-bottom:2px;line-height:1.4;">';
+      html+=(e.u1?'<a href="'+e.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+e.t+'↗</a>':'<b>'+e.t+'</b>');
+      html+='</div>';
+      html+='<div style="font-size:11px;color:#888;margin:3px 0;display:flex;align-items:center;gap:5px;flex-wrap:wrap;">';
+      var tpCol={'🆕':'#2e7d32','⚖':'#c62828','⚠':'#1565c0','📋':'#6a1b9a'};
+      var c0=e.tp.charCodeAt(0);var tc=tpCol[e.tp.slice(0,2)]||'#888';
+      html+='<span style="background:'+tc+';color:#fff;padding:1px 5px;border-radius:3px;font-size:10px;">'+e.tp+'</span>';
+      html+='<span>\U0001f4c5 '+e.dt+'</span>';
+      if(nw)html+='<span style="background:#ff5252;color:#fff;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;">🆕 NEW</span>';
+      html+='</div>';
+      html+='<div style="font-size:12px;color:#555;margin:3px 0;line-height:1.5;">'+e.d+'</div>';
       html+='</div>';
     }
     html+='</div>';
   }
-  // 新法规
-  if(newRules.length>0){
-    html+='<div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
-    html+='<div style="font-size:15px;font-weight:700;color:#1b5e20;margin-bottom:10px;">📜 新法规发布 <span style="font-size:12px;font-weight:400;color:#888;">（共'+newRules.length+'项）</span></div>';
-    for(var i=0;i<newRules.length;i++){
-      var nr=newRules[i];
-      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #2e7d32;">';
-      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(nr.u1?'<a href="'+nr.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+nr.t+' ↗</a>':'<b>'+nr.t+'</b>')+'</div>';
-      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+nr.dt+'</div>';
-      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>法规要点：</b>'+nr.d+'</div>';
-      html+='</div>';
-    }
-    html+='</div>';
+  if(dates.length===0)html+='<div style="text-align:center;padding:40px 0;color:#999;font-size:14px;">📭 所选时间范围内暂无动态</div>';
+  html+='<div style="text-align:center;font-size:12px;color:#999;padding:16px 0 32px;">\U0001f4e7 \u6bcf\u65e5\u5408\u89c4\u62a5\u544a\u5df2\u63a8\u9001\u5230\u5185\u90e8\u90ae\u4ef6\u7ec4 \u00b7 <a href="https://tonyto424.github.io/regulatory-directory/" style="color:#1a73e8;">\u67e5\u770b\u5b8c\u6574\u6cd5\u89c4\u76ee\u5f55 \u2192</a></div>';
+  document.getElementById('dailyContent').innerHTML=html;
+}
+function updateDailyBadge(){
+  var badge=document.getElementById('dailyBadge');
+  if(!badge)return;
+  var td=new Date(),today=td.getTime();
+  var cnt=0;
+  for(var i=0;i<ENF_EVENTS.length;i++){
+    var e=ENF_EVENTS[i];if(!e.dt)continue;
+    var p=e.dt.split('-');var ed=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2])||1);
+    if((today-ed.getTime())/86400000<=7)cnt++;
   }
-  // 执法处罚
-  if(penalties.length>0){
-    html+='<div style="background:#fce4ec;border:1px solid #ef9a9a;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
-    html+='<div style="font-size:15px;font-weight:700;color:#c62828;margin-bottom:10px;">⚖️ 执法处罚 <span style="font-size:12px;font-weight:400;color:#888;">（共'+penalties.length+'件）</span></div>';
-    for(var i=0;i<penalties.length;i++){
-      var p=penalties[i];
-      var insight="";
-      if(p.r=="privacy"){insight="加强数据合规管理，确保个人信息收集使用符合法规要求";}
-      else if(p.r=="advertising"){insight="广告内容须真实准确，直播带货主播同样承担广告法责任";}
-      else if(p.r=="ai"){insight="AI生成内容须显著标识，建立内容审核机制，防止虚假信息传播";}
-      else if(p.r=="consumer"){insight="完善消费者权益保护机制，确保售后服务合规";}
-      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #c62828;">';
-      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(p.u1?'<a href="'+p.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+p.t+' ↗</a>':'<b>'+p.t+'</b>')+'</div>';
-      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+p.dt+' · '+p.tp+'</div>';
-      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>事件要点：</b>'+p.d+'</div>';
-      if(insight){html+='<div style="font-size:12px;color:#e65100;margin:4px 0;background:#fff8e1;padding:6px 8px;border-radius:6px;">💡 <b>合规启示：</b>'+insight+'</div>';}
-      html+='</div>';
-    }
-    html+='</div>';
-  }
-  // 监管通报
-  if(events.length>0){
-    html+='<div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
-    html+='<div style="font-size:15px;font-weight:700;color:#1565c0;margin-bottom:10px;">⚠️ 监管通报 <span style="font-size:12px;font-weight:400;color:#888;">（共'+events.length+'条）</span></div>';
-    for(var i=0;i<events.length;i++){
-      var ev=events[i];
-      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #1565c0;">';
-      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(ev.u1?'<a href="'+ev.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+ev.t+' ↗</a>':'<b>'+ev.t+'</b>')+'</div>';
-      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+ev.dt+' · '+ev.tp+'</div>';
-      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 <b>要点：</b>'+ev.d+'</div>';
-      html+='</div>';
-    }
-    html+='</div>';
-  }
-  // 监管数据
-  if(dataPoints.length>0){
-    html+='<div style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:12px;padding:16px 20px;margin-bottom:16px;">';
-    html+='<div style="font-size:15px;font-weight:700;color:#6a1b9a;margin-bottom:10px;">📊 监管数据 <span style="font-size:12px;font-weight:400;color:#888;">（共'+dataPoints.length+'条）</span></div>';
-    for(var i=0;i<dataPoints.length;i++){
-      var dp=dataPoints[i];
-      html+='<div style="background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid #6a1b9a;">';
-      html+='<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+(dp.u1?'<a href="'+dp.u1+'" target="_blank" rel="noopener" style="color:#1a73e8;text-decoration:none;">'+dp.t+' ↗</a>':'<b>'+dp.t+'</b>')+'</div>';
-      html+='<div style="font-size:12px;color:#888;margin-bottom:4px;">📅 '+dp.dt+'</div>';
-      html+='<div style="font-size:12px;color:#555;margin:6px 0;">📋 '+dp.d+'</div>';
-      html+='</div>';
-    }
-    html+='</div>';
-  }
-  html+='<div style="text-align:center;font-size:12px;color:#999;padding:24px 0 40px;">📧 每日合规报告已推送到内部邮件组 · <a href="https://tonyto424.github.io/regulatory-directory/" style="color:#1a73e8;">查看完整法规目录 →</a></div>';
-  document.getElementById("dailyContent").innerHTML=html;
+  if(cnt>0){badge.textContent=cnt;badge.style.display='inline-block';}
+  else badge.style.display='none';
 }
 function showHome(){
   document.getElementById("homeView").style.display="block";
@@ -924,7 +917,7 @@ function switchView(v){
   document.getElementById("sourcesView").style.display=v=="sources"?"block":"none";
   document.getElementById("casesView").style.display=v=="cases"?"block":"none";
   if(v=="home"){document.getElementById("navHome").classList.add("active");}
-  else if(v=="daily"){document.getElementById("navDaily").classList.add("active");renderDaily();}
+  else if(v=="daily"){document.getElementById("navDaily").classList.add("active");renderDaily();updateDailyBadge();}
   else if(v=="cases"){document.getElementById("navCases").classList.add("active");renderCases();}
   else if(v=="sources"){document.getElementById("navSources").classList.add("active");}
 }
@@ -951,7 +944,7 @@ function doSearch(){
   }
   nr.style.display=found?"none":"block";
 }
-render();
+render();updateDailyBadge();
 // Mark domains with new laws (after render, so cards exist)
 if(typeof _newLaws!="undefined"&&_newLaws.length>0){
   for(var ri=0;ri<DOMAINS.length;ri++){
