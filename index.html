@@ -90,7 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans S
 <div class="header">
   <h1>📋 互联网合规法规导航</h1>
   <p>全量法规清单 · 持续更新</p>
-  <div class="badge">14 个合规领域 · 181 部法规 · 40+ 监管及标准网站</div>
+  <div class="badge">14 个合规领域 · 214 部法规 · 40+ 监管及标准网站 · 59 条合规动态</div>
 </div>
 <div class="search-bar"><span class="icon">🔍</span><input type="text" id="searchInput" oninput="doSearch()" placeholder="搜索法规名称..."></div>
 <div class="container" id="app">
@@ -798,6 +798,13 @@ const ENF_EVENTS = [
   {"y":"2026.07","dt":"2026-07-06","t":"腾讯发布2026暑期未成年人保护专项行动：AI双引擎防沉迷","tp":"📋 监管数据","b":"store,game","r":"content-safety","d":"腾讯7月3日发布暑期未成年人保护专项行动，推出AI双引擎防沉迷模式，新增声纹特征检测、年龄识别、代过特征检测等AI多模态验证","u1":"http://app.myzaker.com/news/article.php?pk=6a48f16a8e9f0902ff0475cd","l1":"ZAKER新闻"},
   {"y":"2026.07","dt":"2026-07-06","t":"市场监管总局2026年反垄断执法重点：数据垄断、算法合谋","tp":"📋 监管数据","b":"store,browser,ad","r":"anti-fraud","d":"市场监管总局部署2026年加强反垄断执法，深入整治'内卷式'竞争，聚焦平台经济数据垄断、算法合谋等新型行为，推动平台监管'一库一码一系统'建设","u1":"https://finance.eastmoney.com/a/202512293604763041.html","l1":"东方财富网"},
   {"y":"2026.07","dt":"2026-07-06","t":"EU AI Act高风险AI系统合规或推迟至2027年全面适用","tp":"📋 监管数据","b":"xiaoyi,ad,harmony,store","r":"ai","d":"据欧洲议会发布AI Act实施时间线，因通用AI模型行为准则未按期交付，高风险AI系统全面合规或推迟至2027年，但禁止类AI条款已于2025年2月生效","u1":"https://blog.nsfocus.net/%E6%AC%A7%E7%9B%9F%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%B3%95%E3%80%8B%E5%AE%9E%E6%96%BD%E6%97%B6%E9%97%B4%E7%BA%BF%EF%BC%88ai-act-implementation-timeline%EF%BC%89%E6%83%85%E5%86%B5%E4%BB%8B%E7%AE%80/","l1":"绿盟科技"},
+  {"y": "2026.07", "dt": "2026-07-01", "t": "上海启动2026年未成年人网络环境整治专项行动（7月-10月）", "tp": "📋 监管数据", "b": "store,browser,game,video", "r": "content-safety", "d": "上海市委网信办联合9部门开展清朗守护专项行动，聚焦政策落地精准化、线下空间清朗化、网络生态优质化等五大重点任务", "u1": "https://www.thepaper.cn/newsDetail_forward_33501109", "l1": "澎湃新闻"},
+  {"y": "2026.07", "dt": "2026-04-26", "t": "市场监管总局启动为期半年互联网广告市场秩序整治行动", "tp": "⚠️ 监管通报", "b": "ad,store,video,browser", "r": "advertising", "d": "印发《互联网广告市场秩序整治重点任务》，围绕AI生成式广告监管、直播电商广告、弹窗广告、矩阵式投放等6大方面靶向治理", "u1": "https://www.hxw.gov.cn/content/2026/04/26/14888787.html", "l1": "红星网"},
+  {"y": "2026.07", "dt": "2026-02-03", "t": "八部门联合印发《汽车数据出境安全指引（2026版）》", "tp": "🆕 新规", "b": "dev,store,xiaoyi,harmony", "r": "cyber", "d": "工信部等八部门联合发布，规定汽车数据出境活动管理方式和适用条件，提出九类豁免情形，细化重要数据判定规则", "u1": "https://www.nda.gov.cn/sjj/zwgk/zcfb/0203/20260203171849356062918_pc.html", "l1": "国家数据局"},
+  {"y": "2026.07", "dt": "2026-07-01", "t": "2026年算法监管深化：上线即备案原则全面执行", "tp": "📋 监管数据", "b": "xiaoyi,ad,harmony,store,dev", "r": "ai", "d": "2026年算法备案全面覆盖明确上线即备案原则，涵盖生成合成/个性化推送/排序精选等5+1分类模式，未备案服务面临下架及罚款风险", "u1": "https://cloud.tencent.com/developer/article/2634936", "l1": "腾讯云开发者社区"},
+  {"y": "2026.07", "dt": "2026-03-18", "t": "江苏省发布AI与知识产权双向赋能行动2026年工作要点", "tp": "📋 监管数据", "b": "dev,store", "r": "trade-secret", "d": "明确15条要点，涵盖数据知识产权试点、核心专利布局、AI+知识产权应用建设，构建技术赋能数据支撑场景牵引规则保障四位一体融合生态", "u1": "http://www.cnipa.gov.cn/art/2026/3/18/art_57_205406.html", "l1": "国家知识产权局"},
+  {"y": "2026.07", "dt": "2026-03-24", "t": "市场监管总局举办2026年第一期反垄断合规讲堂：安全港制度", "tp": "📋 监管数据", "b": "store,browser,ad", "r": "anti-fraud", "d": "聚焦新修改的《禁止垄断协议规定》，对反垄断安全港制度的立法目标、适用标准进行深度宣介", "u1": "https://www.samr.gov.cn:1935/fldys/sjdt/gzdt/art/2026/art_18792154035d475dba73583bcba6e67e.html", "l1": "市场监管总局"},
+  {"y": "2026.07", "dt": "2026-04-30", "t": "北京市发布数据跨境流动便利化综合配套改革实施方案", "tp": "🆕 新规", "b": "dev,store,xiaoyi", "r": "privacy", "d": "三部门联合印发，上线数据跨境流动公共服务平台V3.0，发布负面清单，形成1+N数据跨境流动指引体系", "u1": "https://www.beijing.gov.cn/zhengce/zhengcefagui/202604/t20260430_4627551.html", "l1": "北京市人民政府"},
 ];
 const ENF_RD = {"anti-fraud":{"ic":"🛡️","nm":"反诈"},"content-safety":{"ic":"📰","nm":"内容安全"},"privacy":{"ic":"🔐","nm":"隐私合规"},"cyber":{"ic":"🛡️","nm":"网络安全"},"ai":{"ic":"🤖","nm":"AI治理"},"trade-secret":{"ic":"🔒","nm":"商业秘密保护"},"qualification":{"ic":"📋","nm":"资质合规"},"anti-bribery":{"ic":"⚖️","nm":"反商业贿赂"},"advertising":{"ic":"📢","nm":"广告法遵从"},"consumer":{"ic":"👤","nm":"消费者权益保护"}};
 const ENF_COLORS = {"anti-fraud":"#e65100","content-safety":"#c62828","privacy":"#1565c0","cyber":"#2e7d32","ai":"#6a1b9a","trade-secret":"#4e342e","qualification":"#283593","anti-bribery":"#3e2723","advertising":"#ad1457","consumer":"#f57c00"};
