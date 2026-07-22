@@ -188,7 +188,7 @@ def crawl():
     with open(META_FILE, 'w', encoding='utf-8') as f:
         json.dump(meta, f, ensure_ascii=False, indent=2)
 
-    # ── 如有新增法规，更新 HTML ──
+    # ── 如有新增法规，更新 _new_items.md ──
     if truly_new:
         report = f'# 新增法规报告\n\n巡检时间: {now_str}\n\n'
         report += '| 来源 | 法规名称 | 日期 |\n|------|----------|------|\n'
@@ -197,20 +197,8 @@ def crawl():
         with open(NEW_FILE, 'w', encoding='utf-8') as f:
             f.write(report)
 
-        new_law_names = [n['title'] for n in truly_new]
-        html = re.sub(
-            r'var _newLaws=\[.*?\];',
-            f'var _newLaws={json.dumps(new_law_names, ensure_ascii=False)};',
-            html
-        )
-        with open(HTML_FILE, 'w', encoding='utf-8') as f:
-            f.write(html)
-        print(f'\n已更新 _newLaws，标记 {len(truly_new)} 条新增法规')
-    else:
-        html = re.sub(r'var _newLaws=\[.*?\];', 'var _newLaws=[];', html)
-        with open(HTML_FILE, 'w', encoding='utf-8') as f:
-            f.write(html)
-        print('\n无新增法规')
+    # _newLaws 由前端从 st=="n" 数据自动计算，不再由爬虫覆盖
+    print(f'\n新增法规(爬虫发现): {len(truly_new)} 条')
 
     return len(truly_new)
 
