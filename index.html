@@ -610,13 +610,40 @@ var CASES=[
 {title:"青岛网站未审核内容致违法信息传播",domain:"content",date:"2025-08-01",source:"澎湃新闻",url:"https://www.thepaper.cn/newsDetail_forward_32059176",summary:"青岛某网站未按《网络安全法》审核用户发布信息,导致违法信息传播,被警方行政处罚。"}
 ];
 
-// 自动从数据中提取新发布法规（st=="n" 状态）
+// 新发布标签计算逻辑（按日期动态计算）
+// 满足以下任一条件即打"新发布"标签：
+//  1) 发布时间在1个月内
+//  2) 生效时间在1个月内
+//  3) 还未生效
+// 其余情况不打"新发布"标签
+function _lawSt(l){
+  var t=new Date();
+  function p(s){
+    if(!s)return null;
+    var m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if(!m)return null;
+    return new Date(+m[1],+m[2]-1,+m[3]);
+  }
+  var rd=p(l.release),ed=p(l.effective);
+  var day=24*3600*1000, m30=30*day, now=t.getTime();
+  // 3) 还未生效
+  if(ed&&ed.getTime()>now)return {st:"n",label:"新发布"};
+  // 2) 生效时间1个月内
+  if(ed&&(now-ed.getTime())>=0&&(now-ed.getTime())<=m30)return {st:"n",label:"新发布"};
+  // 1) 发布时间1个月内
+  if(rd&&(now-rd.getTime())>=0&&(now-rd.getTime())<=m30)return {st:"n",label:"新发布"};
+  // 兜底：仍沿用原草案/立法中状态
+  if(l.st==="p")return {st:"p",label:"立法中"};
+  if(l.st==="d")return {st:"d",label:"草案"};
+  return {st:"e",label:"已生效"};
+}
+// 自动从数据中提取新发布法规（按日期动态判定为新发布）
 var _newLaws=(function(){
   var names=[];
   for(var di=0;di<DOMAINS.length;di++){
     for(var li=0;li<DOMAINS[di].laws.length;li++){
       var law=DOMAINS[di].laws[li];
-      if(law.st==='n'||law.st==='d')names.push(law.name);
+      if(_lawSt(law).st==='n')names.push(law.name);
     }
   }
   return names;
@@ -717,7 +744,8 @@ function showDetail(id){
       l=sortedLaws[i];
       catHtml+='<div class="law-item" style="border-left-color:'+d.color+'">';
       catHtml+='<div class="top"><a class="name" href="'+getSrc(l.name)+'" target="_blank" rel="noopener">'+l.name+"</a>";
-      catHtml+='<span class="st '+(l.st=="e"?"st-e":l.st=="p"?"st-p":l.st=="n"?"st-n":"st-d")+'">'+(l.st=="e"?"已生效":l.st=="p"?"立法中":l.st=="n"?"新发布":"草案")+"</span></div>";
+      var _ls=_lawSt(l);
+      catHtml+='<span class="st '+(_ls.st=="e"?"st-e":_ls.st=="p"?"st-p":_ls.st=="n"?"st-n":"st-d")+'">'+_ls.label+"</span></div>";
       if(l.desc)catHtml+='<div class="desc">'+l.desc+"</div>";
       catHtml+='<div class="meta">';
       if(l.release)catHtml+="<span>📋 "+l.release+"</span>";
